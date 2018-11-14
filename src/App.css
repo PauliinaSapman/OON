@@ -1,7 +1,11 @@
 .App {
     display: flex;
     flex-direction: column;
+<<<<<<< HEAD
     //background-color: aqua;
+=======
+    background-color: aqua;
+>>>>>>> e801e950ff440a179bf13ee3fd6111a078524326
     height: 100%;
 }
 
@@ -46,6 +50,7 @@
     border-radius:8px 0 0 8px;
 }
 
+<<<<<<< HEAD
 .skillContent h3, .Skill p, .new p {
     margin: 0.3rem;
 }
@@ -74,4 +79,8 @@
     position: absolute;
     right: 0;
     bottom: 0;
+=======
+.skillContent h3, .Skill p {
+    margin: 0.3rem;
+>>>>>>> e801e950ff440a179bf13ee3fd6111a078524326
 }

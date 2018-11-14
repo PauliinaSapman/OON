@@ -1,9 +1,14 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
+<<<<<<< HEAD
 import MoreInfo from "./Pauliina2";
 import { ModalButton } from "react-modal-button";
 import Select from "react-select";
+=======
+
+
+>>>>>>> e801e950ff440a179bf13ee3fd6111a078524326
 
 // Listassa näkyvä yksittäinen osaaminen
 // Parametrinä annetaan objekti jonka sisällä on osaamisen nimi, kategoria ja väri
@@ -46,6 +51,7 @@ function Header() {
     );
 }
 
+<<<<<<< HEAD
 //Uusi osaaminen nappula ja modaalin sisältöä
 function New() {
     const Kategoriat = [
@@ -75,13 +81,19 @@ function New() {
 }
 
 
+=======
+>>>>>>> e801e950ff440a179bf13ee3fd6111a078524326
 // Sivun varsinanen sisältö
 function Main() {
 
     // Placeholder lista tietokannasta haetuista osaamisista.
     const skillsList = [
         {   name: "renkaat",
+<<<<<<< HEAD
             category: "autot lol",
+=======
+            category: "autot",
+>>>>>>> e801e950ff440a179bf13ee3fd6111a078524326
             color: "#a826d9"},
 
         {   name: "makkaraperunat",
@@ -98,6 +110,10 @@ function Main() {
     ];
     return (
         <div className="Main">
+<<<<<<< HEAD
+=======
+            <h1>+ lisää uus =)</h1>
+>>>>>>> e801e950ff440a179bf13ee3fd6111a078524326
             <SkillList skillList={skillsList}/>
         </div>
     );
@@ -107,11 +123,17 @@ function App() {
     return (
         <div className="App">
             <Header/>
+<<<<<<< HEAD
             <New/>
+=======
+>>>>>>> e801e950ff440a179bf13ee3fd6111a078524326
             <Main/>
         </div>
     );
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e801e950ff440a179bf13ee3fd6111a078524326
 export default App;
