@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
-
+import firebase from './firebase.js';
+import * as sanna from './sanna.js';
 
 
 // Listassa näkyvä yksittäinen osaaminen
@@ -35,12 +36,20 @@ function SkillList(props) {
     );
 }
 
+function DbButton() {
+    return (
+        <a href="#" onClick={sanna.sendToDb}>
+            Click me
+        </a>
+    );
+}
+
 // Sivun yläpalkki.
 function Header() {
     return (
         <div className="Header">
             <h1>Yläpalkki</h1>
-
+            <DbButton/>
         </div>
     );
 }
