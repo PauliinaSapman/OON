@@ -5,6 +5,6 @@ function MoreInfo() {
 
 }
 
-export default MoreInfo
+//export default MoreInfo
 
 

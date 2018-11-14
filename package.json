@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
     "npm": "^6.4.1",
     "react": "^16.6.1",
     "react-bootstrap": "^0.32.4",
@@ -12,12 +11,6 @@
     "react-modal-button": "^2.0.6",
     "react-scripts": "2.1.1",
     "react-select": "^2.1.1"
-=======
-    "react": "^16.6.1",
-    "react-bootstrap": "^0.32.4",
-    "react-dom": "^16.6.1",
-    "react-scripts": "2.1.1"
->>>>>>> e801e950ff440a179bf13ee3fd6111a078524326
   },
   "scripts": {
     "start": "react-scripts start",
