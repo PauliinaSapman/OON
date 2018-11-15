@@ -3,10 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 import { ModalButton } from "react-modal-button";
 import Select from "react-select";
-
 import firebase from './firebase.js';
 import * as sanna from './sanna.js';
 
+let skills;
 
 // Listassa näkyvä yksittäinen osaaminen
 // Parametrinä annetaan objekti jonka sisällä on osaamisen nimi, kategoria ja väri
@@ -19,7 +19,6 @@ function Skill(props) {
                 <p>{props.skillInfo.category}</p>
                 <h3>{props.skillInfo.name}</h3>
             </div>
-
         </li>
     );
 }
@@ -29,20 +28,37 @@ function Skill(props) {
 function SkillList(props) {
     return (
         <ul className="SkillList">
-
             {/* Looppaa kaikki parametrina annetun listan alkiot ja tekee jokaisesta osaamisen(Skill) */}
             {props.skillList.map( (skill, i)=> {
                 return <Skill key={i} skillInfo={skill}/>
             } )}
-
         </ul>
     );
 }
 
+// Lähetetään osaaminen
+const sendToDb = () => {
+    // TODO haetaan arvot lomakkeesta
+    const values = {
+        category    : 'autot',
+        title       : 'Renkaidenvaihto',
+        rating      : '4',
+        tools       : 'Uudet renkaat, tunkki, jakoavain, työhanskat, auto.',
+        steps       : 'Nostetaan autoa, otetaan vanhat renkaat pois ja laitetaan uudet tilalle.',
+        picture     : '',
+        newsection1  : 'Osaan vaihtaa myös vanteet.'
+    };
+
+    // lähetetään databaseen postaukseen 1
+    sanna.sendToDb(values, 1);
+    sanna.testDb();
+};
+
+
 // Nappi lähettää databaseen arvon
 function DbButton() {
     return (
-        <a href="#" onClick={sanna.sendToDb}>
+        <a href="#" onClick={sendToDb}>
             Click me
         </a>
     );
@@ -90,7 +106,6 @@ function New() {
 
 // Sivun varsinanen sisältö
 function Main() {
-
     // Placeholder lista tietokannasta haetuista osaamisista.
     const skillsList = [
         {   name: "renkaat",
@@ -109,6 +124,10 @@ function Main() {
             category: "ruoka",
             color: "#52bcd9"}
     ];
+
+   // skills = sanna.getAllPosts();
+   // console.log(skills);
+
     return (
         <div className="Main">
             <SkillList skillList={skillsList}/>
