@@ -4,6 +4,8 @@ import './App.css';
 import { ModalButton } from "react-modal-button";
 import Select from "react-select";
 
+import firebase from './firebase.js';
+import * as sanna from './sanna.js';
 
 
 // Listassa näkyvä yksittäinen osaaminen
@@ -37,12 +39,21 @@ function SkillList(props) {
     );
 }
 
+// Nappi lähettää databaseen arvon
+function DbButton() {
+    return (
+        <a href="#" onClick={sanna.sendToDb}>
+            Click me
+        </a>
+    );
+}
+
 // Sivun yläpalkki.
 function Header() {
     return (
         <div className="Header">
             <h1>Yläpalkki</h1>
-
+            <DbButton/>
         </div>
     );
 }
