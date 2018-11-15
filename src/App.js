@@ -66,7 +66,7 @@ function New() {
                 <div className="Modal">
                     <button className="tallenna" onClick={closeModal}><h3>Tallenna</h3></button>
                     <Select options={Kategoriat}>Valitse kategoria</Select>
-                    <button>Uusi ominaisuus</button>
+                    <button className="ominaisuus"><h4>Uusi ominaisuus</h4></button>
                 </div>
             )}
         >
