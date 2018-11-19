@@ -26,7 +26,7 @@ const getPostNumber = () => {
     const testRef = firebase.database().ref('posts/userid');
     testRef.on('value', function(snapshot)
     {
-        console.log(snapshot.numChildren());
+     //   console.log(snapshot.numChildren());
         postNumber = snapshot.numChildren();
     });
 };
