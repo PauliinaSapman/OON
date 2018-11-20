@@ -1,4 +1,4 @@
-import firebase from './firebase.js';
+import firebase from './firebase/firebase.js';
 
 let number = 0;
 let postNumber;
