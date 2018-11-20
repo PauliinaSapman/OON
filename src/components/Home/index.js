@@ -7,6 +7,7 @@ import firebase from '../../firebase/firebase.js';
 import * as sanna from '../../sanna.js';
 import * as ROUTES from "../../constants/routes";
 import { Link } from 'react-router-dom';
+import {Collapse} from 'react-collapse';
 
 function LogOut () {
     return (
@@ -122,6 +123,62 @@ function getColour(category) {
     return colour;
 }
 
+
+
+function toggleVisible() {
+
+}
+
+class ToggleCollapse extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOpened: false,
+            button: '▼'
+        };
+    }
+
+
+    render() {
+        const {isOpened} = this.state;
+
+        return (
+            <div>
+                <div>
+                    <div className="postTop" onClick={() => {
+                        if (this.state.isOpened === true) {
+                            this.setState({isOpened: false});
+                            this.setState({button: '▼'});
+                        }
+                        else {
+                            this.setState({isOpened: true});
+                            this.setState({button: '▲'});
+                        }
+                    }
+                    }>
+                        <div className="postHeadline">
+                            <p>{this.props.info.category}</p>
+                            <h3>{this.props.info.title}</h3>
+                        </div>
+                        <div className="postOpen">
+                            <p>{this.state.button}</p>
+                        </div>
+                    </div>
+                </div>
+                <Collapse isOpened={isOpened}>
+                    <div>
+                        <p>{this.props.info.tools}</p>
+                        <p>{this.props.info.steps}</p>
+                        <p>{this.props.info.picture}</p>
+                        <p>{this.props.info.newsection1}</p>
+                    </div>
+                </Collapse>
+            </div>
+        );
+    }
+}
+
+
 /**
  * Yksittäinen osaaminen listassa.
  * @param props
@@ -130,22 +187,25 @@ function getColour(category) {
  */
 function Skill(props) {
     let colour = getColour(props.skillInfo.category);
-    console.log(colour);
+   // console.log(colour);
+
+   // let isOpened = sanna.toggleCollapse(true);
 
     return (
         <li className="Skill">
             <div className="skillColorTag" style={{backgroundColor : colour}}>
             </div>
             <div className="skillContent">
-                <p>{props.skillInfo.category}</p>
-                <h3>{props.skillInfo.title}</h3>
+                <ToggleCollapse info={props.skillInfo}/>
+            </div>
+        </li>
+    );
+    /*
                 <p>{props.skillInfo.tools}</p>
                 <p>{props.skillInfo.steps}</p>
                 <p>{props.skillInfo.picture}</p>
                 <p>{props.skillInfo.newsection1}</p>
-            </div>
-        </li>
-    );
+                */
 }
 
 /**

@@ -101,3 +101,19 @@ keltainen(rakennus) #FFBA5C
 .skillContent h3, .Skill p {
     margin: 0.3rem;
 }
+
+.skillContent {
+    width: 100%;
+}
+
+.postTop {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.postOpen {
+    width: 10%;
+    display: flex;
+    align-items: center;
+}

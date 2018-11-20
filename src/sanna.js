@@ -89,3 +89,10 @@ export function getAllPosts() {
         return values;
     });
 }
+
+
+export function toggleCollapse(val) {
+
+  console.log(val);
+
+}
