@@ -1,3 +1,20 @@
+/*
+Värit:
+
+headerin sininen #4B8CAB
+nappulan vihree #47C786
+vaalea sininen #E9ECF0
+taustan vaalea harmaa #F0F0F0
+tummanliila(autot) #590375
+tummanvihreä(ruoka) #136F63
+tummanisininen(siivous) #395C89
+tummanpunainen(it) #89023E
+keltainen(rakennus) #FFBA5C
+
+ */
+
+
+
 .App {
     display: flex;
     flex-direction: column;
@@ -9,10 +26,14 @@
     display: flex;
     align-items: center;
     padding: 1rem;
-    background-color: #4274d9;
+    background-color: #4B8CAB;
     box-shadow: 0px 0px 33px -3px rgba(0,0,0,0.75);
     z-index: 23;
     height: 4rem;
+}
+
+.Header h1 {
+    color: #E9ECF0;
 }
 
 .Main {
@@ -20,7 +41,7 @@
     flex-direction: column;
     flex-grow: 1;
     padding: 1rem;
-    background-color: #d7ddd1;
+    background-color: #F0F0F0;
 }
 
 .SkillList {
@@ -34,7 +55,7 @@
     flex-direction: row;
     margin: 0.5rem;
     padding:0;
-    background-color: #fffaef;
+    background-color: white;
     box-shadow: 0px 0px 13px -6px rgba(0,0,0,0.75);
     border-radius:8px;
 }
