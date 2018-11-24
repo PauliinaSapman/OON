@@ -124,6 +124,11 @@ function getColour(category) {
     return colour;
 }
 
+// TODO tarkistetaan, että tietokannassa on haluttavat tiedot ettei mene rikki kun jätetään jokin osio pois osaamisesta!
+// TODO Poistetaan osio jos se jätetään tyhjäksi?
+// TODO CSS lomakkeelle
+// TODO Kuvan toteuttaminen ?
+// TODO Ratingin toteuttaminen ?
 
 /**
  * Osaaminen eli post esitetään muokattavana lomakkeena.
