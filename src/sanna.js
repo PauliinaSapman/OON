@@ -26,7 +26,6 @@ const getPostNumber = () => {
     const testRef = firebase.database().ref('posts/userid');
     testRef.on('value', function(snapshot)
     {
-        //   console.log(snapshot.numChildren());
         postNumber = snapshot.numChildren();
     });
 };
@@ -66,21 +65,8 @@ export function sendToDb(values, number) {
 let values;
 
 export function getAllPosts() {
-    /*
-    for(let nmr = 1; nmr!==postNumber; nmr ++) {
-        let testRef = firebase.database().ref('posts/userid' + '/' + nmr);
-        if(testRef) {
-            testRef.on('value', function(snapshot)
-            {
-                console.log(snapshot);
-            });
-        }
-    }
-    */
-
-
     let testRef = firebase.database().ref('posts/userid');
-    console.log(testRef);
+
     firebase.database().ref('posts/userid').on('value', function(snapshot)
     {
         console.log(snapshot.val());
@@ -88,11 +74,4 @@ export function getAllPosts() {
         console.log(values);
         return values;
     });
-}
-
-
-export function toggleCollapse(val) {
-
-  console.log(val);
-
 }

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "firebase": "^5.5.8",
+    "informed": "^1.10.9",
     "npm": "^6.4.1",
     "react": "^16.6.3",
     "react-bootstrap": "^0.32.4",

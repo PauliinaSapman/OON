@@ -18,7 +18,7 @@ keltainen(rakennus) #FFBA5C
 .App {
     display: flex;
     flex-direction: column;
-//background-color: aqua;
+/*  background-color: aqua; */
     height: 100%;
 }
 
@@ -98,7 +98,7 @@ keltainen(rakennus) #FFBA5C
     bottom: 1%;
 }
 
-.skillContent h3, .Skill p {
+.skillContent h3, .Skill p, .skillContent h5 {
     margin: 0.3rem;
 }
 
@@ -116,4 +116,11 @@ keltainen(rakennus) #FFBA5C
     width: 10%;
     display: flex;
     align-items: center;
+}
+textarea {
+    outline: none;
+    resize: none;
+    overflow: auto;
+    width: 95% !important;
+    padding: 0.5rem;
 }

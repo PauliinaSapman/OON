@@ -8,6 +8,7 @@ import * as sanna from '../../sanna.js';
 import * as ROUTES from "../../constants/routes";
 import { Link } from 'react-router-dom';
 import {Collapse} from 'react-collapse';
+import { Form, Text, Scope, TextArea, Option} from 'informed';
 
 function LogOut () {
     return (
@@ -23,7 +24,7 @@ const sendToDb = () => {
     // TODO haetaan arvot lomakkeesta
     const values = {
         /*
-        category    : 'autot',
+        category    : 'Autot',
         title       : 'Renkaidenvaihto',
         rating      : '4',
         tools       : 'Uudet renkaat, tunkki, jakoavain, työhanskat, auto.',
@@ -31,7 +32,7 @@ const sendToDb = () => {
         picture     : '',
         newsection1  : 'Osaan vaihtaa myös vanteet.'
         */
-        category    : 'ruuanlaitto',
+        category    : 'Ruuanlaitto',
         title       : 'Perunankuorinta',
         rating      : '2',
         tools       : 'Peruna, kuorimaveitsi, kädet.',
@@ -69,7 +70,7 @@ function Header() {
 function New() {
     const Kategoriat = [
         { label: "Autot", value: 1 },
-        { label: "IT", value: 2 },
+        { label: "Tietotekniikka", value: 2 },
         { label: "Musiikki", value: 3 },
         { label: "Ruuanlaitto", value: 4 },
         { label: "Talotyöt", value: 5 },
@@ -101,22 +102,22 @@ function New() {
 function getColour(category) {
     let colour = '#0000';
     switch (category) {
-        case 'autot':
+        case 'Autot':
             colour = '#590375';
             break;
-        case 'it':
+        case 'Tietotekniikka':
             colour = '#89023E';
             break;
-        case 'musiikki':
+        case 'Musiikki':
             colour = '#e48255';
             break;
-        case 'ruuanlaitto':
+        case 'Ruuanlaitto':
             colour = '#136F63';
             break;
-        case 'talotyöt':
+        case 'Talotyöt':
             colour = '#395C89';
             break;
-        case 'nikkarointi':
+        case 'Nikkarointi':
             colour = '#FFBA5C';
             break;
     }
@@ -124,20 +125,105 @@ function getColour(category) {
 }
 
 
+/**
+ * Osaaminen eli post esitetään muokattavana lomakkeena.
+ */
+class PostForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value:'',
+            selected: ''
+        };
+    }
 
-function toggleVisible() {
+    // Lähetetään lomakkeen arvot databaseen.
+    handleSubmit = (e) => {
+        const values = {
+            category: this.state.selected,
+            title: e.title,
+            rating : e.rating,
+            tools : e.tools,
+            steps : e.steps,
+            picture : e.picture,
+            newsection1 : e.newsection1
+        };
 
+        const id = this.props.id;
+        sanna.sendToDb(values, id);
+    };
+
+    // Valitaan selectistä kategorian arvo.
+    handleChange = (selectedOption) => {
+        const option = selectedOption.value;
+        this.setState({ selected: option });
+    };
+
+    // Asetetaan kategorian arvo placeholderiksi selectiin, sekä sen arvoksi.
+    componentDidMount() {
+        let category = '';
+
+        if(this.props.info.category) {
+            category = this.props.info.category;
+        }
+        this.setState({selected: category});
+    }
+
+    render() {
+        const Kategoriat = [
+            { label: "Autot", value: 'Autot' },
+            { label: "Tietotekniikka", value: 'Tietotekniikka' },
+            { label: "Musiikki", value: 'Musiikki' },
+            { label: "Ruuanlaitto", value: 'Ruuanlaitto' },
+            { label: "Talotyöt", value: 'Talotyöt' },
+            { label: "Nikkarointi", value: 'Nikkarointi' },
+        ];
+
+            return(
+                <Form id="form-api-form" onSubmit={this.handleSubmit}>
+                    <div>
+                        <p>{this.props.id}</p>
+                        <Select placeholder={this.state.selected} value={this.state.selected} onChange={this.handleChange} options={Kategoriat}>Kategoria</Select>
+                        <br></br>
+                        <TextArea field="title" id="textarea-title" initialValue={this.props.info.title}/>
+                        <br></br>
+                        <label htmlFor="textarea-tools">Työvälineet:</label>
+                        <br></br>
+                        <TextArea field="tools" id="textarea-tools" initialValue={this.props.info.tools}/>
+                        <br></br>
+                        <label htmlFor="textarea-steps">Työvaiheet:</label>
+                        <br></br>
+                        <TextArea field="steps" id="textarea-steps" initialValue={this.props.info.steps}/>
+                        <br></br>
+                        <Text field="rating" id="text-rating" initialValue={this.props.info.rating}/>
+                        <br></br>
+                        <Text field="picture" id="text-picture" initialValue={this.props.info.picture}/>
+                        <br></br>
+                        {/*TODO otsikko muokattavissa, on käyttäjän lisäämä uusi osio*/}
+                        <label htmlFor="textarea-newsection1">Muuta:</label>
+                        <br></br>
+                        <TextArea field="newsection1" id="textarea-newsection1" initialValue={this.props.info.newsection1}/>
+                        <br></br>
+                        <button type="submit">
+                        Tallenna
+                        </button>
+                    </div>
+                </Form>
+    )}
 }
 
+/**
+ * Osaamisen aukeaminen ja sulkeutuminen.
+ */
 class ToggleCollapse extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isOpened: false,
-            button: '▼'
+            button: '▼',
+            value:''
         };
     }
-
 
     render() {
         const {isOpened} = this.state;
@@ -166,12 +252,7 @@ class ToggleCollapse extends Component {
                     </div>
                 </div>
                 <Collapse isOpened={isOpened}>
-                    <div>
-                        <p>{this.props.info.tools}</p>
-                        <p>{this.props.info.steps}</p>
-                        <p>{this.props.info.picture}</p>
-                        <p>{this.props.info.newsection1}</p>
-                    </div>
+                    <PostForm info={this.props.info} id={this.props.id}/>
                 </Collapse>
             </div>
         );
@@ -187,25 +268,16 @@ class ToggleCollapse extends Component {
  */
 function Skill(props) {
     let colour = getColour(props.skillInfo.category);
-   // console.log(colour);
-
-   // let isOpened = sanna.toggleCollapse(true);
 
     return (
         <li className="Skill">
             <div className="skillColorTag" style={{backgroundColor : colour}}>
             </div>
             <div className="skillContent">
-                <ToggleCollapse info={props.skillInfo}/>
+                <ToggleCollapse info={props.skillInfo} id={props.id}/>
             </div>
         </li>
     );
-    /*
-                <p>{props.skillInfo.tools}</p>
-                <p>{props.skillInfo.steps}</p>
-                <p>{props.skillInfo.picture}</p>
-                <p>{props.skillInfo.newsection1}</p>
-                */
 }
 
 /**
@@ -226,7 +298,7 @@ function SkillList(props) {
         <ul className="SkillList">
             {/* Looppaa kaikki parametrina annetun listan alkiot ja tekee jokaisesta osaamisen(Skill) */}
             {postArray.map((r, post) => {
-                return <Skill key={post} skillInfo={r}/>
+                return <Skill key={post} skillInfo={r} id={post}/>
             })}
         </ul>
     );
@@ -250,13 +322,10 @@ class Posts extends Component {
             this.setState({
                 posts: snap.val()
             });
-            //  console.log(snap.val());
         });
     }
 
     render() {
-        // console.log(this.state.posts);
-
         return (
             <div>
                 <SkillList posts={this.state.posts}/>
