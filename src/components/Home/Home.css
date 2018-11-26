@@ -124,3 +124,158 @@ textarea {
     width: 95% !important;
     padding: 0.5rem;
 }
+
+.App {
+    display: flex;
+    flex-direction: column;
+//background-color: aqua;
+    height: 100%;
+}
+
+.Header {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: #4B8CAB;
+    box-shadow: 0px 0px 33px -3px rgba(0,0,0,0.75);
+    z-index: 23;
+    height: 4rem;
+}
+
+.Header h1 {
+    color: #E9ECF0;
+}
+
+.Main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 1rem;
+    background-color: #F0F0F0;
+}
+
+.SkillList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.Skill {
+    display: flex;
+    flex-direction: row;
+    margin: 0.5rem;
+    padding:0;
+    background-color: white;
+    box-shadow: 0px 0px 13px -6px rgba(0,0,0,0.75);
+    border-radius:8px;
+}
+
+.skillColorTag {
+    margin-left: 0;
+    height: inherit;
+    width: 1.5rem;
+    border-radius:8px 0 0 8px;
+}
+
+
+.New {
+    color: white;
+    background-color: #47C786;
+    border-radius: 8px;
+    margin: 1%;
+
+}
+
+.window-container {
+    padding: 50px;
+}
+
+.Modal {
+    background-color: #47C786;
+    color: white;
+    border-radius: 8px;
+    position: absolute;
+    right: 1%;
+    bottom: 1%;
+}
+
+.skillContent h3, .Skill p {
+    margin: 0.3rem;
+}
+
+.NewTitleMain .header {
+
+}
+
+.NewTitleMain .header button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px;
+    margin-right: 0px;
+    background-color: #4B8CAB;
+    color: #F0F0F0;
+    border: 1px solid #3b5a78;
+    border-radius: 8px;
+}
+
+.NewTitleMain .header button:hover {
+    background-color: #3b5a78;
+    cursor: pointer;
+}
+
+.NewTitleMain .header input {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #4B8CAB;
+    width: 165px;
+}
+
+.AddToolsMain .header button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px;
+    margin-right: 0px;
+    background-color: #4B8CAB;
+    color: #F0F0F0;
+    border: 1px solid #3b5a78;
+    border-radius: 8px;
+}
+
+.AddToolsMain .header button:hover {
+    background-color: #3b5a78;
+    cursor: pointer;
+}
+
+.AddToolsMain .header input {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #4B8CAB;
+    width: 165px;
+}
+
+.EnterStepsMain .header button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px;
+    margin-right: 0px;
+    background-color: #4B8CAB;
+    color: #F0F0F0;
+    border: 1px solid #3b5a78;
+    border-radius: 8px;
+}
+
+.EnterStepsMain .header button:hover {
+    background-color: #3b5a78;
+    cursor: pointer;
+}
+
+.EnterStepsMain .header input {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #4B8CAB;
+    width: 165px;
+}
+
+.EnterStepsMain .header input:hover {
+    cursor: pointer;
+}

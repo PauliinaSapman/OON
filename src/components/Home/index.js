@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import './Home.css';
-import { ModalButton } from "react-modal-button";
+//import { ModalButton } from "react-modal-button";
 import Select from "react-select";
 import firebase from '../../firebase/firebase.js';
 import * as sanna from '../../sanna.js';
@@ -9,6 +9,7 @@ import * as ROUTES from "../../constants/routes";
 import { Link } from 'react-router-dom';
 import {Collapse} from 'react-collapse';
 import { Form, Text, Scope, TextArea, Option} from 'informed';
+import  {NewButton} from "../../Pauliina2";
 
 function LogOut () {
     return (
@@ -67,6 +68,7 @@ function Header() {
 }
 
 //Uusi osaaminen nappula ja modaalin sisältöä
+/*
 function New() {
     const Kategoriat = [
         { label: "Autot", value: 1 },
@@ -77,21 +79,27 @@ function New() {
         { label: "Nikkarointi", value: 6 },
     ];
     return (
-        <ModalButton
+        <div>
+            <NewButton/>
+        </div>
+       /* <ModalButton
             buttonClassName="New"
             windowClassName="window-container"
             modal={({ closeModal }) => (
-                <div className="Modal">
-                    <button className="tallenna" onClick={closeModal}><h3>Tallenna</h3></button>
-                    <Select options={Kategoriat}>Valitse kategoria</Select>
-                    <button className="ominaisuus"><h4>Uusi ominaisuus</h4></button>
+                <div>
+                    <div><SelectCategory/></div>
+                    <div><NewTitle/></div>
+                    <div><SelfEvulation/></div>
+                    <div><AddTools/></div>
+                    <div><EnterSteps/></div>
+                    <button className="Modal" onClick={closeModal}><h3>Tallenna</h3></button> //OnClick lähettää tietokantaan
                 </div>
             )}
         >
             <h1> + Lisää uusi osaaminen </h1>
         </ModalButton>
     );
-}
+}*/
 
 //TODO onko tää hyvä tehdä täällä frontissa?
 /**
@@ -351,7 +359,7 @@ function Home() {
     return (
         <div className="App">
             <Header/>
-            <New/>
+            <NewButton/>
             <Main/>
         </div>
     );
