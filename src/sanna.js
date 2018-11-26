@@ -61,17 +61,3 @@ export function sendToDb(values, number) {
         newsection1 : values.newsection1
     });
 }
-
-let values;
-
-export function getAllPosts() {
-    let testRef = firebase.database().ref('posts/userid');
-
-    firebase.database().ref('posts/userid').on('value', function(snapshot)
-    {
-        console.log(snapshot.val());
-        values = snapshot.val();
-        console.log(values);
-        return values;
-    });
-}

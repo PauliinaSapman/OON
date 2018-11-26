@@ -164,6 +164,7 @@ class PostForm extends Component {
         this.setState({ selected: option });
     };
 
+
     // Asetetaan kategorian arvo placeholderiksi selectiin, sekä sen arvoksi.
     componentDidMount() {
         let category = '';
@@ -184,36 +185,36 @@ class PostForm extends Component {
             { label: "Nikkarointi", value: 'Nikkarointi' },
         ];
 
-            return(
-                <Form id="form-api-form" onSubmit={this.handleSubmit}>
-                    <div>
-                        <p>{this.props.id}</p>
-                        <Select placeholder={this.state.selected} value={this.state.selected} onChange={this.handleChange} options={Kategoriat}>Kategoria</Select>
-                        <br></br>
-                        <TextArea field="title" id="textarea-title" initialValue={this.props.info.title}/>
-                        <br></br>
-                        <label htmlFor="textarea-tools">Työvälineet:</label>
-                        <br></br>
-                        <TextArea field="tools" id="textarea-tools" initialValue={this.props.info.tools}/>
-                        <br></br>
-                        <label htmlFor="textarea-steps">Työvaiheet:</label>
-                        <br></br>
-                        <TextArea field="steps" id="textarea-steps" initialValue={this.props.info.steps}/>
-                        <br></br>
-                        <Text field="rating" id="text-rating" initialValue={this.props.info.rating}/>
-                        <br></br>
-                        <Text field="picture" id="text-picture" initialValue={this.props.info.picture}/>
-                        <br></br>
-                        {/*TODO otsikko muokattavissa, on käyttäjän lisäämä uusi osio*/}
-                        <label htmlFor="textarea-newsection1">Muuta:</label>
-                        <br></br>
-                        <TextArea field="newsection1" id="textarea-newsection1" initialValue={this.props.info.newsection1}/>
-                        <br></br>
-                        <button type="submit">
+        return(
+            <Form id="form-api-form" onSubmit={this.handleSubmit}>
+                <div>
+                    {/*<p>{this.props.id}</p>*/}
+                    <Select placeholder={this.state.selected} value={this.state.selected} onChange={this.handleChange} options={Kategoriat}>Kategoria</Select>
+                    <br></br>
+                    <TextArea field="title" id="textarea-title" initialValue={this.props.info.title}/>
+                    <br></br>
+                    <label htmlFor="textarea-tools">Työvälineet:</label>
+                    <br></br>
+                    <TextArea field="tools" id="textarea-tools" initialValue={this.props.info.tools}/>
+                    <br></br>
+                    <label htmlFor="textarea-steps">Työvaiheet:</label>
+                    <br></br>
+                    <TextArea field="steps" id="textarea-steps" initialValue={this.props.info.steps}/>
+                    <br></br>
+                    <Text field="rating" id="text-rating" initialValue={this.props.info.rating}/>
+                    <br></br>
+                    <Text field="picture" id="text-picture" initialValue={this.props.info.picture}/>
+                    <br></br>
+                    {/*TODO otsikko muokattavissa, on käyttäjän lisäämä uusi osio*/}
+                    <label htmlFor="textarea-newsection1">Muuta:</label>
+                    <br></br>
+                    <TextArea field="newsection1" id="textarea-newsection1" initialValue={this.props.info.newsection1}/>
+                    <br></br>
+                    <button type="submit">
                         Tallenna
-                        </button>
-                    </div>
-                </Form>
+                    </button>
+                </div>
+            </Form>
     )}
 }
 
@@ -226,7 +227,9 @@ class ToggleCollapse extends Component {
         this.state = {
             isOpened: false,
             button: '▼',
-            value:''
+            value:'',
+            category: '',
+            title: ''
         };
     }
 
@@ -271,18 +274,31 @@ class ToggleCollapse extends Component {
  * @returns {*}
  * @constructor
  */
-function Skill(props) {
-    let colour = getColour(props.skillInfo.category);
+class Skill extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOpened: false,
+            button: '▼',
+            value:'',
+            category: '',
+            title: ''
+        };
+    }
 
-    return (
-        <li className="Skill">
-            <div className="skillColorTag" style={{backgroundColor : colour}}>
-            </div>
-            <div className="skillContent">
-                <ToggleCollapse info={props.skillInfo} id={props.id}/>
-            </div>
-        </li>
-    );
+    render() {
+        let colour = getColour(this.props.skillInfo.category);
+
+        return (
+            <li className="Skill">
+                <div className="skillColorTag" style={{backgroundColor: colour}}>
+                </div>
+                <div className="skillContent">
+                    <ToggleCollapse info={this.props.skillInfo} id={this.props.id}/>
+                </div>
+            </li>
+        )
+    }
 }
 
 /**
@@ -321,9 +337,10 @@ class Posts extends Component {
     }
 
     componentDidMount(){
+        // TODO tämä Sannaan? Päivitysjuttu tänne?
         const postsRef = firebase.database().ref().child('posts/userid/');
 
-        postsRef.once('value', snap => {
+        postsRef.on('value', snap => {
             this.setState({
                 posts: snap.val()
             });
