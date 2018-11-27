@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import {Collapse} from 'react-collapse';
 import { Form, Text, Scope, TextArea, Option} from 'informed';
 import  {NewButton} from "../../Pauliina2";
+import Dialog from 'react-dialog'
+
 
 function LogOut () {
     return (
@@ -195,7 +197,7 @@ class PostForm extends Component {
             return(
                 <Form id="postForm" onSubmit={this.handleSubmit}>
                     <div>
-                        <p>{this.props.id}</p>
+                        {/*<p>{this.props.id}</p>*/}
                         <Select placeholder={this.state.selected} value={this.state.selected} onChange={this.handleChange} options={Kategoriat}>Kategoria</Select>
                         <br></br>
                         <TextArea field="title" id="textarea-title" initialValue={this.props.info.title}/>
@@ -225,6 +227,66 @@ class PostForm extends Component {
     )}
 }
 
+
+class DeletePostDialog extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isDialogOpen: false
+        }
+    }
+
+    openDialog = () => this.setState({ isDialogOpen: true });
+
+    handleClose = () => this.setState({ isDialogOpen: false });
+
+    confirmDelete = () => {
+        if(this.props.postid){
+            sanna.deletePost(this.props.postid);
+        } else {
+            console.log('Could not get post id.');
+        }
+        this.handleClose();
+    };
+
+    render() {
+        return (
+            <div className="container">
+                <button className="deletePost" type="button" onClick={this.openDialog}>Poista osaaminen</button>
+                {
+                    this.state.isDialogOpen &&
+                    <Dialog
+                        title="Haluatko varmasti poistaa tämän osaamisen?"
+                        modal={true}
+                        onClose={this.handleClose}
+                        buttons={
+                            [{
+                                text: "Kyllä",
+                                onClick: () => this.confirmDelete(),
+                                className: "dialogButton"
+                            }, {
+                                text: "Ei",
+                                onClick: () => this.handleClose(),
+                                className: "dialogButton"
+                            }]
+                        }>
+                        {/* <h1>Dialog Content</h1> */}
+
+                    </Dialog>
+                }
+            </div>
+        );
+    }
+}
+
+
+const deletePost = (post) => {
+
+
+    console.log(post);
+    sanna.deletePost(post)
+};
+
 /**
  * Osaamisen aukeaminen ja sulkeutuminen.
  */
@@ -234,8 +296,20 @@ class ToggleCollapse extends Component {
         this.state = {
             isOpened: false,
             button: '▼',
-            value:''
+            value:'',
+            id: ''
         };
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        const post = this.props.id;
+        console.log(post);
+
+        if (window.confirm('Haluatko varmasti poistaa tämän osaamisen?')){
+            sanna.deletePost(post);
+        }
+
     }
 
     render() {
@@ -266,6 +340,8 @@ class ToggleCollapse extends Component {
                 </div>
                 <Collapse isOpened={isOpened}>
                     <PostForm info={this.props.info} id={this.props.id}/>
+                    <br></br>
+                    <DeletePostDialog postid={this.props.id}/>
                 </Collapse>
             </div>
         );

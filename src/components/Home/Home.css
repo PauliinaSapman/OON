@@ -279,3 +279,19 @@ textarea {
     margin-top: 10px;
 }
 
+.deletePost {
+    background-color: white;
+    color: red;
+    border: 0;
+    cursor: pointer;
+}
+
+div.ui-dialog {
+    transform: translate(0) !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+.dialogButton {
+    margin: 1rem;
+}
