@@ -193,7 +193,7 @@ class PostForm extends Component {
         ];
 
             return(
-                <Form id="form-api-form" onSubmit={this.handleSubmit}>
+                <Form id="postForm" onSubmit={this.handleSubmit}>
                     <div>
                         <p>{this.props.id}</p>
                         <Select placeholder={this.state.selected} value={this.state.selected} onChange={this.handleChange} options={Kategoriat}>Kategoria</Select>
@@ -331,7 +331,7 @@ class Posts extends Component {
     componentDidMount(){
         const postsRef = firebase.database().ref().child('posts/userid/');
 
-        postsRef.once('value', snap => {
+        postsRef.on('value', snap => {
             this.setState({
                 posts: snap.val()
             });

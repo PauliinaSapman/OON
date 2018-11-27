@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Select from "react-select";
 import {ModalButton} from "react-modal-button";
 //import firebase from './firebase/firebase.js';
+import * as sanna from './sanna.js'
 
 // Komponentteihin lisätään myös "Lisää" -napin toiminnallisuus. Kun nappia painetaan avautuu/paljastuu uusi vaihe osaamisen
 // määrittelyyn !!HUOM!! mulla oli joku syy miks oon laittanu jokasen osan omaks komponentiks mut en just nyt muista sitä..
@@ -24,12 +25,39 @@ const Itsearvionti = [
     { label: 4, value: 4},
 ];
 
+let savedValues = {
+    category    : '',
+    title       : '',
+    rating      : '',
+    tools       : '',
+    steps       : '',
+    picture     : '',
+    newsection1 : ''
+};
+
+/**
+ * Tallennetaan lokaalisti muuttujaan savedValues kohtaan section arvo value
+ * @param section
+ * @param value
+ */
+const setValues = (section, value) => {
+    savedValues[section] = value;
+};
+
+
 //Kategorian valitseminen
 export class SelectCategory extends Component {
+
+    // kun Selectin arvo muuttuu, kutsutaan funktiota setValues, joka tallentaa arvon tilapäisesti
+    handleChange(selectedOption) {
+        const value = selectedOption.label;
+        setValues('category', value);
+    }
+
     render() {
         return (
             <div>
-                <Select placeholder = "Kategoria" options={Kategoriat}></Select>
+                <Select placeholder = "Kategoria" options={Kategoriat} onChange={this.handleChange}></Select>
             </div>
         );
     }
@@ -37,19 +65,25 @@ export class SelectCategory extends Component {
 
 //Osaamisen otsikko
 export class NewTitle extends Component {
+
+    // sama kuin selectissä, mutta tässä joudutaan ottaa event.target.value (Select on kirjasto, jossa se ei toimi)
+    handleChange(event) {
+        const value = event.target.value;
+        setValues('title', value);
+    }
+
     render () {
         return (
             <div>
                 <div className="NewTitleMain">
                     <div className="header">
                         <form /*onSubmit={}*/>
-                            <input placeholder="Otsikko">
+                            <input placeholder="Otsikko" onBlur={this.handleChange}>
                             </input>
                             <button className="title" type="submit">Lisää</button>
                         </form>
                     </div>
                 </div>
-
             </div>
         );
     }
@@ -57,10 +91,16 @@ export class NewTitle extends Component {
 
 //Itsearvionti
 export class SelfEvulation extends Component {
+
+    handleChange(selectedOption) {
+        const value = selectedOption.label;
+        setValues('rating', value);
+    }
+
     render() {
         return (
             <div>
-                <Select placeholder="Itsearvionti"  options={Itsearvionti}></Select>
+                <Select placeholder="Itsearvionti"  options={Itsearvionti} onChange={this.handleChange}></Select>
             </div>
         );
     }
@@ -68,13 +108,19 @@ export class SelfEvulation extends Component {
 
 //Työkalujen listaus
 export class AddTools extends Component {
+
+    handleChange(event) {
+        const value = event.target.value;
+        setValues('tools', value);
+    }
+
     render () {
         return (
             <div>
                 <div className="AddToolsMain">
                     <div className="header">
                         <form>
-                            <textarea placeholder="Tarvittavat työkalut">
+                            <textarea placeholder="Tarvittavat työkalut" onBlur={this.handleChange}>
                             </textarea>
                             <button className="tools" type="submit">Lisää</button>
                         </form>
@@ -87,13 +133,19 @@ export class AddTools extends Component {
 
 //Vaiheiden luettelu
 export class EnterSteps extends Component {
+
+    handleChange(event) {
+        const value = event.target.value;
+        setValues('steps', value);
+    }
+
     render () {
         return (
             <div>
                 <div className="EnterStepsMain">
                     <div className="header">
                         <form>
-                            <textarea placeholder="Työn vaiheet">
+                            <textarea placeholder="Työn vaiheet" onBlur={this.handleChange}>
                             </textarea>
                             <button className="steps" type="submit">Lisää</button>
                         </form>
@@ -106,15 +158,22 @@ export class EnterSteps extends Component {
 
 //Lisää oma osio (Tulossa)
 
+
 //Modaalin sisältö kasattuna
 export class NewButton extends Component {
+
+    // lähetetään kaikki tiedot savedValues eikä preventata defaultia, jotta savedValues nollautuu
+    handleSubmit() {
+        sanna.sendToDb(savedValues);
+    }
+
     render() {
         return (
             <ModalButton
                 buttonClassName="New"
                 windowClassName="window-container"
                 modal={({ closeModal }) => (
-                    <form className="NewModal" /*onSubmit={}*/>
+                    <form className="NewModal" onSubmit={this.handleSubmit}>
                         <div><SelectCategory/></div>
                         <div><NewTitle/></div>
                         <div><SelfEvulation/></div>

@@ -40,38 +40,27 @@ const deletePosts = () => {
 */
 
 export function sendToDb(values, number) {
-    // in case of new post
-    if(!number) {
-        number = postNumber + 1;
+    // jottei tulisi tyhjiä osaamisia
+    if(values.category) {
+        // in case of new post
+        if (!number) {
+            number = postNumber + 1;
+        }
+        // posts start at 1
+        if (postNumber === 0) {
+            number = 1;
+        }
+
+        console.log('post number ' + number);
+
+        firebase.database().ref('posts/userid/' + number + '').set({
+            category: values.category,
+            title: values.title,
+            rating: values.rating,
+            tools: values.tools,
+            steps: values.steps,
+            picture: values.picture,
+            newsection1: values.newsection1
+        });
     }
-    // posts start at 1
-    if(postNumber === 0){
-        number = 1;
-    }
-
-    console.log('post number ' + number);
-
-    firebase.database().ref('posts/userid/' + number + '').set({
-        category    : values.category,
-        title       : values.title,
-        rating      : values.rating,
-        tools       : values.tools,
-        steps       : values.steps,
-        picture     : values.picture,
-        newsection1 : values.newsection1
-    });
-}
-
-let values;
-
-export function getAllPosts() {
-    let testRef = firebase.database().ref('posts/userid');
-
-    firebase.database().ref('posts/userid').on('value', function(snapshot)
-    {
-        console.log(snapshot.val());
-        values = snapshot.val();
-        console.log(values);
-        return values;
-    });
 }
