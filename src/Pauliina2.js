@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import Select from "react-select";
 import {ModalButton} from "react-modal-button";
-import firebase from './firebase/firebase.js';
+//import firebase from './firebase/firebase.js';
 
-//myöhemmin noutaa suoraan databasesta valittavat arvot(kö?)
+// Komponentteihin lisätään myös "Lisää" -napin toiminnallisuus. Kun nappia painetaan avautuu/paljastuu uusi vaihe osaamisen
+// määrittelyyn !!HUOM!! mulla oli joku syy miks oon laittanu jokasen osan omaks komponentiks mut en just nyt muista sitä..
+
+//Valittavat Kategoriat
 const Kategoriat = [
     { label: "Autot", value: 1 },
     { label: "Tietotekniikka", value: 2 },
@@ -13,7 +16,7 @@ const Kategoriat = [
     { label: "Nikkarointi", value: 6 },
 ];
 
-//myöhemmin noutaa suoraan databasesta valittavat arvot/(kö?)
+//Valittavat arviot
 const Itsearvionti = [
     { label: 1, value: 1},
     { label: 2, value: 2},
@@ -21,7 +24,7 @@ const Itsearvionti = [
     { label: 4, value: 4},
 ];
 
-
+//Kategorian valitseminen
 export class SelectCategory extends Component {
     render() {
         return (
@@ -32,13 +35,14 @@ export class SelectCategory extends Component {
     }
 }
 
+//Osaamisen otsikko
 export class NewTitle extends Component {
     render () {
         return (
             <div>
                 <div className="NewTitleMain">
                     <div className="header">
-                        <form onSubmit={this.addItem}>
+                        <form /*onSubmit={}*/>
                             <input placeholder="Otsikko">
                             </input>
                             <button className="title" type="submit">Lisää</button>
@@ -49,9 +53,9 @@ export class NewTitle extends Component {
             </div>
         );
     }
-
 }
 
+//Itsearvionti
 export class SelfEvulation extends Component {
     render() {
         return (
@@ -59,11 +63,10 @@ export class SelfEvulation extends Component {
                 <Select placeholder="Itsearvionti"  options={Itsearvionti}></Select>
             </div>
         );
-
     }
 }
 
-
+//Työkalujen listaus
 export class AddTools extends Component {
     render () {
         return (
@@ -71,19 +74,18 @@ export class AddTools extends Component {
                 <div className="AddToolsMain">
                     <div className="header">
                         <form>
-                            <input type="text" placeholder="Tarvittavat työkalut">
-                            </input>
+                            <textarea placeholder="Tarvittavat työkalut">
+                            </textarea>
                             <button className="tools" type="submit">Lisää</button>
                         </form>
                     </div>
                 </div>
-
             </div>
         );
     }
-
 }
 
+//Vaiheiden luettelu
 export class EnterSteps extends Component {
     render () {
         return (
@@ -91,19 +93,20 @@ export class EnterSteps extends Component {
                 <div className="EnterStepsMain">
                     <div className="header">
                         <form>
-                            <input type="text" placeholder="Työn vaiheet">
-                            </input>
+                            <textarea placeholder="Työn vaiheet">
+                            </textarea>
                             <button className="steps" type="submit">Lisää</button>
                         </form>
                     </div>
                 </div>
-
             </div>
         );
     }
-
 }
 
+//Lisää oma osio (Tulossa)
+
+//Modaalin sisältö kasattuna
 export class NewButton extends Component {
     render() {
         return (
@@ -111,16 +114,18 @@ export class NewButton extends Component {
                 buttonClassName="New"
                 windowClassName="window-container"
                 modal={({ closeModal }) => (
-                    <form>
+                    <form className="NewModal" /*onSubmit={}*/>
                         <div><SelectCategory/></div>
                         <div><NewTitle/></div>
                         <div><SelfEvulation/></div>
                         <div><AddTools/></div>
                         <div><EnterSteps/></div>
-                        <button className="Modal" type="submit" onClick={closeModal}><h3>Tallenna</h3></button> //OnClick lähettää tietokantaan
+                        <div>
+                            <input type="file" className="AddPicture"></input>
+                        </div>
+                        <button className="Modal" type="submit" onClick={closeModal}><h3>Tallenna</h3></button>
                     </form>
-                )}
-            >
+                )}>
                 <h1> + Lisää uusi osaaminen </h1>
             </ModalButton>
         );

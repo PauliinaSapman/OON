@@ -187,7 +187,10 @@ textarea {
 }
 
 .window-container {
-    padding: 5%;
+    padding-top: 5%;
+    padding-bottom: 25%;
+    padding-right: 5%;
+    padding-left: 5%;
 }
 
 .Modal {
@@ -233,8 +236,7 @@ textarea {
 .AddToolsMain .header button {
     padding: 10px;
     font-size: 16px;
-    margin: 10px;
-    margin-right: 0px;
+    margin: 1px;
     background-color: #4B8CAB;
     color: #F0F0F0;
     border: 1px solid #3b5a78;
@@ -247,17 +249,17 @@ textarea {
     cursor: pointer;
 }
 
-.AddToolsMain .header input {
+.AddToolsMain .header textarea {
     padding: 10px;
     font-size: 16px;
     border: 2px solid #4B8CAB;
-    width: 80%;
+    margin-top: 10px;
 }
 
 .EnterStepsMain .header button {
     padding: 10px;
     font-size: 16px;
-    margin: 10px;
+    margin: 1px;
     margin-right: 0px;
     background-color: #4B8CAB;
     color: #F0F0F0;
@@ -270,13 +272,10 @@ textarea {
     cursor: pointer;
 }
 
-.EnterStepsMain .header input {
+.EnterStepsMain .header textarea {
     padding: 10px;
     font-size: 16px;
     border: 2px solid #4B8CAB;
-    width: 80%;
+    margin-top: 10px;
 }
 
-.EnterStepsMain .header input:hover {
-    cursor: pointer;
-}
