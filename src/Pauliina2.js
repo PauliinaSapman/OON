@@ -162,8 +162,9 @@ export class EnterSteps extends Component {
 //Modaalin sisältö kasattuna
 export class NewButton extends Component {
 
-    // lähetetään kaikki tiedot savedValues eikä preventata defaultia, jotta savedValues nollautuu
-    handleSubmit() {
+    // lähetetään kaikki tiedot savedValues
+    handleSubmit(e) {
+        e.preventDefault();
         sanna.sendToDb(savedValues);
     }
 
