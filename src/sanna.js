@@ -61,3 +61,11 @@ export function sendToDb(values, number) {
         newsection1 : values.newsection1
     });
 }
+
+export function askToDb(id) {
+    firebase.database().ref('shareToUser/userid2/'+id+'').set({
+        userid  : id,
+        message : '',
+        posts   : [1,2,3]
+    });
+}

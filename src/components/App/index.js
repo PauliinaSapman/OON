@@ -7,11 +7,11 @@ import {
 
 import HomePage from '../Home';
 import LandingPage from '../Landing';
+import HomeProPage from '../HomePro';
 
 import * as ROUTES from '../../constants/routes';
 
 import Landing from '../Landing/index.js'
-
 
 
 
@@ -23,6 +23,7 @@ function App () {
             <div>
                 <Route exact path={ROUTES.LANDING} component={LandingPage} />
                 <Route exact path={ROUTES.HOME} component={HomePage} />
+                <Route exact path={ROUTES.HOMEPRO} component={HomeProPage} />
             </div>
 
         </Router>

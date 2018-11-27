@@ -46,11 +46,24 @@ const sendToDb = () => {
     sanna.testDb();
 };
 
+const askToDb = () => {
+    sanna.askToDb(1);
+    sanna.askToDb(2);
+};
+
 // Nappi lähettää databaseen arvon
 function DbButton() {
     return (
         <a href="#" onClick={sendToDb}>
             Testinappi
+        </a>
+    );
+}
+
+function AskCommentButton() {
+    return (
+        <a href="#" onClick={askToDb}>
+            Pyydä kommenttia
         </a>
     );
 }
@@ -62,6 +75,7 @@ function Header() {
             <h1>OON</h1>
             <DbButton/>
             <LogOut/>
+            <AskCommentButton/>
         </div>
     );
 }
@@ -314,12 +328,14 @@ function SkillList(props) {
     if(Object.keys(postArray).length === 0 && postArray.constructor === Object){
         postArray = [''];
     }
-
+console.log(postArray);
     return (
         <ul className="SkillList">
             {/* Looppaa kaikki parametrina annetun listan alkiot ja tekee jokaisesta osaamisen(Skill) */}
-            {postArray.map((r, post) => {
-                return <Skill key={post} skillInfo={r} id={post}/>
+            {postArray.map((content, id) => {
+                console.log(id);
+                console.log(content);
+                return <Skill key={id} skillInfo={content} id={id}/>
             })}
         </ul>
     );
@@ -337,10 +353,10 @@ class Posts extends Component {
     }
 
     componentDidMount(){
-        // TODO tämä Sannaan? Päivitysjuttu tänne?
         const postsRef = firebase.database().ref().child('posts/userid/');
 
         postsRef.on('value', snap => {
+            console.log(snap.val());
             this.setState({
                 posts: snap.val()
             });
