@@ -187,7 +187,7 @@ textarea {
 }
 
 .window-container {
-    padding: 50px;
+    padding: 5%;
 }
 
 .Modal {
@@ -227,7 +227,7 @@ textarea {
     padding: 10px;
     font-size: 16px;
     border: 2px solid #4B8CAB;
-    width: 165px;
+    width: 80%;
 }
 
 .AddToolsMain .header button {
@@ -239,6 +239,7 @@ textarea {
     color: #F0F0F0;
     border: 1px solid #3b5a78;
     border-radius: 8px;
+    position: static;
 }
 
 .AddToolsMain .header button:hover {
@@ -250,7 +251,7 @@ textarea {
     padding: 10px;
     font-size: 16px;
     border: 2px solid #4B8CAB;
-    width: 165px;
+    width: 80%;
 }
 
 .EnterStepsMain .header button {
@@ -273,7 +274,7 @@ textarea {
     padding: 10px;
     font-size: 16px;
     border: 2px solid #4B8CAB;
-    width: 165px;
+    width: 80%;
 }
 
 .EnterStepsMain .header input:hover {

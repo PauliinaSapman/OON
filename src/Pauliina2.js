@@ -71,7 +71,7 @@ export class AddTools extends Component {
                 <div className="AddToolsMain">
                     <div className="header">
                         <form>
-                            <input placeholder="Tarvittavat työkalut">
+                            <input type="text" placeholder="Tarvittavat työkalut">
                             </input>
                             <button className="tools" type="submit">Lisää</button>
                         </form>
@@ -91,7 +91,7 @@ export class EnterSteps extends Component {
                 <div className="EnterStepsMain">
                     <div className="header">
                         <form>
-                            <input placeholder="Työn vaiheet">
+                            <input type="text" placeholder="Työn vaiheet">
                             </input>
                             <button className="steps" type="submit">Lisää</button>
                         </form>
