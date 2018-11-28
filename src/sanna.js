@@ -3,6 +3,9 @@ import firebase from './firebase/firebase.js';
 let number = 0;
 let postNumber;
 
+/**
+ * Testikäyttöön
+ */
 function getFromDb () {
     const testRef = firebase.database().ref('test/testnumber');
     testRef.on('value', function (snapshot) {
@@ -10,7 +13,9 @@ function getFromDb () {
     });
 }
 
-
+/**
+ * Testikäyttöön
+ */
 export function testDb()  {
     number += 1;
 
@@ -21,51 +26,64 @@ export function testDb()  {
     getFromDb();
 }
 
-
+/**
+ * Haetaan viimeisimmän osaamisen numero
+ */
 const getPostNumber = () => {
     const testRef = firebase.database().ref('posts/userid');
     testRef.on('value', function(snapshot)
     {
         postNumber = snapshot.numChildren();
+
+        // loopataan läpi postaukset ja annetaan viimeisimmän arvo postNumberille
+        for(let i = 0; i < snapshot.numChildren(); i++) {
+            console.log(Object.keys(snapshot.val())[i]);
+            postNumber = Object.keys(snapshot.val())[i];
+        }
+
+        console.log(postNumber);
     });
 };
 
 getPostNumber();
 
-/*
-const deletePosts = () => {
-    const testRef = firebase.database().ref('posts/userid/undefined');
+/**
+ * Poistetaan osaaminen jolla on id post
+ * @param post
+ */
+export function deletePost (post) {
+    const testRef = firebase.database().ref('posts/userid/'+post+'');
     testRef.remove();
-};
-*/
-
-export function sendToDb(values, number) {
-    // in case of new post
-    if(!number) {
-        number = postNumber + 1;
-    }
-    // posts start at 1
-    if(postNumber === 0){
-        number = 1;
-    }
-
-    console.log('post number ' + number);
-
-    firebase.database().ref('posts/userid/' + number + '').set({
-        category    : values.category,
-        title       : values.title,
-        rating      : values.rating,
-        tools       : values.tools,
-        steps       : values.steps,
-        picture     : values.picture,
-        newsection1 : values.newsection1
-    });
+    console.log(testRef);
 }
 
-export function askToDb(id) {
-    firebase.database().ref('shareToUser/userid2/'+id+'').set({
-        userid  : id,
-        message : '',
-        posts   : [1,2,3]
-    });
+/**
+ * Lähetetään databaseen kohtaan number arvot values
+ * @param values
+ * @param number
+ */
+export function sendToDb(values, number) {
+    // jottei tulisi tyhjiä osaamisia
+    if(values.category) {
+        // in case of new post
+        if (!number) {
+            number = Number(postNumber) + 1;
+        }
+        // posts start at 1
+        if (postNumber === 0) {
+            number = 1;
+        }
+
+        console.log('post number ' + number);
+
+        firebase.database().ref('posts/userid/' + number + '').set({
+            category: values.category,
+            title: values.title,
+            rating: values.rating,
+            tools: values.tools,
+            steps: values.steps,
+            picture: values.picture,
+            newsection1: values.newsection1
+        });
+    }
 }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import './Home.css';
-import { ModalButton } from "react-modal-button";
+//import { ModalButton } from "react-modal-button";
 import Select from "react-select";
 import firebase from '../../firebase/firebase.js';
 import * as sanna from '../../sanna.js';
@@ -9,6 +9,9 @@ import * as ROUTES from "../../constants/routes";
 import { Link } from 'react-router-dom';
 import {Collapse} from 'react-collapse';
 import { Form, Text, Scope, TextArea, Option} from 'informed';
+import  {NewButton} from "../../Pauliina2";
+import Dialog from 'react-dialog'
+
 
 function LogOut () {
     return (
@@ -46,24 +49,11 @@ const sendToDb = () => {
     sanna.testDb();
 };
 
-const askToDb = () => {
-    sanna.askToDb(1);
-    sanna.askToDb(2);
-};
-
 // Nappi lähettää databaseen arvon
 function DbButton() {
     return (
         <a href="#" onClick={sendToDb}>
             Testinappi
-        </a>
-    );
-}
-
-function AskCommentButton() {
-    return (
-        <a href="#" onClick={askToDb}>
-            Pyydä kommenttia
         </a>
     );
 }
@@ -75,12 +65,12 @@ function Header() {
             <h1>OON</h1>
             <DbButton/>
             <LogOut/>
-            <AskCommentButton/>
         </div>
     );
 }
 
 //Uusi osaaminen nappula ja modaalin sisältöä
+/*
 function New() {
     const Kategoriat = [
         { label: "Autot", value: 1 },
@@ -91,21 +81,27 @@ function New() {
         { label: "Nikkarointi", value: 6 },
     ];
     return (
-        <ModalButton
+        <div>
+            <NewButton/>
+        </div>
+       /* <ModalButton
             buttonClassName="New"
             windowClassName="window-container"
             modal={({ closeModal }) => (
-                <div className="Modal">
-                    <button className="tallenna" onClick={closeModal}><h3>Tallenna</h3></button>
-                    <Select options={Kategoriat}>Valitse kategoria</Select>
-                    <button className="ominaisuus"><h4>Uusi ominaisuus</h4></button>
+                <div>
+                    <div><SelectCategory/></div>
+                    <div><NewTitle/></div>
+                    <div><SelfEvulation/></div>
+                    <div><AddTools/></div>
+                    <div><EnterSteps/></div>
+                    <button className="Modal" onClick={closeModal}><h3>Tallenna</h3></button> //OnClick lähettää tietokantaan
                 </div>
             )}
         >
             <h1> + Lisää uusi osaaminen </h1>
         </ModalButton>
     );
-}
+}*/
 
 //TODO onko tää hyvä tehdä täällä frontissa?
 /**
@@ -178,7 +174,6 @@ class PostForm extends Component {
         this.setState({ selected: option });
     };
 
-
     // Asetetaan kategorian arvo placeholderiksi selectiin, sekä sen arvoksi.
     componentDidMount() {
         let category = '';
@@ -200,7 +195,7 @@ class PostForm extends Component {
         ];
 
         return(
-            <Form id="form-api-form" onSubmit={this.handleSubmit}>
+            <Form id="postForm" onSubmit={this.handleSubmit}>
                 <div>
                     {/*<p>{this.props.id}</p>*/}
                     <Select placeholder={this.state.selected} value={this.state.selected} onChange={this.handleChange} options={Kategoriat}>Kategoria</Select>
@@ -229,8 +224,68 @@ class PostForm extends Component {
                     </button>
                 </div>
             </Form>
-    )}
+        )}
 }
+
+
+class DeletePostDialog extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isDialogOpen: false
+        }
+    }
+
+    openDialog = () => this.setState({ isDialogOpen: true });
+
+    handleClose = () => this.setState({ isDialogOpen: false });
+
+    confirmDelete = () => {
+        if(this.props.postid){
+            sanna.deletePost(this.props.postid);
+        } else {
+            console.log('Could not get post id.');
+        }
+        this.handleClose();
+    };
+
+    render() {
+        return (
+            <div className="container">
+                <button className="deletePost" type="button" onClick={this.openDialog}>Poista osaaminen</button>
+                {
+                    this.state.isDialogOpen &&
+                    <Dialog
+                        title="Haluatko varmasti poistaa tämän osaamisen?"
+                        modal={true}
+                        onClose={this.handleClose}
+                        buttons={
+                            [{
+                                text: "Kyllä",
+                                onClick: () => this.confirmDelete(),
+                                className: "dialogButton"
+                            }, {
+                                text: "Ei",
+                                onClick: () => this.handleClose(),
+                                className: "dialogButton"
+                            }]
+                        }>
+                        {/* <h1>Dialog Content</h1> */}
+
+                    </Dialog>
+                }
+            </div>
+        );
+    }
+}
+
+
+const deletePost = (post) => {
+
+
+    console.log(post);
+    sanna.deletePost(post)
+};
 
 /**
  * Osaamisen aukeaminen ja sulkeutuminen.
@@ -242,9 +297,19 @@ class ToggleCollapse extends Component {
             isOpened: false,
             button: '▼',
             value:'',
-            category: '',
-            title: ''
+            id: ''
         };
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        const post = this.props.id;
+        console.log(post);
+
+        if (window.confirm('Haluatko varmasti poistaa tämän osaamisen?')){
+            sanna.deletePost(post);
+        }
+
     }
 
     render() {
@@ -275,6 +340,8 @@ class ToggleCollapse extends Component {
                 </div>
                 <Collapse isOpened={isOpened}>
                     <PostForm info={this.props.info} id={this.props.id}/>
+                    <br></br>
+                    <DeletePostDialog postid={this.props.id}/>
                 </Collapse>
             </div>
         );
@@ -288,31 +355,18 @@ class ToggleCollapse extends Component {
  * @returns {*}
  * @constructor
  */
-class Skill extends Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            isOpened: false,
-            button: '▼',
-            value:'',
-            category: '',
-            title: ''
-        };
-    }
+function Skill(props) {
+    let colour = getColour(props.skillInfo.category);
 
-    render() {
-        let colour = getColour(this.props.skillInfo.category);
-
-        return (
-            <li className="Skill">
-                <div className="skillColorTag" style={{backgroundColor: colour}}>
-                </div>
-                <div className="skillContent">
-                    <ToggleCollapse info={this.props.skillInfo} id={this.props.id}/>
-                </div>
-            </li>
-        )
-    }
+    return (
+        <li className="Skill">
+            <div className="skillColorTag" style={{backgroundColor : colour}}>
+            </div>
+            <div className="skillContent">
+                <ToggleCollapse info={props.skillInfo} id={props.id}/>
+            </div>
+        </li>
+    );
 }
 
 /**
@@ -328,14 +382,12 @@ function SkillList(props) {
     if(Object.keys(postArray).length === 0 && postArray.constructor === Object){
         postArray = [''];
     }
-console.log(postArray);
+
     return (
         <ul className="SkillList">
             {/* Looppaa kaikki parametrina annetun listan alkiot ja tekee jokaisesta osaamisen(Skill) */}
-            {postArray.map((content, id) => {
-                console.log(id);
-                console.log(content);
-                return <Skill key={id} skillInfo={content} id={id}/>
+            {postArray.map((r, post) => {
+                return <Skill key={post} skillInfo={r} id={post}/>
             })}
         </ul>
     );
@@ -356,7 +408,6 @@ class Posts extends Component {
         const postsRef = firebase.database().ref().child('posts/userid/');
 
         postsRef.on('value', snap => {
-            console.log(snap.val());
             this.setState({
                 posts: snap.val()
             });
@@ -384,7 +435,7 @@ function Home() {
     return (
         <div className="App">
             <Header/>
-            <New/>
+            <NewButton/>
             <Main/>
         </div>
     );
