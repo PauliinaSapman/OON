@@ -124,7 +124,7 @@ class Users extends Component {
 
     componentDidMount(){
         // TODO tämä Sannaan? Päivitysjuttu tänne?
-        const postsRef = firebase.database().ref().child('shareToUser/userid2');
+        const postsRef = firebase.database().ref().child('shareToUser/userid2/');
 
         postsRef.on('value', snap => {
             console.log(snap.val());

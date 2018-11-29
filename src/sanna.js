@@ -37,11 +37,11 @@ const getPostNumber = () => {
 
         // loopataan läpi postaukset ja annetaan viimeisimmän arvo postNumberille
         for(let i = 0; i < snapshot.numChildren(); i++) {
-            console.log(Object.keys(snapshot.val())[i]);
+         //  console.log(Object.keys(snapshot.val())[i]);
             postNumber = Object.keys(snapshot.val())[i];
         }
 
-        console.log(postNumber);
+       // console.log(postNumber);
     });
 };
 
@@ -86,4 +86,29 @@ export function sendToDb(values, number) {
             newsection1: values.newsection1
         });
     }
+}
+
+/**
+ * Lähetetään databaseen tieto keneltä, kenelle ja mitkä osaamiset jaetaan
+ * @param to
+ * @param from
+ * @param posts
+ */
+export function askComment(to, from, posts, message) {
+    console.log(to);
+    console.log(from);
+    console.log(posts);
+    console.log(message);
+
+    firebase.database().ref('shareToUser/'+to+'/'+from+'').set({
+        userid  : from,
+        message : message,
+        posts   : posts
+    });
+    firebase.database().ref('shareToUser/'+to+'/testuser').set({
+        userid  : from,
+        message : message,
+        posts   : posts
+    });
+
 }

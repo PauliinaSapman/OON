@@ -135,6 +135,7 @@ textarea {
 .Header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 1rem;
     background-color: #4B8CAB;
     box-shadow: 0px 0px 33px -3px rgba(0,0,0,0.75);
@@ -294,4 +295,21 @@ div.ui-dialog {
 
 .dialogButton {
     margin: 1rem;
+}
+
+.shareButton {
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 8px;
+}
+
+.flexBetween {
+    display: flex;
+    justify-content: space-between;
+}
+
+.SkillTitleList{
+    overflow: auto;
+    height: 25rem;
 }

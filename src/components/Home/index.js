@@ -9,8 +9,9 @@ import * as ROUTES from "../../constants/routes";
 import { Link } from 'react-router-dom';
 import {Collapse} from 'react-collapse';
 import { Form, Text, Scope, TextArea, Option} from 'informed';
-import  {NewButton} from "../../Pauliina2";
+import {AddTools, EnterSteps, NewButton, NewTitle, SelectCategory, SelfEvulation} from "../../Pauliina2";
 import Dialog from 'react-dialog'
+import {ModalButton} from "react-modal-button";
 
 
 function LogOut () {
@@ -49,6 +50,21 @@ const sendToDb = () => {
     sanna.testDb();
 };
 
+const askToDb = () => {
+   // sanna.askToDb(1);
+   // sanna.askToDb(2);
+};
+
+/*
+function AskCommentButton() {
+    return (
+        <a href="#" onClick={askToDb}>
+            Pyydä kommenttia
+        </a>
+    );
+}
+*/
+
 // Nappi lähettää databaseen arvon
 function DbButton() {
     return (
@@ -58,6 +74,160 @@ function DbButton() {
     );
 }
 
+class PostTitles extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            posts: {}
+        }
+    }
+
+    componentDidMount(){
+        const postsRef = firebase.database().ref().child('posts/userid/');
+
+        postsRef.on('value', snap => {
+            this.setState({
+                posts: snap.val()
+            });
+        });
+    }
+
+    render() {
+        return(
+            <SkillList posts={this.state.posts} justTitle='true'/>
+        );
+    }
+}
+
+class ShareButton extends Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            message : '',
+            checkedValues: [],
+            selected:'',
+            content:  <div>
+                <h2>Mitä haluat jakaa?</h2>
+                <PostTitles/>
+                <button>Tallenna PDF</button>
+                <button>Hanki jaettava linkki</button>
+                <button onClick={()=>{console.log(this.checked()); this.changeContent('askComment')}}>Pyydä kommenttia</button>
+            </div>
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.send = this.send.bind(this);
+       // this.onChange = this.onChange.bind(this);
+    }
+
+    // lähetetään kaikki tiedot savedValues
+    handleSubmit(e) {
+       // e.preventDefault();
+        this.changeContent('auto');
+        //sanna.sendToDb(savedValues);
+    }
+
+    handleChange = (selectedOption) => {
+        const option = selectedOption.value;
+        console.log(option);
+        this.setState({ selected: option });
+    };
+
+
+    checked = () => {
+        if(titleArray.length === 0){
+            return checks;
+        }
+        return titleArray;
+    };
+
+    send = () => {
+        let to = this.state.selected;
+        let message = this.state.message;
+
+        if(this.state.selected==='') {
+            alert('Valitse henkilö, jolle haluat jakaa osaamisesi.');
+        }
+        else {
+            if (titleArray.length === 0) {
+                sanna.askComment(to, 'userid', checks, message);
+            } else {
+                sanna.askComment(to, 'userid', titleArray, message);
+            }
+        }
+    };
+
+    setMessage = (event) => {
+        this.setState({message: event.target.value});
+        console.log(event.target.value);
+    };
+
+    changeContent(content){
+
+        const people = [
+            {value: 'userid2', label: 'Maisa Auttaja'}
+        ];
+
+        if(titleArray.length===0 && checks.length===0){
+            alert('Valitse, mitä haluat jakaa.');
+        } else {
+            switch (content) {
+                case 'auto':
+                    this.setState({
+                        content: <div>
+                            <h2>Mitä haluat jakaa?</h2>
+                            <PostTitles/>
+                            <button>Tallenna PDF</button>
+                            <button>Hanki jaettava linkki</button>
+                            <button onClick={() => {
+                                console.log(this.checked());
+                                this.changeContent('askComment')
+                            }}>Pyydä kommenttia
+                            </button>
+                        </div>
+                    });
+                    break;
+                case 'askComment':
+                    this.setState({
+                        content: <div>
+                            <h2>Kenelle haluat jakaa?</h2>
+                            <Select placeholder='Valitse henkilö...' onChange={this.handleChange}
+                                    options={people}></Select>
+                            <textarea placeholder="Kirjoita viesti..." onBlur={this.setMessage}></textarea>
+                            <button onClick={() => {
+                                this.send();
+                            }}>Lähetä
+                            </button>
+                            <button onClick={() => {
+                                this.changeContent('auto');
+                                checks = [];
+                                titleArray = [];
+                            }}>Peruuta
+                            </button>
+                        </div>
+                    });
+                    break;
+            }
+        }
+    }
+
+    render() {
+        return (
+            <ModalButton
+                buttonClassName="shareButton"
+                windowClassName="window-container"
+                modal={({ closeModal }) => (
+                    <Form id="sendForm" >
+                        {this.state.content}
+                        {/*<button className="Modal" type="submit" onClick={closeModal}><h3>Sulje</h3></button>*/}
+                    </Form>
+                )}>
+                <h2> Jaa ↷</h2>
+            </ModalButton>
+        );
+    }
+}
+
 // Sivun yläpalkki.
 function Header() {
     return (
@@ -65,45 +235,12 @@ function Header() {
             <h1>OON</h1>
             <DbButton/>
             <LogOut/>
+            <ShareButton/>
         </div>
     );
 }
 
-//Uusi osaaminen nappula ja modaalin sisältöä
-/*
-function New() {
-    const Kategoriat = [
-        { label: "Autot", value: 1 },
-        { label: "Tietotekniikka", value: 2 },
-        { label: "Musiikki", value: 3 },
-        { label: "Ruuanlaitto", value: 4 },
-        { label: "Talotyöt", value: 5 },
-        { label: "Nikkarointi", value: 6 },
-    ];
-    return (
-        <div>
-            <NewButton/>
-        </div>
-       /* <ModalButton
-            buttonClassName="New"
-            windowClassName="window-container"
-            modal={({ closeModal }) => (
-                <div>
-                    <div><SelectCategory/></div>
-                    <div><NewTitle/></div>
-                    <div><SelfEvulation/></div>
-                    <div><AddTools/></div>
-                    <div><EnterSteps/></div>
-                    <button className="Modal" onClick={closeModal}><h3>Tallenna</h3></button> //OnClick lähettää tietokantaan
-                </div>
-            )}
-        >
-            <h1> + Lisää uusi osaaminen </h1>
-        </ModalButton>
-    );
-}*/
 
-//TODO onko tää hyvä tehdä täällä frontissa?
 /**
  * Valitaan väri kategorian mukaan.
  * @param category
@@ -227,7 +364,6 @@ class PostForm extends Component {
         )}
 }
 
-
 class DeletePostDialog extends Component {
     constructor(props) {
         super(props);
@@ -237,7 +373,6 @@ class DeletePostDialog extends Component {
     }
 
     openDialog = () => this.setState({ isDialogOpen: true });
-
     handleClose = () => this.setState({ isDialogOpen: false });
 
     confirmDelete = () => {
@@ -281,8 +416,6 @@ class DeletePostDialog extends Component {
 
 
 const deletePost = (post) => {
-
-
     console.log(post);
     sanna.deletePost(post)
 };
@@ -348,6 +481,60 @@ class ToggleCollapse extends Component {
     }
 }
 
+let checks = [];
+let titleArray = [];
+
+function getChecks(id) {
+    checks[checks.length] = id;
+    console.log(checks);
+}
+
+function handleAllChecked(postArray) {
+   // console.log(postArray);
+
+    if(titleArray.length === 0) {
+        {
+            postArray.map((r, post) => {
+                titleArray[titleArray.length] = post;
+            })
+        }
+    } else{
+        titleArray = [];
+    }
+   // console.log(titleArray);
+}
+
+class Checkbox extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isChecked: false,
+        };
+    }
+
+    toggleChange = () => {
+        this.setState({
+            isChecked: !this.state.isChecked,
+        });
+
+    };
+
+    addChecked = () => {
+        getChecks(this.props.id);
+    };
+
+    render() {
+        return (
+            <label>
+                <input type="checkbox"
+                       checked={this.state.isChecked}
+                       onChange={this.toggleChange}
+                       onClick={this.addChecked}
+                />
+            </label>
+        );
+    }
+}
 
 /**
  * Yksittäinen osaaminen listassa.
@@ -358,6 +545,17 @@ class ToggleCollapse extends Component {
 function Skill(props) {
     let colour = getColour(props.skillInfo.category);
 
+    if(props.justTitle){
+        return (
+            <li>
+                <div className="flexBetween">
+                    <p>{props.skillInfo.title}</p>
+                    {/*} <input type="checkbox" id="myCheck" checked={checked} onClick={()=>{getChecks(props.id)}}></input>*/}
+                    <Checkbox id={props.id}/>
+                </div>
+            </li>
+        );
+    }
     return (
         <li className="Skill">
             <div className="skillColorTag" style={{backgroundColor : colour}}>
@@ -368,6 +566,8 @@ function Skill(props) {
         </li>
     );
 }
+
+
 
 /**
  * Osaamisia sisältävä lista.
@@ -383,6 +583,23 @@ function SkillList(props) {
         postArray = [''];
     }
 
+    // Haetaan vaik postauksien otsikko, menee jakomodaaliin
+    if(props.justTitle){
+        return (
+            <ul className="SkillTitleList">
+                <li>
+                    <div className="flexBetween">
+                        <p>Kaikki</p>
+                        {/*<input type="checkbox" id="myCheck" onClick={()=>{checkAll()}}></input>*/}
+                        <input type="checkbox" onClick={()=>{handleAllChecked(postArray)}}/>
+                    </div>
+                </li>
+                {postArray.map((r, post) => {
+                    return <Skill key={post} skillInfo={r} id={post} justTitle='true'/>
+                })}
+            </ul>
+        );
+    }
     return (
         <ul className="SkillList">
             {/* Looppaa kaikki parametrina annetun listan alkiot ja tekee jokaisesta osaamisen(Skill) */}
