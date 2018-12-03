@@ -47,6 +47,7 @@ const getPostNumber = () => {
 
 getPostNumber();
 
+
 /**
  * Poistetaan osaaminen jolla on id post
  * @param post
@@ -54,7 +55,6 @@ getPostNumber();
 export function deletePost (post) {
     const testRef = firebase.database().ref('posts/userid/'+post+'');
     testRef.remove();
-    console.log(testRef);
 }
 
 /**
@@ -73,8 +73,6 @@ export function sendToDb(values, number) {
         if (postNumber === 0) {
             number = 1;
         }
-
-        console.log('post number ' + number);
 
         firebase.database().ref('posts/userid/' + number + '').set({
             category: values.category,
@@ -95,20 +93,16 @@ export function sendToDb(values, number) {
  * @param posts
  */
 export function askComment(to, from, posts, message) {
-    console.log(to);
-    console.log(from);
-    console.log(posts);
-    console.log(message);
-
     firebase.database().ref('shareToUser/'+to+'/'+from+'').set({
         userid  : from,
         message : message,
-        posts   : posts
+        posts   : posts,
+        seen    : 'false'
     });
     firebase.database().ref('shareToUser/'+to+'/testuser').set({
         userid  : 'testuser',
         message : message,
-        posts   : posts
+        posts   : posts,
+        seen    : 'false'
     });
-
 }

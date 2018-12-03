@@ -124,3 +124,12 @@ textarea {
     width: 95% !important;
     padding: 0.5rem;
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+.selectUserButton {
+    width: 100%;
+    height: 100%;
+}

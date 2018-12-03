@@ -23,7 +23,7 @@ function LogOut () {
 }
 
 
-// Lähetetään osaaminen
+// Lähetetään esimerkkiosaaminen, testikäyttöön
 const sendToDb = () => {
     // TODO haetaan arvot lomakkeesta
     const values = {
@@ -50,22 +50,7 @@ const sendToDb = () => {
     sanna.testDb();
 };
 
-const askToDb = () => {
-   // sanna.askToDb(1);
-   // sanna.askToDb(2);
-};
-
-/*
-function AskCommentButton() {
-    return (
-        <a href="#" onClick={askToDb}>
-            Pyydä kommenttia
-        </a>
-    );
-}
-*/
-
-// Nappi lähettää databaseen arvon
+// Nappi lähettää databaseen testiarvon.
 function DbButton() {
     return (
         <a href="#" onClick={sendToDb}>
@@ -100,7 +85,6 @@ class PostTitles extends Component {
 }
 
 class ShareButton extends Component {
-
     constructor(props){
         super(props);
         this.state = {
@@ -112,24 +96,20 @@ class ShareButton extends Component {
                 <PostTitles/>
                 <button>Tallenna PDF</button>
                 <button>Hanki jaettava linkki</button>
-                <button onClick={()=>{console.log(this.checked()); this.changeContent('askComment')}}>Pyydä kommenttia</button>
+                <button onClick={()=>{this.changeContent('askComment')}}>Pyydä kommenttia</button>
             </div>
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.send = this.send.bind(this);
-       // this.onChange = this.onChange.bind(this);
     }
 
     // lähetetään kaikki tiedot savedValues
-    handleSubmit(e) {
-       // e.preventDefault();
+    handleSubmit() {
         this.changeContent('auto');
-        //sanna.sendToDb(savedValues);
     }
 
     handleChange = (selectedOption) => {
         const option = selectedOption.value;
-        console.log(option);
         this.setState({ selected: option });
     };
 
@@ -149,9 +129,9 @@ class ShareButton extends Component {
             alert('Valitse henkilö, jolle haluat jakaa osaamisesi.');
         }
         else {
-            if (titleArray.length === 0) {
+            if (titleArray.length === 0) { // jos käyttäjä on valinnut osan
                 sanna.askComment(to, 'userid', checks, message);
-            } else {
+            } else { // jos käyttäjä on valinnut kaikki
                 sanna.askComment(to, 'userid', titleArray, message);
             }
         }
@@ -159,11 +139,9 @@ class ShareButton extends Component {
 
     setMessage = (event) => {
         this.setState({message: event.target.value});
-        console.log(event.target.value);
     };
 
     changeContent(content){
-
         const people = [
             {value: 'userid2', label: 'Maisa Auttaja'}
         ];
@@ -180,7 +158,6 @@ class ShareButton extends Component {
                             <button>Tallenna PDF</button>
                             <button>Hanki jaettava linkki</button>
                             <button onClick={() => {
-                                console.log(this.checked());
                                 this.changeContent('askComment')
                             }}>Pyydä kommenttia
                             </button>
@@ -211,6 +188,9 @@ class ShareButton extends Component {
         }
     }
 
+    // TODO modaalin sulkeminen
+    // TODO kaikki checkboxit checkautuvat kun valitaan 'Kaikki'
+
     render() {
         return (
             <ModalButton
@@ -240,13 +220,12 @@ function Header() {
     );
 }
 
-
 /**
  * Valitaan väri kategorian mukaan.
  * @param category
  * @returns {string}
  */
-function getColour(category) {
+export function getColour(category) {
     let colour = '#0000';
     switch (category) {
         case 'Autot':
@@ -271,8 +250,6 @@ function getColour(category) {
     return colour;
 }
 
-// TODO tarkistetaan, että tietokannassa on haluttavat tiedot ettei mene rikki kun jätetään jokin osio pois osaamisesta!
-// TODO Poistetaan osio jos se jätetään tyhjäksi?
 // TODO CSS lomakkeelle
 // TODO Kuvan toteuttaminen ?
 // TODO Ratingin toteuttaminen ?
@@ -365,6 +342,9 @@ class PostForm extends Component {
         )}
 }
 
+/**
+ * Dialogi, jolla varmistetaan osaamisen poistaminen.
+ */
 class DeletePostDialog extends Component {
     constructor(props) {
         super(props);
@@ -407,7 +387,6 @@ class DeletePostDialog extends Component {
                             }]
                         }>
                         {/* <h1>Dialog Content</h1> */}
-
                     </Dialog>
                 }
             </div>
@@ -415,11 +394,6 @@ class DeletePostDialog extends Component {
     }
 }
 
-
-const deletePost = (post) => {
-    console.log(post);
-    sanna.deletePost(post)
-};
 
 /**
  * Osaamisen aukeaminen ja sulkeutuminen.
@@ -438,12 +412,11 @@ class ToggleCollapse extends Component {
 
     handleClick() {
         const post = this.props.id;
-        console.log(post);
+        const userid = this.props.userid;
 
         if (window.confirm('Haluatko varmasti poistaa tämän osaamisen?')){
-            sanna.deletePost(post);
+            sanna.deletePost(post, userid);
         }
-
     }
 
     render() {
@@ -452,7 +425,7 @@ class ToggleCollapse extends Component {
         return (
             <div>
                 <div>
-                    <div className="postTop" onClick={() => {
+                    <div className="postTop clickable" onClick={() => {
                         if (this.state.isOpened === true) {
                             this.setState({isOpened: false});
                             this.setState({button: '▼'});
@@ -487,12 +460,9 @@ let titleArray = [];
 
 function getChecks(id) {
     checks[checks.length] = id;
-    console.log(checks);
 }
 
 function handleAllChecked(postArray) {
-   // console.log(postArray);
-
     if(titleArray.length === 0) {
         {
             postArray.map((r, post) => {
@@ -502,7 +472,6 @@ function handleAllChecked(postArray) {
     } else{
         titleArray = [];
     }
-   // console.log(titleArray);
 }
 
 class Checkbox extends Component {
@@ -562,13 +531,11 @@ function Skill(props) {
             <div className="skillColorTag" style={{backgroundColor : colour}}>
             </div>
             <div className="skillContent">
-                <ToggleCollapse info={props.skillInfo} id={props.id}/>
+                <ToggleCollapse info={props.skillInfo} id={props.id} userid={props.userid}/>
             </div>
         </li>
     );
 }
-
-
 
 /**
  * Osaamisia sisältävä lista.
@@ -584,7 +551,7 @@ function SkillList(props) {
         postArray = [''];
     }
 
-    // Haetaan vaik postauksien otsikko, menee jakomodaaliin
+    // Haetaan vain postauksien otsikko, menee jakomodaaliin
     if(props.justTitle){
         return (
             <ul className="SkillTitleList">
@@ -596,7 +563,7 @@ function SkillList(props) {
                     </div>
                 </li>
                 {postArray.map((r, post) => {
-                    return <Skill key={post} skillInfo={r} id={post} justTitle='true'/>
+                    return <Skill key={post} skillInfo={r} id={post} justTitle='true' userid={props.userid}/>
                 })}
             </ul>
         );
@@ -605,7 +572,7 @@ function SkillList(props) {
         <ul className="SkillList">
             {/* Looppaa kaikki parametrina annetun listan alkiot ja tekee jokaisesta osaamisen(Skill) */}
             {postArray.map((r, post) => {
-                return <Skill key={post} skillInfo={r} id={post}/>
+                return <Skill key={post} skillInfo={r} id={post} userid={props.userid}/>
             })}
         </ul>
     );
@@ -614,7 +581,7 @@ function SkillList(props) {
 /**
  * Osaamiset eli postit listattuna
  */
-class Posts extends Component {
+export class Posts extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -623,10 +590,9 @@ class Posts extends Component {
     }
 
     componentDidMount(){
-        const postsRef = firebase.database().ref().child('posts/userid/');
+        const postsRef = firebase.database().ref().child('posts/'+this.props.userid+'');
 
         postsRef.on('value', snap => {
-            console.log(snap.val());
             this.setState({
                 posts: snap.val()
             });
@@ -636,7 +602,7 @@ class Posts extends Component {
     render() {
         return (
             <div>
-                <SkillList posts={this.state.posts}/>
+                <SkillList posts={this.state.posts} userid={this.props.userid}/>
             </div>
         );
     }
@@ -646,7 +612,7 @@ class Posts extends Component {
 function Main() {
     return (
         <div className="Main">
-            <Posts/>
+            <Posts userid={'userid'}/>
         </div>
     );
 }
