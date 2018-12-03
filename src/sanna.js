@@ -106,7 +106,7 @@ export function askComment(to, from, posts, message) {
         posts   : posts
     });
     firebase.database().ref('shareToUser/'+to+'/testuser').set({
-        userid  : from,
+        userid  : 'testuser',
         message : message,
         posts   : posts
     });

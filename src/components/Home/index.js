@@ -276,6 +276,7 @@ function getColour(category) {
 // TODO CSS lomakkeelle
 // TODO Kuvan toteuttaminen ?
 // TODO Ratingin toteuttaminen ?
+// TODO modaali sulkeutuu kun lähetetään ja info että onnistui
 
 /**
  * Osaaminen eli post esitetään muokattavana lomakkeena.
@@ -625,6 +626,7 @@ class Posts extends Component {
         const postsRef = firebase.database().ref().child('posts/userid/');
 
         postsRef.on('value', snap => {
+            console.log(snap.val());
             this.setState({
                 posts: snap.val()
             });

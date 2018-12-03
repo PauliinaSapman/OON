@@ -56,7 +56,6 @@ function getColour(note) {
     return 'green';
 }
 
-
 /**
  * Yksittäinen osaaminen listassa.
  * @param props
@@ -72,14 +71,23 @@ class User extends Component{
     }
 
     render() {
+
+        let userid = this.props.userId;
+        let postsRef = firebase.database().ref().child('shareToUser/userid2/'+userid+'');
+        postsRef.on('value', snap => {
+            console.log(snap.val());
+        });
+
+        console.log(this.props.userId);
+
         let colour = getColour(this.state.note);
 
         return (
             <li className="Skill">
-                <div className="skillColorTag" style={{backgroundColor: colour}}>
+                <div className="skillColorTag" style={{backgroundColor : colour}}>
                 </div>
                 <div className="skillContent">
-                    <p>{this.props.userInfo} + {this.props.id}</p>
+                    <p>{this.props.userId}</p>
                 </div>
             </li>
         )
@@ -95,47 +103,70 @@ class User extends Component{
 function UserList(props) {
     let userArray = props.users;
 
+
+    console.log(Object.values(props.users));
+   // let users = Object.values(props.users);
+
     // Jos objekti on tyhjä, annetaan sille arvo. Näin käy kun tietokannasta ei ole haettu riittävän nopeasti.
     if(Object.keys(userArray).length === 0 && userArray.constructor === Object){
         userArray = [''];
     }
-console.log(userArray);
+    console.log(userArray);
+
     return (
         <ul className="SkillList">
             {userArray.map((content, id) => {
                 console.log(id);
                 console.log(content);
-                return <User key={id} userInfo={content} id={id}/>
+                return <User key={id} userId={content} id={id}/>
             })}
         </ul>
     );
 }
 
-
-
-
 class Users extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: {}
+            users: []
         };
     }
 
     componentDidMount(){
         // TODO tämä Sannaan? Päivitysjuttu tänne?
         const postsRef = firebase.database().ref().child('shareToUser/userid2/');
+       // const postsRef = firebase.database().ref().child('posts/userid/');
 
         postsRef.on('value', snap => {
+            /*
             console.log(snap.val());
+            console.log(Object.values(snap.val()));
+
             this.setState({
-                users: snap.val()
+                users:  snap.val()
+            });
+            */
+            let ar = [];
+
+            snap.forEach(function(childSnapshot) {
+                let childKey = childSnapshot.key;
+                let childData = childSnapshot.val();
+                console.log(childKey);
+                console.log(childData);
+
+                ar[ar.length] = childKey;
+            });
+            console.log(ar);
+            this.setState({
+                users:  ar
             });
         });
+
     }
 
     render() {
         console.log(this.state.users);
+
         return (
             <div>
                 <ul>
@@ -146,6 +177,17 @@ class Users extends Component {
     }
 }
 
+class UserContent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            users: []
+        };
+    }
+
+
+}
+
 // Sivun varsinanen sisältö
 function Main() {
     return (
@@ -154,6 +196,7 @@ function Main() {
         </div>
     );
 }
+
 function Home() {
     return (
         <div className="App">
