@@ -1,0 +1,51 @@
+.Shared {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+}
+
+.sharedHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #3b5a78;
+
+    flex-shrink: 0;
+
+    height: 8rem;
+
+}
+
+
+.sharedHeader img {
+    height: 7rem;
+    width: 7rem;
+}
+
+.sharedMain {
+    background-color: #F0F0F0;
+
+
+}
+
+.SkillsListShared {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    list-style: none;
+}
+
+.SkillShared {
+    margin: 0.5rem;
+    width: 100%;
+    background-color: cyan;
+}
+
+.skillSharedContent {
+    margin: 0.5rem;
+
+    background-color: chartreuse;
+}
