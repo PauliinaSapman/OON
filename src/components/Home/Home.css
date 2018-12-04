@@ -317,3 +317,32 @@ div.ui-dialog {
 .clickable {
     cursor: pointer;
 }
+
+.singleComment {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.commentLeft {
+    width: 90%;
+}
+
+.commentRight {
+    width: 10%;
+}
+
+.checkmarkIcon {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    border: 1px solid #47C786;
+    background-color: #47C786;
+    color: white;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

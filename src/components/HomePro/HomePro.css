@@ -121,3 +121,10 @@ textarea {
     width: 100%;
     height: 100%;
 }
+
+.userHeadlines {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}

@@ -5,7 +5,10 @@ import * as sanna from '../../sanna.js';
 import * as ROUTES from "../../constants/routes";
 import { Link } from 'react-router-dom';
 import {Collapse} from 'react-collapse';
-import {getColour} from "../Home";
+import {getColour, Comments} from "../Home";
+import {Tab, TabList, TabPanel, Tabs} from "react-tabs";
+import "react-tabs/style/react-tabs.css";
+
 
 function LogOut () {
     return (
@@ -20,6 +23,7 @@ const sendToDb = () => {
     sanna.testDb();
 };
 
+/*
 // Nappi lähettää databaseen testiarvon.
 function DbButton() {
     return (
@@ -28,13 +32,13 @@ function DbButton() {
         </a>
     );
 }
+*/
 
 // Sivun yläpalkki.
 function Header() {
     return (
         <div className="Header">
             <h1>OON - ohjaavan ammattilaisen sivu</h1>
-            <DbButton/>
             <LogOut/>
         </div>
     );
@@ -94,7 +98,7 @@ class User extends Component{
                 <div className="skillColorTag" style={{backgroundColor : colour}}>
                 </div>
                 <div className="skillContent clickable" onClick={this.props.buttonClick}>
-                    <p className="selectUserButton" onClick={this.handleUserChange}>{this.props.userId}</p>
+                    <p className="selectUserButton" onClick={this.handleUserChange}>{this.props.userId}</p> {/*TODO nimen hakeminen databasesta*/}
                 </div>
             </li>
         )
@@ -311,7 +315,18 @@ class ToggleCollapse extends Component {
                     </div>
                 </div>
                 <Collapse isOpened={isOpened}>
-                    <PostForm info={this.props.info} id={this.props.id}/>
+                    <Tabs>
+                        <TabList>
+                            <Tab>Osaaminen</Tab>
+                            <Tab>Kommentit</Tab>
+                        </TabList>
+                        <TabPanel>
+                            <PostForm info={this.props.info} id={this.props.id}/>
+                        </TabPanel>
+                        <TabPanel>
+                            <Comments postid={this.props.info.postId} userid='userid2' user={true} /> {/*TODO hae oikea userid*/}
+                        </TabPanel>
+                    </Tabs>
                 </Collapse>
             </div>
         );
@@ -388,7 +403,9 @@ export class Posts extends Component {
                 postsRef.on('value', snap => {
                     // Jos käyttäjä on poistanut jaetun postauksen, antaisi errorin ilman tätä if-lausetta.
                     if(snap.val()) {
-                        postArray[postArray.length] = snap.val();
+                        const addId = snap.val(); // Lisätään objektiin postauksen id //TODO pitäiskö olla suoraan databasessa?
+                        addId.postId = post;
+                        postArray[postArray.length] = addId;
                     }
                 });
             });
@@ -409,9 +426,23 @@ export class Posts extends Component {
     }
 
     render() {
+        if(this.state.message!=='') {
+            return (
+                <div>
+                    <div className="userHeadlines">
+                        <h2>Henkilön Masa Testi osaaminen</h2>
+                        <p>Viesti:</p>
+                        <p>{this.state.message}</p>
+                    </div>
+                    <SkillList posts={this.state.posts}/>
+                </div>
+            );
+        }
         return (
             <div>
-                <p>{this.state.message}</p>
+                <div className="userHeadlines">
+                    <h2>Henkilön Masa Testi osaaminen</h2>
+                </div>
                 <SkillList posts={this.state.posts}/>
             </div>
         );

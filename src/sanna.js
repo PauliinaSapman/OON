@@ -3,6 +3,7 @@ import firebase from './firebase/firebase.js';
 let number = 0;
 let postNumber;
 
+
 /**
  * Testikäyttöön
  */
@@ -105,5 +106,39 @@ export function askComment(to, from, posts, message) {
         message : message,
         posts   : posts,
         seen    : 'false'
+    });
+}
+
+
+/**
+ * Lähetetään kommentti databaseen.
+ * @param from
+ * @param postid
+ * @param comment
+ */
+export function sendComment(from, postid, comment){
+    const testRef = firebase.database().ref('comments/userid/'+postid+'');
+    testRef.once('value', function(snapshot)
+    {
+        let commentNumber = snapshot.numChildren();
+        commentNumber = Number(commentNumber) + 1;
+
+        firebase.database().ref('comments/userid/'+postid+'/'+commentNumber+'').set({
+            userid  : from,
+            comment : comment,
+            seen: 'false'
+        });
+
+    });
+}
+
+/**
+ * Päivitetään kommentin arvo 'seen' trueksi eli kommentti nähdyksi.
+ * @param postid
+ * @param commentid
+ */
+export function setCommentSeen(postid, commentid) {
+    firebase.database().ref('comments/userid/'+postid+'/'+commentid+'').update({
+        seen: 'true'
     });
 }

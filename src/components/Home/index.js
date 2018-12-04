@@ -12,7 +12,9 @@ import { Form, Text, Scope, TextArea, Option} from 'informed';
 import {AddTools, EnterSteps, NewButton, NewTitle, SelectCategory, SelfEvulation} from "../../Pauliina2";
 import Dialog from 'react-dialog'
 import {Modal, ModalButton} from "react-modal-button";
-
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import "react-tabs/style/react-tabs.css";
+import Tooltip from 'react-tooltip-lite';
 
 function LogOut () {
     return (
@@ -50,6 +52,7 @@ const sendToDb = () => {
     sanna.testDb();
 };
 
+/*
 // Nappi lähettää databaseen testiarvon.
 function DbButton() {
     return (
@@ -58,6 +61,7 @@ function DbButton() {
         </a>
     );
 }
+*/
 
 class PostTitles extends Component {
     constructor(props){
@@ -105,7 +109,6 @@ class Notification extends Component {
     }
 
     render() {
-        console.log('noti');
         return (
             <div>
                 <Modal windowClassName="window-container" isOpen={this.state.isModalOpen} onClose={this.closeModal}>
@@ -278,7 +281,6 @@ function Header() {
     return (
         <div className="Header">
             <h1>OON</h1>
-            <DbButton/>
             <LogOut/>
             <ShareButton/>
         </div>
@@ -409,6 +411,171 @@ class PostForm extends Component {
 }
 
 /**
+ * Yksittäinen kommentti.
+ */
+class Comment extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            seen: <div className="checkmarkIcon center clickable"><p>✓</p></div>
+        };
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    componentDidMount() {
+        const me = this;
+        const postid = this.props.postid;
+        const commentId = this.props.info.commentId;
+
+        // tarkistetaan onko käyttäjä merkinnyt kommentin nähdyksi
+        firebase.database().ref('comments/userid/'+postid+'/'+commentId+'').once('value', function(snapshot)
+        {
+           const value = snapshot.val();
+           if(value){
+               if(value.seen === 'true'){
+                   me.setState({seen: <div></div>})
+               }
+           }
+        });
+    }
+
+    handleClick() {
+        if(!this.props.user){
+            this.setState({seen: <div></div>});
+            const postid = this.props.postid;
+            const commentId = this.props.info.commentId;
+
+            sanna.setCommentSeen(postid, commentId);
+        }
+
+    }
+
+    render() {
+        if(this.props.info) {
+            if(this.props.user){
+                return (
+                    <li className="singleComment">
+                        <div className="commentLeft">
+                            <h5>{this.props.info.userid}</h5>
+                            <p>{this.props.info.comment}</p>
+                        </div>
+                        <div className="commentRight center" onClick={this.handleClick}>
+                            <Tooltip content={'Kommenttiasi ei ole vielä huomioitu.'} background="#F0F0F0">
+                                {this.state.seen}
+                            </Tooltip>
+                        </div>
+                    </li>
+                );
+            }
+            return (
+                <li className="singleComment">
+                    <div className="commentLeft">
+                        <h5>{this.props.info.userid}</h5>
+                        <p>{this.props.info.comment}</p>
+                    </div>
+                    <div className="commentRight center" onClick={this.handleClick}>
+                        <Tooltip content={'Paina tästä kertoaksesi, että olet huomannut kommentin.'} background="#F0F0F0">
+                            {this.state.seen}
+                        </Tooltip>
+                    </div>
+                </li>
+            );
+        }
+        return(<li className="center"><p>Ei kommentteja.</p></li>);
+    }
+}
+
+/**
+ * Lista kommenteista
+ * @param props
+ * @returns {*}
+ * @constructor
+ */
+function CommentList(props) {
+    let commentArray = props.comments;
+
+    // Jos objekti on tyhjä, annetaan sille arvo. Näin käy kun tietokannasta ei ole haettu riittävän nopeasti.
+    if(Object.keys(commentArray).length === 0 && commentArray.constructor === Object){
+        commentArray = [''];
+    }
+
+    return (
+        <ul className="SkillList">
+            {/* Looppaa kaikki parametrina annetun listan alkiot ja tekee jokaisesta osaamisen(Skill) */}
+            {commentArray.map((r, post) => {
+                return <Comment key={post} info={r} postid={props.postid} user={props.user}/>
+            })}
+        </ul>
+    );
+}
+
+/**
+ * Kommentointiosio
+ */
+export class Comments extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            value: '',
+            comments: {}
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        const newComment = this.state.value;
+        // TODO Staattisen nimen tilalle haettaisiin databasesta this.props.userid :n kautta nimi
+        sanna.sendComment('Maisa Auttaja:', this.props.postid, newComment)
+        this.setState({value: ''});
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
+
+    componentDidMount() {
+        const me = this;
+        const postid = this.props.postid;
+        const ref = firebase.database().ref('comments/userid/'+postid+'');
+
+        ref.on('value', function(snap){
+            if(snap.val()) {
+                let value;
+                let newArray = [];
+                // lisätään objektiin sen avain eli kommentin id
+                snap.forEach(function(childSnapshot) {
+                    value = childSnapshot.val();
+                    value.commentId = childSnapshot.key;
+                    newArray[childSnapshot.key] = value;
+                });
+                me.setState({comments: newArray});
+            }
+        });
+    }
+
+    render(){
+        if(this.props.user){ // ohjaava ammattilainen
+            return(
+                <div>
+                    <CommentList comments={this.state.comments} postid={this.props.postid} user={true}/>
+                    <form onSubmit={this.handleSubmit}>
+                        <input type="text" value={this.state.value} onChange={this.handleChange} autoComplete='off'/>
+                        <button className="clickable" type="submit">Kommentoi</button>
+                    </form>
+                </div>
+            );
+        }
+        return( // käyttäjä
+            <div>
+                <CommentList comments={this.state.comments} postid={this.props.postid}/>
+            </div>
+        );
+    }
+}
+
+/**
  * Dialogi, jolla varmistetaan osaamisen poistaminen.
  */
 class DeletePostDialog extends Component {
@@ -507,15 +674,26 @@ class ToggleCollapse extends Component {
                             <p>{this.props.info.category}</p>
                             <h3>{this.props.info.title}</h3>
                         </div>
-                        <div className="postOpen">
+                        <div className="postOpen center">
                             <p>{this.state.button}</p>
                         </div>
                     </div>
                 </div>
                 <Collapse isOpened={isOpened}>
-                    <PostForm info={this.props.info} id={this.props.id}/>
-                    <br></br>
-                    <DeletePostDialog postid={this.props.id}/>
+                    <Tabs>
+                        <TabList>
+                            <Tab>Osaaminen</Tab>
+                            <Tab>Kommentit</Tab>
+                        </TabList>
+                        <TabPanel>
+                            <PostForm info={this.props.info} id={this.props.id}/>
+                            <br></br>
+                            <DeletePostDialog postid={this.props.id}/>
+                        </TabPanel>
+                        <TabPanel>
+                            <Comments postid={this.props.id} userid='userid'/> {/*TODO hae oikea userid*/}
+                        </TabPanel>
+                    </Tabs>
                 </Collapse>
             </div>
         );
