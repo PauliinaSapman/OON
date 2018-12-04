@@ -11,7 +11,7 @@ import {Collapse} from 'react-collapse';
 import { Form, Text, Scope, TextArea, Option} from 'informed';
 import {AddTools, EnterSteps, NewButton, NewTitle, SelectCategory, SelfEvulation} from "../../Pauliina2";
 import Dialog from 'react-dialog'
-import {ModalButton} from "react-modal-button";
+import {Modal, ModalButton} from "react-modal-button";
 
 
 function LogOut () {
@@ -84,6 +84,42 @@ class PostTitles extends Component {
     }
 }
 
+
+class Notification extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            isModalOpen: false,
+        }
+    }
+
+    closeModal = () => {
+        this.setState({ isModalOpen: false });
+    };
+
+    // Avataan modaali heti kun saadaan prop arvo open
+    componentWillReceiveProps(nextProps){
+        if(nextProps.open) {
+            this.setState({isModalOpen: true});
+        }
+    }
+
+    render() {
+        console.log('noti');
+        return (
+            <div>
+                <Modal windowClassName="window-container" isOpen={this.state.isModalOpen} onClose={this.closeModal}>
+                    <div>
+                        <h2>{this.props.notificationTitle}</h2>
+                        <button className="clickable" onClick={this.closeModal}>Sulje</button>
+                    </div>
+                </Modal>
+            </div>
+        );
+    }
+}
+
+
 class ShareButton extends Component {
     constructor(props){
         super(props);
@@ -91,6 +127,8 @@ class ShareButton extends Component {
             message : '',
             checkedValues: [],
             selected:'',
+            isModalOpen: false,
+            openNotification: false,
             content:  <div>
                 <h2>Mitä haluat jakaa?</h2>
                 <PostTitles/>
@@ -134,6 +172,8 @@ class ShareButton extends Component {
             } else { // jos käyttäjä on valinnut kaikki
                 sanna.askComment(to, 'userid', titleArray, message);
             }
+
+            this.setState({openNotification: true});
         }
     };
 
@@ -173,12 +213,12 @@ class ShareButton extends Component {
                             <textarea placeholder="Kirjoita viesti..." onBlur={this.setMessage}></textarea>
                             <button className="clickable" onClick={() => {
                                 this.send();
+                                this.closeModal();
                             }}>Lähetä
                             </button>
                             <button className="clickable" onClick={() => {
                                 this.changeContent('auto');
-                                checks = [];
-                                titleArray = [];
+                                this.resetChecks();
                             }}>Peruuta
                             </button>
                         </div>
@@ -188,22 +228,47 @@ class ShareButton extends Component {
         }
     }
 
-    // TODO modaalin sulkeminen
+    openModal = () => {
+        this.setState({ isModalOpen: true });
+    };
+
+    closeModal = () => {
+        this.setState({ isModalOpen: false });
+        this.resetChecks();
+    };
+
+    resetChecks = () => {
+        checks = [];
+        titleArray = [];
+    };
+
     // TODO kaikki checkboxit checkautuvat kun valitaan 'Kaikki'
 
     render() {
         return (
+
+            <div>
+                <button className="shareButton clickable" onClick={this.openModal}>Jaa ↷</button>
+                <Modal windowClassName="window-container" isOpen={this.state.isModalOpen} onClose={this.closeModal}>
+                    {this.state.content}
+                </Modal>
+                <Notification open={this.state.openNotification} notificationTitle='Jakaminen onnistui.'/>
+            </div>
+
+
+            /*
             <ModalButton
                 buttonClassName="shareButton clickable"
                 windowClassName="window-container"
                 modal={({ closeModal }) => (
                     <Form id="sendForm" >
                         {this.state.content}
-                        {/*<button className="Modal" type="submit" onClick={closeModal}><h3>Sulje</h3></button>*/}
+                        {/*<button className="Modal" type="submit" onClick={closeModal}><h3>Sulje</h3></button>*/ /*)}
                     </Form>
                 )}>
                 <h2> Jaa ↷</h2>
             </ModalButton>
+*/
         );
     }
 }
@@ -351,13 +416,15 @@ class DeletePostDialog extends Component {
         super(props);
         this.state = {
             isDialogOpen: false
-        }
+        };
+
+        this.confirmDelete = this.confirmDelete.bind(this);
     }
 
     openDialog = () => this.setState({ isDialogOpen: true });
     handleClose = () => this.setState({ isDialogOpen: false });
 
-    confirmDelete = () => {
+    confirmDelete () {
         if(this.props.postid){
             sanna.deletePost(this.props.postid);
         } else {
