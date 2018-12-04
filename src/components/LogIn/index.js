@@ -10,7 +10,8 @@ function LogIn() {
     return (
         <div className='LogIn'>
             <h1>This is Login</h1>
-            <button><Link to={ROUTES.HOME}>Home</Link></button>
+            <button><Link to={ROUTES.HOME}>Kirjaudu käyttäjänä</Link></button>
+            <button><Link to={ROUTES.HOMEPRO}>Kirjaudu ohjaavana ammattilaisena</Link></button><Link to={ROUTES.HOMEPRO}></Link>
             <button><Link to={ROUTES.SHARED}>Jaettava sivu</Link></button>
             <button onClick={ () => {
                 tuomas.randomizeUrl();

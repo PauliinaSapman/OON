@@ -1,6 +1,5 @@
 /*
 Värit:
-
 headerin sininen #4B8CAB
 nappulan vihree #47C786
 vaalea sininen #E9ECF0
@@ -10,15 +9,11 @@ tummanvihreä(ruoka) #136F63
 tummanisininen(siivous) #395C89
 tummanpunainen(it) #89023E
 keltainen(rakennus) #FFBA5C
-
  */
-
-
 
 .App {
     display: flex;
     flex-direction: column;
-    /*  background-color: aqua; */
     height: 100%;
 }
 
@@ -67,19 +62,12 @@ keltainen(rakennus) #FFBA5C
     border-radius:8px 0 0 8px;
 }
 
-
 .New {
     color: white;
     background-color: #47C786;
     border-radius: 8px;
     margin: 1%;
-
 }
-
-.Modal {
-
-}
-
 
 .ominaisuus {
     background-color: white;
@@ -123,4 +111,13 @@ textarea {
     overflow: auto;
     width: 95% !important;
     padding: 0.5rem;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.selectUserButton {
+    width: 100%;
+    height: 100%;
 }

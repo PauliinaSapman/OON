@@ -3,7 +3,7 @@ import Select from "react-select";
 import {ModalButton} from "react-modal-button";
 //import firebase from './firebase/firebase.js';
 import * as sanna from './sanna.js'
-
+import './components/Home/Home.css'; // luokka clickable -> kursori nappiin
 // Komponentteihin lisätään myös "Lisää" -napin toiminnallisuus. Kun nappia painetaan avautuu/paljastuu uusi vaihe osaamisen
 // määrittelyyn !!HUOM!! mulla oli joku syy miks oon laittanu jokasen osan omaks komponentiks mut en just nyt muista sitä..
 
@@ -171,7 +171,7 @@ export class NewButton extends Component {
     render() {
         return (
             <ModalButton
-                buttonClassName="New"
+                buttonClassName="New clickable"
                 windowClassName="window-container"
                 modal={({ closeModal }) => (
                     <form className="NewModal" onSubmit={this.handleSubmit}>

@@ -37,15 +37,16 @@ const getPostNumber = () => {
 
         // loopataan läpi postaukset ja annetaan viimeisimmän arvo postNumberille
         for(let i = 0; i < snapshot.numChildren(); i++) {
-         //  console.log(Object.keys(snapshot.val())[i]);
+            //  console.log(Object.keys(snapshot.val())[i]);
             postNumber = Object.keys(snapshot.val())[i];
         }
 
-       // console.log(postNumber);
+        // console.log(postNumber);
     });
 };
 
 getPostNumber();
+
 
 /**
  * Poistetaan osaaminen jolla on id post
@@ -54,7 +55,6 @@ getPostNumber();
 export function deletePost (post) {
     const testRef = firebase.database().ref('posts/userid/'+post+'');
     testRef.remove();
-    console.log(testRef);
 }
 
 /**
@@ -74,8 +74,6 @@ export function sendToDb(values, number) {
             number = 1;
         }
 
-        console.log('post number ' + number);
-
         firebase.database().ref('posts/userid/' + number + '').set({
             category: values.category,
             title: values.title,
@@ -93,22 +91,19 @@ export function sendToDb(values, number) {
  * @param to
  * @param from
  * @param posts
+ * @param message
  */
 export function askComment(to, from, posts, message) {
-    console.log(to);
-    console.log(from);
-    console.log(posts);
-    console.log(message);
-
     firebase.database().ref('shareToUser/'+to+'/'+from+'').set({
         userid  : from,
         message : message,
-        posts   : posts
+        posts   : posts,
+        seen    : 'false'
     });
     firebase.database().ref('shareToUser/'+to+'/testuser').set({
         userid  : 'testuser',
         message : message,
-        posts   : posts
+        posts   : posts,
+        seen    : 'false'
     });
-
 }

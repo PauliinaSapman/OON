@@ -313,3 +313,7 @@ div.ui-dialog {
     overflow: auto;
     height: 25rem;
 }
+
+.clickable {
+    cursor: pointer;
+}

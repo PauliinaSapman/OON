@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
-
 import './HomePro.css';
-import { ModalButton } from "react-modal-button";
-import Select from "react-select";
 import firebase from '../../firebase/firebase.js';
 import * as sanna from '../../sanna.js';
 import * as ROUTES from "../../constants/routes";
 import { Link } from 'react-router-dom';
 import {Collapse} from 'react-collapse';
-import { Form, Text, Scope, TextArea, Option} from 'informed';
+import {getColour} from "../Home";
 
 function LogOut () {
     return (
@@ -18,13 +15,12 @@ function LogOut () {
     );
 }
 
-
 // Lähetetään osaaminen
 const sendToDb = () => {
     sanna.testDb();
 };
 
-// Nappi lähettää databaseen arvon
+// Nappi lähettää databaseen testiarvon.
 function DbButton() {
     return (
         <a href="#" onClick={sendToDb}>
@@ -45,19 +41,19 @@ function Header() {
 }
 
 /**
- * Valitaan väri riippuen, onko pyydetty kommenttia.
- * @param note
+ * Valitaan väri riippuen siitä, onko kommenttipyyntö uusi vai onko sitä jo katsottu.
+ * @param seen
  * @returns {string}
  */
-function getColour(note) {
-    if(note){
+function getColor(seen) {
+    if(seen === 'false'){
         return 'red';
     }
     return 'green';
 }
 
 /**
- * Yksittäinen osaaminen listassa.
+ * Yksittäinen käyttäjä listassa.
  * @param props
  * @returns {*}
  * @constructor
@@ -66,32 +62,280 @@ class User extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            note: true
+            seen: 'true'
         };
     }
 
-    render() {
-
-        let userid = this.props.userId;
-        let postsRef = firebase.database().ref().child('shareToUser/userid2/'+userid+'');
-        postsRef.on('value', snap => {
-            console.log(snap.val());
+    // Lähetetään parentille käsky onSelectUser eli kerrotaan mikä käyttäjä valitaan.
+    handleUserChange = () => {
+        this.setState({
+            seen:  'true'
         });
 
-        console.log(this.props.userId);
+        firebase.database().ref().child('shareToUser/userid2/'+this.props.userId+'/seen').set('true');
+        this.props.onSelectUser(this.props.userId);
+    };
 
-        let colour = getColour(this.state.note);
+    componentDidMount() {
+        const postsRef = firebase.database().ref().child('shareToUser/userid2/'+this.props.userId+'/seen');
+
+        postsRef.on('value', snap => {
+            this.setState({
+                seen:  snap.val()
+            });
+        });
+    }
+
+    render() {
+        let colour = getColor(this.state.seen);
 
         return (
             <li className="Skill">
                 <div className="skillColorTag" style={{backgroundColor : colour}}>
                 </div>
-                <div className="skillContent">
-                    <p>{this.props.userId}</p>
+                <div className="skillContent clickable" onClick={this.props.buttonClick}>
+                    <p className="selectUserButton" onClick={this.handleUserChange}>{this.props.userId}</p>
                 </div>
             </li>
         )
     }
+}
+
+/**
+ * Käyttäjiä sisältävä lista.
+ * @param props
+ * @returns {*}
+ * @constructor
+ */
+function UserList(props) {
+    let userArray = props.users;
+
+    // Jos objekti on tyhjä, annetaan sille arvo. Näin käy kun tietokannasta ei ole haettu riittävän nopeasti.
+    if(Object.keys(userArray).length === 0 && userArray.constructor === Object){
+        userArray = [''];
+    }
+
+    return (
+        <ul className="SkillList">
+            {userArray.map((content, id) => {
+                return <User key={id} userId={content} id={id} buttonClick={props.buttonClick} onSelectUser={props.onSelectUser}/>
+            })}
+        </ul>
+    );
+}
+
+/**
+ * Käyttäjät, jotka ovat jakaneet ohjaavalle ammattilaiselle listattuna.
+ */
+class Users extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            users: [],
+            content: true,
+            userid: ''
+        };
+    }
+
+    componentDidMount(){
+        const postsRef = firebase.database().ref().child('shareToUser/userid2/');
+
+        postsRef.on('value', snap => {
+            let ar = [];
+
+            snap.forEach(function(childSnapshot) {
+                ar[ar.length] = childSnapshot.key;
+            });
+            this.setState({
+                users:  ar
+            });
+        });
+    }
+
+    // Vaihdetaan sisältöä, jos nappia on klikattu.
+    changeButtonState(event) {
+        this.setState({content: !this.state.content});
+    }
+
+    // Childiltä tulee arvo, joka kertoo minkä käyttäjän tietoja halutaan nähdä.
+    handleUser (value) {
+        this.setState({userid: value});
+    };
+
+    render() {
+        // Näytetään tietyn käyttäjän jakamat postaukset Posts.
+        if(this.state.content === false){
+            return (
+                <div>
+                    <button onClick={this.changeButtonState.bind(this)}>Takaisin</button>
+                    <Posts userid={this.state.userid}/>
+                </div>
+            )
+        }
+        // Näytetään lista käyttäjistä.
+        return (
+            <div>
+                <UserList users={this.state.users} buttonClick={this.changeButtonState.bind(this)} onSelectUser={this.handleUser.bind(this)}/>
+            </div>
+        )
+    }
+}
+
+// Palautetaan muotoiltu sisältö, jos osaamisessa on tiettyjä alueita.
+
+function GetTools (props) {
+    if(props.info.tools){
+        return(
+            <div>
+                <h4>Työvälineet:</h4>
+                <br></br>
+                <p>{props.info.tools}</p>
+                <br></br>
+            </div>
+        );
+    }
+    return(<div></div>)
+}
+
+function GetSteps (props) {
+    if(props.info.steps){
+        return(
+            <div>
+                <h4>Työvaiheet:</h4>
+                <br></br>
+                <p>{props.info.steps}</p>
+                <br></br>
+            </div>
+        );
+    }
+    return(<div></div>)
+}
+
+function GetRating (props) {
+    if(props.info.rating){
+        return(
+            <div>
+                <p>{props.info.rating}</p>
+                <br></br>
+            </div>
+        );
+    }
+    return(<div></div>)
+}
+
+function GetPicture (props) {
+    if(props.info.picture){
+        return(
+            <div>
+                <p>{props.info.picture}</p>
+                <br></br>
+            </div>
+        );
+    }
+    return(<div></div>)
+}
+
+function GetNewSection1 (props) {
+    if(props.info.newsection1){
+        return(
+            <div>
+                {/*TODO otsikko muokattavissa, on käyttäjän lisäämä uusi osio*/}
+                <h4>Muuta:</h4>
+                <br></br>
+                <p>{props.info.newsection1}</p>
+                <br></br>
+            </div>
+        );
+    }
+    return(<div></div>)
+}
+
+/**
+ * Yksittäinen osaaminen.
+ */
+class PostForm extends Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <div>
+                <GetTools info={this.props.info}/>
+                <GetSteps info={this.props.info}/>
+                <GetRating info={this.props.info}/>
+                <GetPicture info={this.props.info}/>
+                <GetNewSection1 info={this.props.info}/>
+            </div>
+        )
+    }
+}
+
+/**
+ * Osaamisen aukeaminen ja sulkeutuminen.
+ */
+class ToggleCollapse extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOpened: false,
+            button: '▼',
+            value:'',
+            id: ''
+        };
+    }
+
+    render() {
+        const {isOpened} = this.state;
+
+        return (
+            <div>
+                <div>
+                    <div className="postTop clickable" onClick={() => {
+                        if (this.state.isOpened === true) {
+                            this.setState({isOpened: false});
+                            this.setState({button: '▼'});
+                        }
+                        else {
+                            this.setState({isOpened: true});
+                            this.setState({button: '▲'});
+                        }
+                    }
+                    }>
+                        <div className="postHeadline">
+                            <p>{this.props.info.category}</p>
+                            <h3>{this.props.info.title}</h3>
+                        </div>
+                        <div className="postOpen">
+                            <p>{this.state.button}</p>
+                        </div>
+                    </div>
+                </div>
+                <Collapse isOpened={isOpened}>
+                    <PostForm info={this.props.info} id={this.props.id}/>
+                </Collapse>
+            </div>
+        );
+    }
+}
+
+/**
+ * Yksittäinen osaaminen listassa.
+ * @param props
+ * @returns {*}
+ * @constructor
+ */
+function Skill(props) {
+    let colour = getColour(props.skillInfo.category);
+
+    return (
+        <li className="Skill">
+            <div className="skillColorTag" style={{backgroundColor : colour}}>
+            </div>
+            <div className="skillContent">
+                <ToggleCollapse info={props.skillInfo} id={props.id}/>
+            </div>
+        </li>
+    );
 }
 
 /**
@@ -100,99 +344,85 @@ class User extends Component{
  * @returns {*}
  * @constructor
  */
-function UserList(props) {
-    let userArray = props.users;
-
-
-    console.log(Object.values(props.users));
-   // let users = Object.values(props.users);
+function SkillList(props) {
+    let postArray = props.posts;
 
     // Jos objekti on tyhjä, annetaan sille arvo. Näin käy kun tietokannasta ei ole haettu riittävän nopeasti.
-    if(Object.keys(userArray).length === 0 && userArray.constructor === Object){
-        userArray = [''];
+    if(Object.keys(postArray).length === 0 && postArray.constructor === Object){
+        postArray = [''];
     }
-    console.log(userArray);
 
     return (
         <ul className="SkillList">
-            {userArray.map((content, id) => {
-                console.log(id);
-                console.log(content);
-                return <User key={id} userId={content} id={id}/>
+            {/* Looppaa kaikki parametrina annetun listan alkiot ja tekee jokaisesta osaamisen(Skill) */}
+            {postArray.map((r, post) => {
+                return <Skill key={post} skillInfo={r} id={post}/>
             })}
         </ul>
     );
 }
 
-class Users extends Component {
-    constructor(props) {
+/**
+ * Jaetut osaamiset eli postit listattuna, sekä jaettu vieti.
+ */
+export class Posts extends Component {
+    constructor(props){
         super(props);
         this.state = {
-            users: []
+            posts: {},
+            message: ''
         };
     }
 
     componentDidMount(){
-        // TODO tämä Sannaan? Päivitysjuttu tänne?
-        const postsRef = firebase.database().ref().child('shareToUser/userid2/');
-       // const postsRef = firebase.database().ref().child('posts/userid/');
+        const user = this.props.userid;
+        const sharedPosts = firebase.database().ref().child('shareToUser/userid2/'+user+'/posts/');
 
-        postsRef.on('value', snap => {
-            /*
-            console.log(snap.val());
-            console.log(Object.values(snap.val()));
+        sharedPosts.on('value', snap => {
+            let postid = snap.val();
+            let postArray = [];
+
+            // Tehdään jaetuista osaamisista lista.
+            postid.forEach((post)=> {
+                let postsRef = firebase.database().ref().child('posts/'+user+'/'+post+'');
+                postsRef.on('value', snap => {
+                    // Jos käyttäjä on poistanut jaetun postauksen, antaisi errorin ilman tätä if-lausetta.
+                    if(snap.val()) {
+                        postArray[postArray.length] = snap.val();
+                    }
+                });
+            });
 
             this.setState({
-                users:  snap.val()
-            });
-            */
-            let ar = [];
-
-            snap.forEach(function(childSnapshot) {
-                let childKey = childSnapshot.key;
-                let childData = childSnapshot.val();
-                console.log(childKey);
-                console.log(childData);
-
-                ar[ar.length] = childKey;
-            });
-            console.log(ar);
-            this.setState({
-                users:  ar
+                posts: postArray
             });
         });
 
+        // Haetaan viesti.
+        const sharedMessage = firebase.database().ref().child('shareToUser/userid2/'+user+'/message/');
+
+        sharedMessage.on('value', snap => {
+            this.setState({
+                message: snap.val()
+            });
+        });
     }
 
     render() {
-        console.log(this.state.users);
-
         return (
             <div>
-                <ul>
-                    <UserList users={this.state.users}/>
-                </ul>
+                <p>{this.state.message}</p>
+                <SkillList posts={this.state.posts}/>
             </div>
-        )
+        );
     }
-}
-
-class UserContent extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            users: []
-        };
-    }
-
-
 }
 
 // Sivun varsinanen sisältö
 function Main() {
     return (
         <div className="Main">
-           <Users/>
+            <Users/>
         </div>
     );
 }
