@@ -16,6 +16,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import Tooltip from 'react-tooltip-lite';
 
+import commenticon from '../../iconfinder_Streamline-59_185079.png'
+
 function LogOut () {
     return (
         <button>
@@ -639,7 +641,8 @@ class ToggleCollapse extends Component {
             isOpened: false,
             button: '▼',
             value:'',
-            id: ''
+            id: '',
+            commenticon: <div/>
         };
         this.handleClick = this.handleClick.bind(this);
     }
@@ -651,6 +654,30 @@ class ToggleCollapse extends Component {
             sanna.deletePost(post);
         }
 
+    }
+
+    componentDidMount() {
+        const me = this;
+        const postid = this.props.id;
+
+        // tarkistetaan onko kommenttia, jota käyttäjä ei ole merkinnyt nähdyksi
+        firebase.database().ref('comments/userid/'+postid+'').once('value', function(snapshot)
+        {
+            const value = snapshot.val();
+            if(value) {
+                if (value.constructor.name === "Array") {
+                    value.forEach((val) => {
+                        if(val.seen === 'false'){
+                            me.setState({commenticon:
+                                <Tooltip content={'Uusi kommentti.'} background="#F0F0F0">
+                                    <img className="icon" src={commenticon}/>
+                                </Tooltip>
+                            })
+                        }
+                    })
+                }
+            }
+        });
     }
 
     render() {
@@ -674,7 +701,8 @@ class ToggleCollapse extends Component {
                             <p>{this.props.info.category}</p>
                             <h3>{this.props.info.title}</h3>
                         </div>
-                        <div className="postOpen center">
+                        <div className="postOpen">
+                            <div>{this.state.commenticon}</div>
                             <p>{this.state.button}</p>
                         </div>
                     </div>

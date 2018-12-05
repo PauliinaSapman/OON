@@ -113,10 +113,14 @@ keltainen(rakennus) #FFBA5C
 }
 
 .postOpen {
-    width: 10%;
+    width: 5rem;
     display: flex;
     align-items: center;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-right: 1rem;
 }
+
 textarea {
     outline: none;
     resize: none;
@@ -345,4 +349,9 @@ div.ui-dialog {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.icon {
+    width: 1rem;
+    height: 1rem;
 }
