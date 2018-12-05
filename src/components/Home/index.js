@@ -156,13 +156,14 @@ class ShareButton extends Component {
         this.setState({ selected: option });
     };
 
-
+/*
     checked = () => {
         if(titleArray.length === 0){
             return checks;
         }
         return titleArray;
     };
+    */
 
     send = () => {
         let to = this.state.selected;
@@ -542,8 +543,12 @@ export class Comments extends Component {
         e.preventDefault();
         const newComment = this.state.value;
         // TODO Staattisen nimen tilalle haettaisiin databasesta this.props.userid :n kautta nimi
-        sanna.sendComment('Maisa Auttaja:', this.props.postid, newComment)
-        this.setState({value: ''});
+        if(this.state.value !== '') {
+            sanna.sendComment('Maisa Auttaja:', this.props.postid, newComment)
+            this.setState({value: ''});
+        } else {
+            alert('Tyhjää kommentia ei voida lähettää.')
+        }
     }
 
     handleChange(event) {
@@ -666,7 +671,6 @@ class ToggleCollapse extends Component {
         if (window.confirm('Haluatko varmasti poistaa tämän osaamisen?')){
             sanna.deletePost(post);
         }
-
     }
 
     componentDidMount() {
@@ -724,7 +728,7 @@ class ToggleCollapse extends Component {
                     <Tabs>
                         <TabList>
                             <Tab>Osaaminen</Tab>
-                            <Tab>Kommentit</Tab>
+                            <Tab onClick={()=>{this.setState({commenticon: <div></div>})}}>Kommentit</Tab>
                         </TabList>
                         <TabPanel>
                             <PostForm info={this.props.info} id={this.props.id}/>

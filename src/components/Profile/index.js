@@ -55,7 +55,7 @@ class GetShared extends Component {
             this.setState({
                 posts: postArray
             });
-            console.log(this.state.posts);
+           // console.log(this.state.posts);
         });
 
     }

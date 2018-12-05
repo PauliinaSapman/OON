@@ -46,6 +46,8 @@ html {
 .full h1 {
     text-align: center;
     margin-top: 1rem;
+    width: 90%;
+
 }
 
 .editButton {
@@ -117,6 +119,10 @@ h2 {
     .profilepicture {
         width: 5rem;
         max-height: 10rem;
+    }
+
+    .profileinfo {
+        width: 90%;
     }
 
     .skillListWrapper {
