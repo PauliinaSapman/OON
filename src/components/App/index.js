@@ -9,7 +9,7 @@ import HomePage from '../Home';
 import LandingPage from '../Landing';
 import HomeProPage from '../HomePro';
 import Shared from '../Shared';
-
+import Profile from '../Profile';
 import * as ROUTES from '../../constants/routes';
 
 import Landing from '../Landing/index.js'
@@ -26,6 +26,7 @@ function App () {
                 <Route exact path={ROUTES.HOME} component={HomePage} />
                 <Route exact path={ROUTES.HOMEPRO} component={HomeProPage} />
                 <Route exact path={ROUTES.SHARED} component={Shared} />
+                <Route exact path={ROUTES.PROFILE} component={Profile} />
             </div>
 
         </Router>

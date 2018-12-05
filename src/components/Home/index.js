@@ -21,7 +21,7 @@ import commenticon from '../../iconfinder_Streamline-59_185079.png'
 function LogOut () {
     return (
         <button>
-            <Link to={ROUTES.LANDING}>Log Out</Link>
+            <Link to={ROUTES.LANDING}>Kirjaudu ulos</Link>
         </button>
     );
 }
@@ -251,7 +251,6 @@ class ShareButton extends Component {
 
     render() {
         return (
-
             <div>
                 <button className="shareButton clickable" onClick={this.openModal}>Jaa ↷</button>
                 <Modal windowClassName="window-container" isOpen={this.state.isModalOpen} onClose={this.closeModal}>
@@ -278,13 +277,27 @@ class ShareButton extends Component {
     }
 }
 
+function Profile () {
+    return (
+        <button>
+            <Link to={ROUTES.PROFILE}>Profiili</Link>
+        </button>
+    );
+}
+
+
 // Sivun yläpalkki.
 function Header() {
     return (
         <div className="Header">
             <h1>OON</h1>
-            <LogOut/>
-            <ShareButton/>
+            <div className="headerRight">
+                <LogOut/>
+                <div className="headerButtons">
+                    <Profile/>
+                    <ShareButton/>
+                </div>
+            </div>
         </div>
     );
 }

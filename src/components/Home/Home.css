@@ -151,6 +151,19 @@ textarea {
     color: #E9ECF0;
 }
 
+.headerRight {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 7rem;
+}
+
+.headerButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .Main {
     display: flex;
     flex-direction: column;
