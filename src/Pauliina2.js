@@ -3,7 +3,8 @@ import Select from "react-select";
 import {ModalButton} from "react-modal-button";
 //import firebase from './firebase/firebase.js';
 import * as sanna from './sanna.js'
-import './components/Home/Home.css'; // luokka clickable -> kursori nappiin
+import Modal from 'react-responsive-modal';
+
 // Komponentteihin lisätään myös "Lisää" -napin toiminnallisuus. Kun nappia painetaan avautuu/paljastuu uusi vaihe osaamisen
 // määrittelyyn !!HUOM!! mulla oli joku syy miks oon laittanu jokasen osan omaks komponentiks mut en just nyt muista sitä..
 
@@ -44,7 +45,6 @@ const setValues = (section, value) => {
     savedValues[section] = value;
 };
 
-
 //Kategorian valitseminen
 export class SelectCategory extends Component {
 
@@ -80,7 +80,6 @@ export class NewTitle extends Component {
                         <form /*onSubmit={}*/>
                             <input placeholder="Otsikko" onBlur={this.handleChange}>
                             </input>
-                            <button className="title" type="submit">Lisää</button>
                         </form>
                     </div>
                 </div>
@@ -99,8 +98,11 @@ export class SelfEvulation extends Component {
 
     render() {
         return (
-            <div>
-                <Select placeholder="Itsearvionti"  options={Itsearvionti} onChange={this.handleChange}></Select>
+            <div className="radio">
+                <input type="radio" value="1" name="rating"  onChange={this.handleChange}></input> 1
+                <input type="radio" value="2" name="rating"  onChange={this.handleChange}></input> 2
+                <input type="radio" value="3" name="rating"  onChange={this.handleChange}></input> 3
+                <input type="radio" value="4" name="rating"  onChange={this.handleChange}></input> 4
             </div>
         );
     }
@@ -122,7 +124,6 @@ export class AddTools extends Component {
                         <form>
                             <textarea placeholder="Tarvittavat työkalut" onBlur={this.handleChange}>
                             </textarea>
-                            <button className="tools" type="submit">Lisää</button>
                         </form>
                     </div>
                 </div>
@@ -147,7 +148,6 @@ export class EnterSteps extends Component {
                         <form>
                             <textarea placeholder="Työn vaiheet" onBlur={this.handleChange}>
                             </textarea>
-                            <button className="steps" type="submit">Lisää</button>
                         </form>
                     </div>
                 </div>
@@ -156,38 +156,129 @@ export class EnterSteps extends Component {
     }
 }
 
-//Lisää oma osio (Tulossa)
+//Lisää kuva
+export class AddFile extends Component {
+    handleChange(event) {
+        const value = event.target.value;
+        setValues('picture', value)
+    }
 
+    render () {
+        return (
+            <div>
+                <input type="file" onChange={this.handleChange}/>
+            </div>
+        )
+    }}
+
+//Lisää oma osio (Tulossa)
+export  class NewSection extends Component {
+    handleChange(event) {
+        const value = event.target.value;
+        setValues('newsection1', value);
+    }
+
+    render () {
+        return (
+            <div>
+                <div className="NewSection">
+                    <div className="header" >
+                        <form>
+                           <textarea placeholder="Uusi osio" onBlur={this.handleChange}>
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        )
+    }}
+
+//Lisää uusi osaamisen määrittely
+export class AddButton extends Component {
+    constructor() {
+        super();
+        this.state = {
+            showMenu: false,
+        }
+
+        this.showMenu = this.showMenu.bind(this);
+    }
+    showMenu(event) {
+        event.preventDefault();
+
+        this.setState({
+            showMenu: true,
+        });
+    }
+
+    //Uuden komponentin valitseminen "+Lisää" napin alta
+    handleClick(compName, e){
+        console.log(compName);
+        this.setState({render:compName});
+    }
+    renderComponent(){
+        switch(this.state.render){
+            case 'rating': return <SelfEvulation/>
+            case 'tools' : return <AddTools/>
+            case 'steps': return <EnterSteps/>
+            case 'picture' : return <AddFile/>
+            case 'newsection1'  : return <NewSection/>
+        }
+    }
+    render () {
+        return (
+            <div>
+
+                {this.state.showMenu
+                    ? (
+                        <div className="AddButton">
+                            { this.renderComponent()}
+                            <button onClick={this.handleClick.bind(this, 'rating')}>Itsearvionti</button>
+                            <button onClick = {this.handleClick.bind(this, 'tools')} > Työkalut </button>
+                            <button onClick={this.handleClick.bind(this, 'steps')}>Vaiheet</button>
+                            <button onClick = {this.handleClick.bind(this, 'picture')} > lisää kuva </button>
+                            <button onClick = {this.handleClick.bind(this, 'newsection1')} > Lisää uusi osio </button>
+                        </div>
+                    ) : (null)}
+                <button className="Lisaa" onClick={this.showMenu}>+Lisää</button>
+            </div>
+        );
+    }
+}
 
 //Modaalin sisältö kasattuna
 export class NewButton extends Component {
+    state = {
+        open: false,};
 
     // lähetetään kaikki tiedot savedValues
     handleSubmit(e) {
         e.preventDefault();
         sanna.sendToDb(savedValues);
-    }
+    };
+
+    onCloseModal = () => {
+        this.setState({ open: false });
+    };
+
+    onOpenModal = () => {
+        this.setState({ open: true });
+    };
 
     render() {
+        const { open } = this.state;
         return (
-            <ModalButton
-                buttonClassName="New clickable"
-                windowClassName="window-container"
-                modal={({ closeModal }) => (
+            <div>
+                <button className="New" onClick={this.onOpenModal}><h1> + Lisää uusi osaaminen </h1></button>
+                <Modal open={open} onClose={this.onCloseModal} >
                     <form className="NewModal" onSubmit={this.handleSubmit}>
                         <div><SelectCategory/></div>
                         <div><NewTitle/></div>
-                        <div><SelfEvulation/></div>
-                        <div><AddTools/></div>
-                        <div><EnterSteps/></div>
-                        <div>
-                            <input type="file" className="AddPicture"></input>
-                        </div>
-                        <button className="Modal" type="submit" onClick={closeModal}><h3>Tallenna</h3></button>
+                        <div><AddButton/></div>
+                        <button className="Modal" type="submit"><h3>Tallenna</h3></button>
                     </form>
-                )}>
-                <h1> + Lisää uusi osaaminen </h1>
-            </ModalButton>
+                </Modal>
+            </div>
         );
     }
 }

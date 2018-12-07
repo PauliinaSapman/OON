@@ -173,10 +173,6 @@ textarea {
     margin: 0.3rem;
 }
 
-.NewTitleMain .header {
-
-}
-
 .NewTitleMain .header button {
     padding: 10px;
     font-size: 16px;
@@ -197,7 +193,7 @@ textarea {
     padding: 10px;
     font-size: 16px;
     border: 2px solid #4B8CAB;
-    width: 80%;
+    width: 95%;
 }
 
 .AddToolsMain .header button {
@@ -240,6 +236,34 @@ textarea {
 }
 
 .EnterStepsMain .header textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #4B8CAB;
+    margin-top: 10px;
+}
+.Lisaa {
+    padding: 10px;
+    font-size: 16px;
+    margin: 1px;
+    margin-right: 0px;
+    background-color: #4B8CAB;
+    color: #F0F0F0;
+    border: 1px solid #3b5a78;
+    border-radius: 8px;
+}
+
+.AddButton button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 1px;
+    margin-right: 0px;
+    background-color: #4B8CAB;
+    color: #F0F0F0;
+    border: 1px solid #3b5a78;
+    border-radius: 8px;
+}
+
+.NewSection .header textarea {
     padding: 10px;
     font-size: 16px;
     border: 2px solid #4B8CAB;
