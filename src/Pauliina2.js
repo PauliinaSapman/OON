@@ -240,7 +240,7 @@ export class AddButton extends Component {
                             <button onClick = {this.handleClick.bind(this, 'newsection1')} > Lisää uusi osio </button>
                         </div>
                     ) : (null)}
-                <button className="Lisaa"git add . onClick={this.showMenu}>+Lisää</button>
+                <button className="Lisaa" onClick={this.showMenu}>+Lisää</button>
             </div>
         );
     }
