@@ -1,0 +1,130 @@
+/*
+Värit:
+headerin sininen #4B8CAB
+nappulan vihree #47C786
+vaalea sininen #E9ECF0
+taustan vaalea harmaa #F0F0F0
+tummanliila(autot) #590375
+tummanvihreä(ruoka) #136F63
+tummanisininen(siivous) #395C89
+tummanpunainen(it) #89023E
+keltainen(rakennus) #FFBA5C
+ */
+
+.App {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.Header {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: #4B8CAB;
+    box-shadow: 0px 0px 33px -3px rgba(0,0,0,0.75);
+    z-index: 23;
+    height: 4rem;
+}
+
+.Header h1 {
+    color: #E9ECF0;
+}
+
+.Main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 1rem;
+    background-color: #F0F0F0;
+}
+
+.SkillList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.Skill {
+    display: flex;
+    flex-direction: row;
+    margin: 0.5rem;
+    padding:0;
+    background-color: white;
+    box-shadow: 0px 0px 13px -6px rgba(0,0,0,0.75);
+    border-radius:8px;
+}
+
+.skillColorTag {
+    margin-left: 0;
+    height: inherit;
+    width: 1.5rem;
+    border-radius:8px 0 0 8px;
+}
+
+.New {
+    color: white;
+    background-color: #47C786;
+    border-radius: 8px;
+    margin: 1%;
+}
+
+.ominaisuus {
+    background-color: white;
+    color: black;
+    border-radius: 8px;
+    position: absolute;
+    right: 1%;
+}
+
+.tallenna {
+    background-color: #47C786;
+    color: white;
+    border-radius: 8px;
+    position: absolute;
+    right: 1%;
+    bottom: 1%;
+}
+
+.skillContent h3, .Skill p, .skillContent h5 {
+    margin: 0.3rem;
+}
+
+.skillContent {
+    width: 100%;
+}
+
+.postTop {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.postOpen {
+    width: 10%;
+    display: flex;
+    align-items: center;
+}
+textarea {
+    outline: none;
+    resize: none;
+    overflow: auto;
+    width: 95% !important;
+    padding: 0.5rem;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.selectUserButton {
+    width: 100%;
+    height: 100%;
+}
+
+.userHeadlines {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
