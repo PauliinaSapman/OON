@@ -142,3 +142,16 @@ export function setCommentSeen(postid, commentid) {
         seen: 'true'
     });
 }
+
+export function saveProfile(userid, fName, lName, pic, email, phone) {
+    const ref = firebase.database().ref('profile/' + userid + '');
+
+    ref.update(
+        {
+            fName: fName,
+            lName: lName,
+            pic: pic,
+            email: email,
+            phone: phone
+        });
+}

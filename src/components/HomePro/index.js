@@ -13,7 +13,7 @@ import "react-tabs/style/react-tabs.css";
 function LogOut () {
     return (
         <button>
-            <Link to={ROUTES.LANDING}>Log Out</Link>
+            <Link to={ROUTES.LANDING}>Kirjaudu ulos</Link>
         </button>
     );
 }
@@ -171,7 +171,7 @@ class Users extends Component {
         if(this.state.content === false){
             return (
                 <div>
-                    <button onClick={this.changeButtonState.bind(this)}>Takaisin</button>
+                    <button className="returnButton clickable greenButton" onClick={this.changeButtonState.bind(this)}>Takaisin</button>
                     <Posts userid={this.state.userid}/>
                 </div>
             )

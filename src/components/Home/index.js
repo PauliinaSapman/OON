@@ -164,13 +164,14 @@ class ShareButton extends Component {
         this.setState({selected: option});
     };
 
-
+/*
     checked = () => {
         if (titleArray.length === 0) {
             return checks;
         }
         return titleArray;
     };
+    */
 
     send = () => {
         let to = this.state.selected;
