@@ -11,6 +11,7 @@ tummanpunainen(it) #89023E
 keltainen(rakennus) #FFBA5C
  */
 
+/*
 .App {
     display: flex;
     flex-direction: column;
@@ -116,6 +117,8 @@ textarea {
 .clickable {
     cursor: pointer;
 }
+*/
+
 
 .selectUserButton {
     width: 100%;
@@ -127,4 +130,9 @@ textarea {
     flex-direction: column;
     justify-content: center;
     text-align: center;
+}
+
+.greenButton {
+    background-color: #47C786 !important;
+    color: white !important;
 }
