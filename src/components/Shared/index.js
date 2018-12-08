@@ -28,13 +28,16 @@ function Profile(props) {
     if (isLoggedIn) {
         return <div className='sharedHeader'>
 
+            <div className="sharedHeaderItem">
+                <img src={props.profile.pic}/>
+            </div>
 
             <div className="sharedHeaderItem">
                 <h4><i className="fas fa-user-alt"></i> {props.profile.fName} {props.profile.lName}</h4>
                 <h4><i className="fas fa-envelope"></i> {props.profile.email}</h4>
                 <h4><i className="fas fa-phone"></i> {props.profile.phone}</h4>
-                <h4 onClick={ () => {
-                    tuomas.makePDF();
+                <h4 onClick={() => {
+                    tuomas.makePDF({fName: props.profile.fName, lName: props.profile.lName,});
                 }} className="downloadPDFBtn" id="ignorePDF1"><i className="fas fa-download"></i> Lataa PDF</h4>
             </div>
 
@@ -49,10 +52,26 @@ function Profile(props) {
 function SharedSkillSectionCheck(props) {
     const doesExist = props.content;
     if (doesExist) {
-        return (<div className="sharedSkillContentSection innerSection">
-            <h4>{props.title}</h4>
-            <p>{props.content}</p>
-        </div>);
+        if (props.title === 'Kuvat') {
+            return (<div className="sharedSkillContentSection innerSection">
+                <div className="skillPicture">
+                    <img src={props.content}/>
+                </div>
+                <div className="skillPictureHidden">
+                    <img src={props.content}/>
+                </div>
+
+
+            </div>);
+        } else {
+            return (<div className="sharedSkillContentSection innerSection">
+                <h4>{props.title}</h4>
+                <p>{props.content}</p>
+
+            </div>);
+        }
+
+
     } else {
         return null;
     }
@@ -67,9 +86,11 @@ function SkillShared(props) {
 
                     <SharedSkillSectionCheck title={"Työkalut"} content={props.skillInfo.tools}/>
 
-                    <SharedSkillSectionCheck title={"Tyovaiheet"} content={props.skillInfo.steps}/>
+                    <SharedSkillSectionCheck title={"Työvaiheet"} content={props.skillInfo.steps}/>
 
                     <SharedSkillSectionCheck title={"Muuta"} content={props.skillInfo.newsection1}/>
+
+                    <SharedSkillSectionCheck title={"Kuvat"} content={props.skillInfo.picture}/>
                 </div>
 
             </div>
@@ -78,6 +99,8 @@ function SkillShared(props) {
 }
 
 function SkillsListShared(props) {
+
+
     let postArray = props.skillsData;
 
     // Jos objekti on tyhjä, annetaan sille arvo. Näin käy kun tietokannasta ei ole haettu riittävän nopeasti.
@@ -92,6 +115,8 @@ function SkillsListShared(props) {
             {postArray.map((r, post) => {
                 return <SkillShared key={post} skillInfo={r} id={post}/>
             })}
+
+
         </ul>
     );
 }
@@ -124,6 +149,7 @@ class Shared extends PureComponent {
         const {
             id
         } = this.props;
+
 
         let profileRef = firebase.database().ref();
         profileRef.child('profile/').orderByChild('urlId').equalTo(id).on('value', snap => {
@@ -181,7 +207,9 @@ class Shared extends PureComponent {
     }
 
 
+
     render() {
+
 
         return (
             <div className='Shared'>
@@ -198,6 +226,7 @@ class Shared extends PureComponent {
 
             </div>
         );
+
     }
 }
 

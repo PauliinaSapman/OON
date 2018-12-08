@@ -2,19 +2,25 @@ import React from 'react';
 
 import {Link} from 'react-router-dom';
 
+import './LogIn.css';
+
 import * as ROUTES from '../../constants/routes';
 import * as tuomas from '../../tuomas.js';
 
 
 function LogIn() {
     return (
-        <div className='LogIn'>
-            <h1>This is Login</h1>
-            <button><Link to={ROUTES.HOME}>Kirjaudu käyttäjänä</Link></button>
-            <button><Link to={ROUTES.HOMEPRO}>Kirjaudu ohjaavana ammattilaisena</Link></button><Link to={ROUTES.HOMEPRO}></Link>
-            <button onClick={ () => {
+        <div className="LogIn">
+
+            <div className='logIn'>
+                <h1>Oma Osaaminen Näkyväksi</h1>
+                <button className="loginButton"><Link to={ROUTES.HOME}><h3>Kirjaudu käyttäjänä</h3></Link></button>
+                <button className="loginButton"><Link to={ROUTES.HOMEPRO}><h3>Kirjaudu ohjaavana ammattilaisena</h3>
+                </Link></button>
+                {/*<button onClick={ () => {
                 tuomas.randomizeUrl();
-            }}><h3>Generate url</h3></button>
+            }}><h3>Generate url</h3></button>*/}
+            </div>
         </div>
 
     );

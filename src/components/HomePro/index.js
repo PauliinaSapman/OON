@@ -9,10 +9,11 @@ import {getColour, Comments} from "../Home";
 import {Tab, TabList, TabPanel, Tabs} from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import {Profile} from "../Profile";
+import logo from "../../OON.svg";
 
 function LogOut () {
     return (
-        <button>
+        <button className="LogOut">
             <Link to={ROUTES.LANDING}>Kirjaudu ulos</Link>
         </button>
     );
@@ -39,8 +40,10 @@ function DbButton() {
 function Header() {
     return (
         <div className="Header">
-            <h1>OON - ohjaavan ammattilaisen sivu</h1>
-            <LogOut/>
+            <img src={logo} width="30%" height="100%" />
+            <div className="headerButtons">
+                <LogOut/>
+            </div>
         </div>
     );
 }
@@ -52,9 +55,9 @@ function Header() {
  */
 function getColor(seen) {
     if(seen === 'false'){
-        return 'red';
+        return '#e48255';
     }
-    return 'green';
+    return '#47C786';
 }
 
 /**
@@ -233,6 +236,7 @@ function GetRating (props) {
         return(
             <div>
                 <h4>Itsearviointi</h4>
+                <br></br>
                 <p>{props.info.rating} / 4</p>
                 <br></br>
             </div>
@@ -246,6 +250,7 @@ function GetPicture (props) {
         return(
             <div>
                 <img className="postImg" src={props.info.picture}/>
+                <br></br>
                 <br></br>
             </div>
         );
@@ -277,7 +282,7 @@ class PostForm extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="postFormPro">
                 <GetTools info={this.props.info}/>
                 <GetSteps info={this.props.info}/>
                 <GetRating info={this.props.info}/>
@@ -458,8 +463,10 @@ export class Posts extends Component {
                 <div>
                     <div className="userHeadlines">
                         <h2>Henkilön {this.state.fName} {this.state.lName} osaaminen</h2>
-                        <p>Viesti:</p>
-                        <p>{this.state.message}</p>
+                        <div className="proMessageContainer">
+                            <p className="messageHeader">Viesti:</p>
+                            <p>{this.state.message}</p>
+                        </div>
                     </div>
                     <SkillList posts={this.state.posts}/>
                 </div>

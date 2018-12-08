@@ -1,6 +1,5 @@
 /*
 Värit:
-
 headerin sininen #4B8CAB
 nappulan vihree #47C786
 vaalea sininen #E9ECF0
@@ -10,7 +9,7 @@ tummanvihreä(ruoka) #136F63
 tummanisininen(siivous) #395C89
 tummanpunainen(it) #89023E
 keltainen(rakennus) #FFBA5C
-
+oranssi(musiikki) #e48255
  */
 
 
@@ -146,6 +145,10 @@ keltainen(rakennus) #FFBA5C
     width: calc(100% - 1.111rem) !important;
     padding: 0.5rem;
     height: 5rem;
+}
+
+.editPostFormWrap input {
+    padding: 0.5rem;
 }
 
 .postFormTitle {
@@ -332,6 +335,42 @@ keltainen(rakennus) #FFBA5C
     color: red;
     border: 0;
     cursor: pointer;
+    margin: 1rem;
+}
+
+.radioButton {
+    margin-left: 0.5rem;
+    margin-right: 1rem;
+}
+
+.savePostButton {
+    border: none;
+    width: 6rem;
+    height: 2rem;
+    border-radius: 8px;
+    background-color: #47C786;
+    color: white;
+    margin-top: 1rem;
+}
+
+.sendCommentInput {
+    margin: 1rem;
+    padding: 0.5rem;
+    width: calc(100% - 10.5rem);
+}
+
+.sendCommentButton {
+    border: none;
+    width: 6rem;
+    height: 2rem;
+    border-radius: 8px;
+    background-color: #4B8CAB;
+    color: white;
+    margin-top: 1rem;
+}
+
+.ui-dialog-container {
+    padding: 1rem;
 }
 
 div.ui-dialog {
@@ -342,7 +381,14 @@ div.ui-dialog {
 
 .dialogButton {
     margin: 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #F0F0F0;
+    width: 3rem;
+    height: 2rem;
 }
+
+button:focus {outline:0;}
 
 .shareButton {
     background-color: white;
@@ -378,10 +424,15 @@ div.ui-dialog {
 
 .commentLeft {
     width: 90%;
+    margin-left: 1rem;
 }
 
 .commentRight {
     width: 10%;
+}
+
+.commentWrap {
+    margin-bottom: 1rem;
 }
 
 .checkmarkIcon {
@@ -433,6 +484,107 @@ div.ui-dialog {
     padding: 1rem;
 }
 
+
+
+/* Tuomaan alue */
+
+
+
+.sharePDFTextAreaContainer {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sharePDFTextAreaContainer textarea {
+    outline: none;
+    resize: none;
+
+    vertical-align: center;
+
+    height: 2rem;
+    width: calc(100% - 3rem);
+
+    border-radius:  8px 0 0 8px;
+    border: 2px solid #4b8cab;
+   background-color: #f0f0f0;
+
+
+}
+
+
+.sharePDFTextAreaContainer textarea::-webkit-input-placeholder {
+    vertical-align: center;
+    font-size: 150%;
+    padding: 0.5rem;
+}
+
+.sharePDFTextAreaContainer textarea:-moz-placeholder { /* Firefox 18- */
+    vertical-align: center;
+    font-size: 150%;
+    padding: 0.5rem;
+}
+
+.sharePDFTextAreaContainer textarea::-moz-placeholder {  /* Firefox 19+ */
+    vertical-align: center;
+    font-size: 150%;
+    padding: 0.5rem;
+}
+
+.sharePDFTextAreaContainer textarea:-ms-input-placeholder {
+    vertical-align: center;
+    font-size: 150%;
+    padding: 0.5rem;
+}
+
+
+.copyToClipboard {
+    border: 2px solid #4b8cab;
+    border-radius: 0 8px 8px 0;
+
+    color: #f0f0f0;
+    background-color: #4b8cab;
+
+    width: 2rem;
+    height: 2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fa-paste {
+   transform: scale(1.5);
+}
+
+
+.sharePDFSection {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+
+    margin-top: 1rem;
+
+}
+
+.sharePDFSection button {
+    background-color: #dc2411;
+
+    border-radius: 8px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 2rem;
+
+    width: calc(100% - 1rem + 4px);
+}
+
+
+
 @media only screen and (max-width: 600px) {
     .postImg {
         width: 100%;
@@ -442,5 +594,21 @@ div.ui-dialog {
     div.c-modal--window.modal-fade-on-enter.window-container {
         width: 70%!important;
         height: 70%!important;
+    }
+
+    .savePostButtonWrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+
+    .sendCommentInput {
+        width: calc(80% - 0.5rem);
+    }
+
+    .sendCommentButton {
+        margin-top: 0;
+        margin-left: calc(50% - 3rem);
     }
 }
