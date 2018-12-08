@@ -16,16 +16,18 @@ import {Modal, ModalButton} from "react-modal-button";
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import Tooltip from 'react-tooltip-lite';
+import logo from '../../OON.svg';
+
 
 import commenticon from '../../iconfinder_Streamline-59_185079.png'
 
 function LogOut() {
     return (
-        <button>
-            <Link to={ROUTES.LANDING}>Kirjaudu ulos</Link>
-        </button>
+        //<button className="LogOut"><Link to={ROUTES.LANDING}>Kirjaudu ulos</Link></button>
+        <Link to={ROUTES.LANDING}><button className="LogOut">Kirjaudu Ulos</button></Link>
     );
 }
+
 
 
 // Lähetetään esimerkkiosaaminen, testikäyttöön
@@ -310,9 +312,8 @@ class ShareButton extends Component {
 
 function Profile() {
     return (
-        <button>
-            <Link to={ROUTES.PROFILE}>Profiili</Link>
-        </button>
+        //<button className="Profile"><Link to={ROUTES.PROFILE}>Profiili</Link></button>
+        <Link to={ROUTES.PROFILE}><button className="Profile"><a>Profiili</a></button></Link>
     );
 }
 
@@ -321,14 +322,12 @@ function Profile() {
 function Header() {
     return (
         <div className="Header">
-            <h1>OON</h1>
-            <div className="headerRight">
-                <LogOut/>
+            <img src={logo} width="30%" height="100%" />
                 <div className="headerButtons">
                     <Profile/>
                     <ShareButton/>
+                    <LogOut/>
                 </div>
-            </div>
         </div>
     );
 }

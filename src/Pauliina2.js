@@ -92,7 +92,7 @@ export class NewTitle extends Component {
 export class SelfEvulation extends Component {
 
     handleChange(selectedOption) {
-        const value = selectedOption.label;
+        const value = selectedOption.target.value;
         setValues('rating', value);
     }
 
@@ -194,6 +194,9 @@ export  class NewSection extends Component {
     }}
 
 //Lisää uusi osaamisen määrittely
+
+let contents = [];
+
 export class AddButton extends Component {
     constructor() {
         super();
@@ -202,6 +205,7 @@ export class AddButton extends Component {
         }
 
         this.showMenu = this.showMenu.bind(this);
+        this.renderComponent = this.renderComponent.bind(this);
     }
     showMenu(event) {
         event.preventDefault();
@@ -213,10 +217,56 @@ export class AddButton extends Component {
 
     //Uuden komponentin valitseminen "+Lisää" napin alta
     handleClick(compName, e){
+        e.preventDefault();
         console.log(compName);
-        this.setState({render:compName});
+        contents[contents.length] = compName;
+        console.log(contents);
+        //  this.setState({render:compName});
+        this.setState({render: contents});
     }
     renderComponent(){
+        let r = contents;
+        let s = <div></div>
+        let rating = <div></div>;
+        let tools = <div></div>;
+        let steps = <div></div>;
+        let picture = <div></div>;
+        let newsection1 = <div></div>;
+
+        if(r) {
+            r.forEach((render) => {
+                console.log(render);
+                switch (render) {
+                    case 'rating':
+                        //  return <SelfEvulation/>
+                        rating = <SelfEvulation/>
+                        break;
+                    case 'tools' :
+                        //  return <AddTools/>
+                        tools = <AddTools/>
+                        break;
+                    case 'steps':
+                        //  return <EnterSteps/>
+                        steps = <EnterSteps/>
+                        break;
+                    case 'picture' :
+                        //  return <AddFile/>
+                        picture = <AddFile/>
+                        break;
+                    case 'newsection1'  :
+                        // return <NewSection/>
+                        newsection1 = <NewSection/>
+                        break;
+
+
+                }
+                console.log(s);
+            });
+
+            let n = <div>{rating}{tools}{steps}{picture}{newsection1}</div>;
+
+            return <div>{n}</div>;
+        }
         switch(this.state.render){
             case 'rating': return <SelfEvulation/>
             case 'tools' : return <AddTools/>
@@ -268,14 +318,14 @@ export class NewButton extends Component {
     render() {
         const { open } = this.state;
         return (
-            <div>
+            <div className="kys">
                 <button className="New" onClick={this.onOpenModal}><h1> + Lisää uusi osaaminen </h1></button>
                 <Modal open={open} onClose={this.onCloseModal} >
                     <form className="NewModal" onSubmit={this.handleSubmit}>
                         <div><SelectCategory/></div>
                         <div><NewTitle/></div>
                         <div><AddButton/></div>
-                        <button className="Modal" type="submit"><h3>Tallenna</h3></button>
+                        <button className="ModalSave" type="submit" onClick={this.onCloseModal}>Tallenna</button>
                     </form>
                 </Modal>
             </div>
