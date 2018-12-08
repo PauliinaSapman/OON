@@ -9,10 +9,12 @@ import * as tuomas from '../../tuomas.js';
 import * as ROUTES from "../../constants/routes";
 import {Link} from 'react-router-dom';
 import {Collapse} from 'react-collapse';
-import {Form, Text, Scope, TextArea, Option} from 'informed';
+import {Form, Text, Scope, TextArea, Option, RadioGroup, Radio} from 'informed';
 import {AddTools, EnterSteps, NewButton, NewTitle, SelectCategory, SelfEvulation} from "../../Pauliina2";
 import Dialog from 'react-dialog'
 import {Modal, ModalButton} from "react-modal-button";
+import logo from '../../OON.svg';
+
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import Tooltip from 'react-tooltip-lite';
@@ -21,7 +23,7 @@ import commenticon from '../../iconfinder_Streamline-59_185079.png'
 
 function LogOut() {
     return (
-        <button>
+        <button className="LogOut">
             <Link to={ROUTES.LANDING}>Kirjaudu ulos</Link>
         </button>
     );
@@ -310,7 +312,7 @@ class ShareButton extends Component {
 
 function Profile() {
     return (
-        <button>
+        <button className="Profile">
             <Link to={ROUTES.PROFILE}>Profiili</Link>
         </button>
     );
@@ -321,13 +323,11 @@ function Profile() {
 function Header() {
     return (
         <div className="Header">
-            <h1>OON</h1>
-            <div className="headerRight">
+            <img src={logo} width="30%" height="100%" />
+            <div className="headerButtons">
+                <Profile/>
+                <ShareButton/>
                 <LogOut/>
-                <div className="headerButtons">
-                    <Profile/>
-                    <ShareButton/>
-                </div>
             </div>
         </div>
     );
@@ -424,25 +424,58 @@ class PostForm extends Component {
         ];
 
         return (
-            <Form id="postForm" onSubmit={this.handleSubmit}>
-                <div>
+            <Form id="postForm" className="postForm" onSubmit={this.handleSubmit}>
+                <div className="editPostFormWrap">
                     {/*<p>{this.props.id}</p>*/}
                     <Select placeholder={this.state.selected} value={this.state.selected} onChange={this.handleChange}
-                            options={Kategoriat}>Kategoria</Select>
+                            options={Kategoriat} className="postFormSelect"  theme={(theme) => ({
+                        ...theme,
+                        borderRadius: 0,
+                        colors: {
+                            ...theme.colors,
+                            primary25: '#F0F0F0',
+                            primary: 'none',
+                            primary75: '#E9ECF0',
+                            primary50: '#E9ECF0'
+                        },
+                    })}>Kategoria</Select>
                     <br></br>
-                    <TextArea field="title" id="textarea-title" initialValue={this.props.info.title}/>
+                    <label htmlFor="textarea-title">Otsikko:</label>
+                    <br></br>
+                    <TextArea field="title" id="textarea-title" className="postFormTitle" initialValue={this.props.info.title}/>
+                    <br></br>
                     <br></br>
                     <label htmlFor="textarea-tools">Työvälineet:</label>
                     <br></br>
                     <TextArea field="tools" id="textarea-tools" initialValue={this.props.info.tools}/>
                     <br></br>
+                    <br></br>
                     <label htmlFor="textarea-steps">Työvaiheet:</label>
                     <br></br>
                     <TextArea field="steps" id="textarea-steps" initialValue={this.props.info.steps}/>
                     <br></br>
-                    <Text field="rating" id="text-rating" initialValue={this.props.info.rating}/>
+                    <br></br>
+                    {/*<Text field="rating" id="text-rating" initialValue={this.props.info.rating}/>*/}
+                    <label htmlFor="radio-rating">Itsearviointi: </label>
+                    <br></br>
+                    <RadioGroup field="rating" id="radio-rating" initialValue={this.props.info.rating}>
+                        <label htmlFor="radio-one">1</label>
+                        <Radio value="1" id="radio-one" />
+                        <label htmlFor="radio-two">2</label>
+                        <Radio value="2" id="radio-two" />
+                        <label htmlFor="radio-three">3</label>
+                        <Radio value="3" id="radio-three" />
+                        <label htmlFor="radio-four">4</label>
+                        <Radio value="4" id="radio-four" />
+                    </RadioGroup>
+                    <br></br>
+                    <br></br>
+                    <img src={this.props.info.picture} alt='' className="postImg"/>
+                    <br></br>
+                    <label htmlFor="text-picture">Kuvan url: </label>
                     <br></br>
                     <Text field="picture" id="text-picture" initialValue={this.props.info.picture}/>
+                    <br></br>
                     <br></br>
                     {/*TODO otsikko muokattavissa, on käyttäjän lisäämä uusi osio*/}
                     <label htmlFor="textarea-newsection1">Muuta:</label>

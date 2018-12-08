@@ -83,7 +83,7 @@ class UserInfo extends Component{
         super(props);
         this.state = {
             userinfo : {},
-            email: 'masa.testi@gmail.com',
+            email: '',
             phone: '',
             editProfile: <div>
                 <div className="profileName">
@@ -118,7 +118,8 @@ class UserInfo extends Component{
 
     componentDidMount(){
         const me = this;
-        const userid = 'userid';
+        let userid = 'userid';
+
         const ref = firebase.database().ref('profile/'+userid+'');
 
         ref.once('value', function(snapshot)
@@ -242,11 +243,11 @@ function Header() {
     );
 }
 
-function Profile() {
+export function Profile(user) {
     return (
         <div className="profileMain">
             <Header/>
-            <UserInfo/>
+            <UserInfo userid={user}/>
         </div>
 
     );

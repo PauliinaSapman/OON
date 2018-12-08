@@ -22,6 +22,7 @@ keltainen(rakennus) #FFBA5C
 }
 
 .Header {
+    /*
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -30,10 +31,17 @@ keltainen(rakennus) #FFBA5C
     box-shadow: 0px 0px 33px -3px rgba(0,0,0,0.75);
     z-index: 23;
     height: 4rem;
+    */
+    height: 7rem;
+    background-color: #4B8CAB;
+    box-shadow: 0px 0px 33px -3px rgba(0,0,0,0.75);
+    z-index: 23;
 }
 
-.Header h1 {
+.oon {
+    font-size: 3rem;
     color: #E9ECF0;
+    padding-right: 2rem;
 }
 
 .Main {
@@ -42,12 +50,17 @@ keltainen(rakennus) #FFBA5C
     flex-grow: 1;
     padding: 1rem;
     background-color: #F0F0F0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top:0;
 }
 
 .SkillList {
-    margin: 0;
-    padding: 0;
     list-style: none;
+}
+
+.kys {
+    padding-top: 0.5rem;
 }
 
 .Skill {
@@ -65,14 +78,16 @@ keltainen(rakennus) #FFBA5C
     height: inherit;
     width: 1.5rem;
     border-radius:8px 0 0 8px;
+    flex-shrink: 0;
 }
 
 
 .New {
+    padding: 1rem;
     color: white;
     background-color: #47C786;
     border-radius: 8px;
-    margin: 1%;
+    width: 98%;
 }
 
 .ominaisuus {
@@ -115,14 +130,36 @@ keltainen(rakennus) #FFBA5C
     margin-right: 1rem;
 }
 
-textarea {
+.postForm {
+    display: flex;
+    justify-content: center;
+}
+
+.editPostFormWrap {
+    width: 80%;
+}
+
+.editPostFormWrap textarea {
     outline: none;
     resize: none;
     overflow: auto;
-    width: 95% !important;
+    width: calc(100% - 1.111rem) !important;
     padding: 0.5rem;
+    height: 5rem;
 }
 
+.postFormTitle {
+    height: 2rem !important;
+}
+
+.postFormSelect {
+    width: 100% !important;
+}
+
+.postImg {
+    width: 50%;
+    max-height: 50rem;
+}
 
 .headerRight {
     display: flex;
@@ -134,9 +171,15 @@ textarea {
 .headerButtons {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    float: right;
+    margin:0;
 }
 
+.headerButtons button a {
+    text-decoration: none;
+}
+
+/*
 .Main {
     display: flex;
     flex-direction: column;
@@ -144,6 +187,7 @@ textarea {
     padding: 1rem;
     background-color: #F0F0F0;
 }
+*/
 
 .New {
     color: white;
@@ -160,6 +204,7 @@ textarea {
     padding-left: 5%;
 }
 
+/*
 .Modal {
     background-color: #47C786;
     color: white;
@@ -167,6 +212,19 @@ textarea {
     position: absolute;
     right: 1%;
     bottom: 1%;
+}
+*/
+
+.ModalSave {
+    margin-top: 1rem;
+    background-color: #47C786;
+    border: none;
+    border-radius: 8px;
+    width: 6rem;
+    height: 2rem;
+    color: white;
+    align-self: center;
+    float: left;
 }
 
 .skillContent h3, .Skill p {
@@ -220,13 +278,12 @@ textarea {
 }
 
 .EnterStepsMain .header button {
-    padding: 10px;
-    font-size: 16px;
+    width: 6rem;
+    height: 2rem;
     margin: 1px;
     margin-right: 0px;
     background-color: #4B8CAB;
     color: #F0F0F0;
-    border: 1px solid #3b5a78;
     border-radius: 8px;
 }
 
@@ -242,25 +299,25 @@ textarea {
     margin-top: 10px;
 }
 .Lisaa {
-    padding: 10px;
-    font-size: 16px;
-    margin: 1px;
-    margin-right: 0px;
+    margin-top: 1rem;
     background-color: #4B8CAB;
-    color: #F0F0F0;
-    border: 1px solid #3b5a78;
+    border: none;
     border-radius: 8px;
+    width: 6rem;
+    height: 2rem;
+    color: white;
+    align-self: center;
 }
 
 .AddButton button {
-    padding: 10px;
-    font-size: 16px;
     margin: 1px;
     margin-right: 0px;
     background-color: #4B8CAB;
-    color: #F0F0F0;
-    border: 1px solid #3b5a78;
+    color: white;
+    width: 6rem;
+    height: 2rem;
     border-radius: 8px;
+    border: none;
 }
 
 .NewSection .header textarea {
@@ -289,9 +346,14 @@ div.ui-dialog {
 
 .shareButton {
     background-color: white;
-    color: black;
-    border: none;
+    width: 4rem;
+    height: 2rem;
     border-radius: 8px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem;
 }
 
 .flexBetween {
@@ -340,4 +402,45 @@ div.ui-dialog {
 .icon {
     width: 1rem;
     height: 1rem;
+}
+
+.LogOut {
+    background-color: white;
+    width: 4rem;
+    height: 2rem;
+    border-radius: 8px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem;
+}
+.Profile {
+    background-color: white;
+    width: 4rem;
+    height: 2rem;
+    border-radius: 8px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem;
+}
+.Profile a {
+    text-decoration: none;
+}
+.NewModal {
+    padding: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+    .postImg {
+        width: 100%;
+        max-height: 40rem;
+    }
+
+    div.c-modal--window.modal-fade-on-enter.window-container {
+        width: 70%!important;
+        height: 70%!important;
+    }
 }

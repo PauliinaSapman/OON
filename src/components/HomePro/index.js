@@ -8,7 +8,7 @@ import {Collapse} from 'react-collapse';
 import {getColour, Comments} from "../Home";
 import {Tab, TabList, TabPanel, Tabs} from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-
+import {Profile} from "../Profile";
 
 function LogOut () {
     return (
@@ -33,6 +33,7 @@ function DbButton() {
     );
 }
 */
+
 
 // Sivun yläpalkki.
 function Header() {
@@ -66,7 +67,9 @@ class User extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            seen: 'true'
+            seen: 'true',
+            fName: '',
+            lName: ''
         };
     }
 
@@ -88,6 +91,16 @@ class User extends Component{
                 seen:  snap.val()
             });
         });
+
+        const ref = firebase.database().ref('profile/' + this.props.userId + '');
+        console.log(this.props.userId);
+        ref.once('value', snap => {
+            console.log(snap.val());
+            this.setState({
+                fName: snap.val().fName,
+                lName:  snap.val().lName
+            })
+        });
     }
 
     render() {
@@ -98,7 +111,7 @@ class User extends Component{
                 <div className="skillColorTag" style={{backgroundColor : colour}}>
                 </div>
                 <div className="skillContent clickable" onClick={this.props.buttonClick}>
-                    <p className="selectUserButton" onClick={this.handleUserChange}>{this.props.userId}</p> {/*TODO nimen hakeminen databasesta*/}
+                    <p className="selectUserButton" onClick={this.handleUserChange}>{this.state.fName} {this.state.lName}</p>
                 </div>
             </li>
         )
@@ -219,7 +232,8 @@ function GetRating (props) {
     if(props.info.rating){
         return(
             <div>
-                <p>{props.info.rating}</p>
+                <h4>Itsearviointi</h4>
+                <p>{props.info.rating} / 4</p>
                 <br></br>
             </div>
         );
@@ -231,7 +245,7 @@ function GetPicture (props) {
     if(props.info.picture){
         return(
             <div>
-                <p>{props.info.picture}</p>
+                <img className="postImg" src={props.info.picture}/>
                 <br></br>
             </div>
         );
@@ -385,12 +399,15 @@ export class Posts extends Component {
         super(props);
         this.state = {
             posts: {},
-            message: ''
+            message: '',
+            fName: '',
+            lName: ''
         };
     }
 
     componentDidMount(){
         const user = this.props.userid;
+        console.log(user);
         const sharedPosts = firebase.database().ref().child('shareToUser/userid2/'+user+'/posts/');
 
         sharedPosts.on('value', snap => {
@@ -423,6 +440,16 @@ export class Posts extends Component {
                 message: snap.val()
             });
         });
+
+        const ref = firebase.database().ref('profile/' + this.props.userid + '');
+        console.log(this.props.userId);
+        ref.once('value', snap => {
+            console.log(snap.val());
+            this.setState({
+                fName: snap.val().fName,
+                lName:  snap.val().lName
+            })
+        });
     }
 
     render() {
@@ -430,7 +457,7 @@ export class Posts extends Component {
             return (
                 <div>
                     <div className="userHeadlines">
-                        <h2>Henkilön Masa Testi osaaminen</h2>
+                        <h2>Henkilön {this.state.fName} {this.state.lName} osaaminen</h2>
                         <p>Viesti:</p>
                         <p>{this.state.message}</p>
                     </div>
@@ -441,7 +468,7 @@ export class Posts extends Component {
         return (
             <div>
                 <div className="userHeadlines">
-                    <h2>Henkilön Masa Testi osaaminen</h2>
+                    <h2>Henkilön {this.state.fName} {this.state.lName} osaaminen</h2>
                 </div>
                 <SkillList posts={this.state.posts}/>
             </div>

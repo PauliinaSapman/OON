@@ -110,6 +110,10 @@ html {
     padding-left: 1rem;
 }
 
+.skillListWrapper {
+    overflow: auto;
+}
+
 .skillListWrapper h4 {
     margin-bottom: 1rem;
 }
@@ -178,10 +182,6 @@ html {
     .profileInfo {
         width: 90%;
         height: 55%;
-    }
-
-    .skillListWrapper {
-        overflow: auto;
     }
 
     .profileFull h1 {
