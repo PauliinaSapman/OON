@@ -186,7 +186,7 @@ export  class NewSection extends Component {
                 <div className="NewSection">
                     <div className="header" >
                         <form>
-                           <textarea placeholder="Uusi osio" onBlur={this.handleChange}>
+                           <textarea placeholder="Muuta" onBlur={this.handleChange}>
                             </textarea>
                         </form>
                     </div>
@@ -209,6 +209,7 @@ export class AddButton extends Component {
 
         this.showMenu = this.showMenu.bind(this);
         this.renderComponent = this.renderComponent.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
     showMenu(event) {
         event.preventDefault();
@@ -219,11 +220,11 @@ export class AddButton extends Component {
     }
 
     //Uuden komponentin valitseminen "+Lisää" napin alta
-    handleClick(compName, e){
+    handleClick(e, compName){
         e.preventDefault();
-        console.log(compName);
+       // console.log(compName);
         contents[contents.length] = compName;
-        console.log(contents);
+       // console.log(contents);
         //  this.setState({render:compName});
         this.setState({render: contents});
     }
@@ -240,7 +241,7 @@ export class AddButton extends Component {
 
         if(r) {
             r.forEach((render) => {
-                console.log(render);
+                // console.log(render);
                 switch (render) {
                     case 'rating':
                         //  return <SelfEvulation/>
@@ -265,7 +266,7 @@ export class AddButton extends Component {
 
 
                 }
-                console.log(s);
+              //  console.log(s);
             });
 
             let n = <div>{rating}{tools}{steps}{picture}{newsection1}</div>;
@@ -288,14 +289,32 @@ export class AddButton extends Component {
                     ? (
                         <div className="AddButton">
                             { this.renderComponent()}
-                            <button onClick={ this.handleClick.bind(this, 'rating')}>Itsearvionti</button>
-                            <button onClick = {this.handleClick.bind(this, 'tools')} > Työkalut </button>
-                            <button onClick={this.handleClick.bind(this, 'steps')}>Vaiheet</button>
-                            <button onClick = {this.handleClick.bind(this, 'picture')} > lisää kuva </button>
-                            <button onClick = {this.handleClick.bind(this, 'newsection1')} > +Uusi osio </button>
+                            <button className="delButton1" onClick={ (e) => {
+                                this.handleClick(e, 'rating');
+                                document.querySelector('.delButton1').classList.add('hideButton');
+                            }}>Itsearvionti</button>
+                            <button className="delButton2" onClick = { (e) => {
+                                this.handleClick(e, 'tools');
+                                document.querySelector('.delButton2').classList.add('hideButton');
+                            }} >Työkalut </button>
+                            <button className="delButton3" onClick={ (e) => {
+                                this.handleClick(e, 'steps');
+                                document.querySelector('.delButton3').classList.add('hideButton');
+                            }}>Vaiheet</button>
+                            <button className="delButton4"  onClick = { (e) => {
+                                this.handleClick(e, 'picture');
+                                document.querySelector('.delButton4').classList.add('hideButton');
+                            }} >Kuva </button>
+                            <button className="delButton5"  onClick = { (e) => {
+                                this.handleClick(e, 'newsection1');
+                                document.querySelector('.delButton5').classList.add('hideButton');
+                            }} >Muuta</button>
                         </div>
                     ) : (null)}
-                <button className="Lisaa" onClick={this.showMenu }>+Lisää</button>
+                <button className="Lisaa" onClick={ (e) => {
+                    this.showMenu(e);
+                    document.querySelector('.Lisaa').classList.add('hideButton');
+                }}>+Lisää</button>
             </div>
         );
     }
@@ -314,6 +333,7 @@ export class NewButton extends Component {
 
     onCloseModal = () => {
         this.setState({ open: false });
+        contents = []; // tyhjennetään
     };
 
     onOpenModal = () => {

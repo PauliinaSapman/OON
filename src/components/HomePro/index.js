@@ -101,9 +101,9 @@ class User extends Component {
         });
 
         const ref = firebase.database().ref('profile/' + this.props.userId + '');
-        console.log(this.props.userId);
+       // console.log(this.props.userId);
         ref.once('value', snap => {
-            console.log(snap.val());
+           // console.log(snap.val());
             this.setState({
                 fName: snap.val().fName,
                 lName: snap.val().lName
@@ -429,7 +429,7 @@ export class Posts extends Component {
 
     componentDidMount() {
         const user = this.props.userid;
-        console.log(user);
+       // console.log(user);
         const sharedPosts = firebase.database().ref().child('shareToUser/userid2/' + user + '/posts/');
 
         sharedPosts.on('value', snap => {
@@ -464,9 +464,9 @@ export class Posts extends Component {
         });
 
         const ref = firebase.database().ref('profile/' + this.props.userid + '');
-        console.log(this.props.userId);
+       // console.log(this.props.userId);
         ref.once('value', snap => {
-            console.log(snap.val());
+           // console.log(snap.val());
             this.setState({
                 fName: snap.val().fName,
                 lName: snap.val().lName

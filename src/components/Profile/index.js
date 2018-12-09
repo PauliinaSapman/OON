@@ -127,7 +127,7 @@ class UserInfo extends Component{
             let info = snapshot.val();
             if(info){
                 me.setState({userinfo: info});
-                console.log(info);
+                // console.log(info);
             }
             me.setInitialValues();
         });
@@ -150,7 +150,7 @@ class UserInfo extends Component{
     }
 
     showError(e) {
-        console.log(e);
+       // console.log(e);
         if(e.fName){
             alert(e.fName);
         }
