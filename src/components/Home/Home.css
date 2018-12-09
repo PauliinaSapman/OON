@@ -588,6 +588,9 @@ button:focus {outline:0;}
     font-size: 150%;
 }
 
+.hideButton{
+    display: none;
+}
 
 @media only screen and (max-width: 600px) {
     .postImg {

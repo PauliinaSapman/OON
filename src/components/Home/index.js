@@ -806,7 +806,7 @@ class ToggleCollapse extends Component {
                         }
                         else {
                             this.setState({isOpened: true});
-                            this.setState({button: <i class="fas fa-angle-up openPostArrow"></i>});
+                            this.setState({button: <i className="fas fa-angle-up openPostArrow"></i>});
                         }
                     }
                     }>
