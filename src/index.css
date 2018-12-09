@@ -1,16 +1,22 @@
 *,html,body {
     margin:0;
     padding:0;
+
 }
 html, body, #root, .Router{
     height: 100%;
 }
+
 body {
+@import url('https://fonts.googleapis.com/css?family=PT+Mono|Roboto|Source+Sans+Pro:600');
+
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+
 }
 
 code {
@@ -20,5 +26,5 @@ code {
 
 .routerContainer {
     height: 100%;
-
 }
+

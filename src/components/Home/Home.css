@@ -12,25 +12,18 @@ keltainen(rakennus) #FFBA5C
 oranssi(musiikki) #e48255
  */
 
-
-
 .App {
     display: flex;
     flex-direction: column;
+    align-items: center;
     height: 100%;
 }
 
+/*  Headerin tyylit alku*/
 .Header {
-    /*
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    background-color: #4B8CAB;
-    box-shadow: 0px 0px 33px -3px rgba(0,0,0,0.75);
-    z-index: 23;
-    height: 4rem;
-    */
+    font-family: 'Roboto', sans-serif;
+
+    color: #f0f0f0;
 
     display: flex;
 
@@ -39,21 +32,73 @@ oranssi(musiikki) #e48255
     left: 0;
     height: 3.5rem;
     background-color: #4B8CAB;
-    box-shadow: 0px 0px 33px -3px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 33px -3px rgba(0, 0, 0, 0.55);
     z-index: 23;
 
     width: 100%;
 }
 
-
 .logoContainer {
     height: 100%;
     padding-left: 0.3rem;
+    display: flex;
+    align-items: center;
+    font-family: 'PT Mono', monospace;
+
 }
 
 .logoContainer img {
+    padding-top: 0.5rem;
+
+    height: 100%;
+
+}
+
+.headerButtons {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    flex-grow: 1;
+
+    margin: 0;
+}
+
+.headerButtons button a {
+    text-decoration: none;
+}
+
+.headerButtonContainer {
+    display: flex;
+    align-items: center;
     height: 100%;
 }
+
+.headerButton {
+    height: 60%;
+
+    background-color: transparent;
+
+    padding: 0.7rem;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-left: 1px solid rgba(240, 240, 240, 0.35);
+
+}
+
+.headerButtonLink {
+    height: 1rem;
+
+    color: #E9ECF0;
+
+    font-size: 100%;
+}
+
+/* headerin tyylit loppu*/
 
 .oon {
     font-size: 3rem;
@@ -70,51 +115,66 @@ oranssi(musiikki) #e48255
     background-color: #F0F0F0;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    padding-top:0;
+    padding-top: 0;
 }
 
 .SkillList {
     list-style: none;
 }
 
-.kys {
-    margin-top: 3.3rem;
-    display: flex;
-    justify-content: center;
-    padding-top: 0.5rem;
-
-    flex-shrink: 0;
-}
-
 .Skill {
     display: flex;
     flex-direction: row;
-    margin: 0.5rem;
-    padding:0;
+    margin: 0.5rem 0;
+    padding: 0;
     background-color: white;
-    box-shadow: 0px 0px 13px -6px rgba(0,0,0,0.75);
-    border-radius:8px;
+    box-shadow: 0px 0px 13px -6px rgba(0, 0, 0, 0.75);
+    border-radius: 8px;
+}
+
+.Skill:nth-child(1) {
+    margin-top: 0;
 }
 
 .skillColorTag {
     margin-left: 0;
     height: inherit;
     width: 1.5rem;
-    border-radius:8px 0 0 8px;
+    border-radius: 8px 0 0 8px;
     flex-shrink: 0;
 }
 
+.kys {
+    margin-top: 4.5rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+
+    flex-shrink: 0;
+}
 
 .New {
-    padding: 1rem;
-    color: white;
-    background-color: #47C786;
+    font-family: 'Source Sans Pro', sans-serif;
+    padding: .5rem 1rem .6rem 1rem;
+    color: #f0f0f0;
+    background-color: #47c786;
+
     border-radius: 8px;
+
+    font-size: 125%;
+
     width: calc(100% - 1rem);
-    height: 4rem;
+
+    box-shadow: 0px 0px 23px -13px rgba(0, 0, 0, 0.55);
 
     border: none;
+}
 
+div.kys > button > h2 > i {
+
+    transform: scale(0.75);
 }
 
 .ominaisuus {
@@ -199,47 +259,6 @@ oranssi(musiikki) #e48255
     width: 7rem;
 }
 
-.headerButtons {
-
-    display: flex;
-    flex-direction: row;
-
-    justify-content: flex-end;
-
-    flex-grow: 1;
-
-
-
-    margin:0;
-}
-
-.headerButtons button a {
-    text-decoration: none;
-}
-
-
-.headerButtonContainer {
-    display: flex;
-    height: 100%;
-}
-
-.headerButton {
-    height: 100%;
-
-    background-color: #4b8cab;
-
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-}
-
-.headerButtonLink {
-    height: 1rem;
-}
-
-
 /*
 .Main {
     display: flex;
@@ -249,14 +268,6 @@ oranssi(musiikki) #e48255
     background-color: #F0F0F0;
 }
 */
-
-.New {
-    color: white;
-    background-color: #47C786;
-    border-radius: 8px;
-    margin: 1%;
-
-}
 
 .window-container {
     padding-top: 5%;
@@ -359,6 +370,7 @@ oranssi(musiikki) #e48255
     border: 2px solid #4B8CAB;
     margin-top: 10px;
 }
+
 .Lisaa {
     margin-top: 1rem;
     background-color: #4B8CAB;
@@ -446,7 +458,9 @@ div.ui-dialog {
     height: 2rem;
 }
 
-button:focus {outline:0;}
+button:focus {
+    outline: 0;
+}
 
 .shareButton {
     background-color: white;
@@ -465,7 +479,7 @@ button:focus {outline:0;}
     justify-content: space-between;
 }
 
-.SkillTitleList{
+.SkillTitleList {
     overflow: auto;
     height: 25rem;
 }
@@ -524,6 +538,7 @@ button:focus {outline:0;}
     justify-content: center;
     margin: 0.5rem;
 }
+
 .Profile {
     background-color: white;
     width: 4rem;
@@ -535,18 +550,16 @@ button:focus {outline:0;}
     justify-content: center;
     margin: 0.5rem;
 }
+
 .Profile a {
     text-decoration: none;
 }
+
 .NewModal {
     padding: 1rem;
 }
 
-
-
 /* Tuomaan alue */
-
-
 
 .sharePDFTextAreaContainer {
     width: 100%;
@@ -567,14 +580,11 @@ button:focus {outline:0;}
 
     padding-left: 0.2rem;
 
-    border-radius:  8px 0 0 8px;
+    border-radius: 8px 0 0 8px;
     border: 2px solid #4b8cab;
-   background-color: #f0f0f0;
-
-
+    background-color: #f0f0f0;
 
 }
-
 
 .sharePDFTextAreaContainer textarea::-webkit-input-placeholder {
     vertical-align: center;
@@ -588,7 +598,7 @@ button:focus {outline:0;}
     padding: 0.5rem;
 }
 
-.sharePDFTextAreaContainer textarea::-moz-placeholder {  /* Firefox 19+ */
+.sharePDFTextAreaContainer textarea::-moz-placeholder { /* Firefox 19+ */
     vertical-align: center;
     font-size: 150%;
     padding: 0.5rem;
@@ -599,7 +609,6 @@ button:focus {outline:0;}
     font-size: 150%;
     padding: 0.5rem;
 }
-
 
 .copyToClipboard {
     border: 2px solid #4b8cab;
@@ -617,9 +626,8 @@ button:focus {outline:0;}
 }
 
 .fa-paste {
-   transform: scale(1.5);
+    transform: scale(1.5);
 }
-
 
 .sharePDFSection {
     flex-direction: column;
@@ -644,11 +652,9 @@ button:focus {outline:0;}
     width: calc(100% - 1rem + 4px);
 }
 
-div.c-modal--window.modal-fade-on-enter.window-container, div.headerButtons > div:nth-child(2) > div.c-modal.modal-fade-on-enter, div.c-modal.modal-fade-on-enter > div.c-modal--backdrop  {
+div.c-modal--window.modal-fade-on-enter.window-container, div.headerButtons > div:nth-child(2) > div.c-modal.modal-fade-on-enter, div.c-modal.modal-fade-on-enter > div.c-modal--backdrop {
     position: fixed;
 }
-
-
 
 @media only screen and (max-width: 600px) {
     .postImg {
@@ -657,8 +663,8 @@ div.c-modal--window.modal-fade-on-enter.window-container, div.headerButtons > di
     }
 
     div.c-modal--window.modal-fade-on-enter.window-container {
-        width: 70%!important;
-        height: 70%!important;
+        width: 70% !important;
+        height: 70% !important;
     }
 
     .savePostButtonWrapper {
@@ -667,7 +673,6 @@ div.c-modal--window.modal-fade-on-enter.window-container, div.headerButtons > di
         justify-content: center;
     }
 
-
     .sendCommentInput {
         width: calc(80% - 0.5rem);
     }
@@ -675,5 +680,17 @@ div.c-modal--window.modal-fade-on-enter.window-container, div.headerButtons > di
     .sendCommentButton {
         margin-top: 0;
         margin-left: calc(50% - 3rem);
+    }
+}
+
+@media only screen and (min-width: 599px) {
+
+    .kys {
+        max-width: 60rem;
+    }
+
+    .Main {
+
+        max-width: 59rem;
     }
 }

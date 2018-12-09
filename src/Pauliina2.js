@@ -316,7 +316,7 @@ export class NewButton extends Component {
         const { open } = this.state;
         return (
             <div className="kys">
-                <button className="New" onClick={this.onOpenModal}><h1> + Lisää uusi osaaminen </h1></button>
+                <button className="New clickable" onClick={this.onOpenModal}><h2><i className="fas fa-plus"></i> Uusi osaaminen</h2></button>
                 <Modal open={open} onClose={this.onCloseModal} >
                     <form className="NewModal" onSubmit={this.handleSubmit}>
                         <div><SelectCategory/></div>

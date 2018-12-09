@@ -25,7 +25,7 @@ function LogOut() {
     return (
         <div className="headerButtonContainer">
             <button className="headerButton">
-                <Link className="headerButtonLink" to={ROUTES.LANDING}>Kirjaudu ulos</Link>
+                <Link className="headerButtonLink" to={ROUTES.LANDING}><i className="fas fa-sign-out-alt"></i> Kirjaudu ulos</Link>
             </button>
         </div>
     );
@@ -318,7 +318,7 @@ class ShareButton extends Component {
         return (
             <div className="headerButtonContainer">
                 <button className="headerButton clickable" onClick={this.openModal}>
-                    <a className="headerButtonLink">Jaa ↷</a>
+                    <a className="headerButtonLink"><i className="fas fa-share-alt"></i> Jaa</a>
                 </button>
                 <Modal windowClassName="window-container" isOpen={this.state.isModalOpen} onClose={this.closeModal}>
                     {this.state.content}
@@ -348,7 +348,7 @@ function Profile() {
     return (
         <div className="headerButtonContainer">
             <button className="headerButton">
-                <Link className="headerButtonLink" to={ROUTES.PROFILE}>Profiili</Link>
+                <Link className="headerButtonLink" to={ROUTES.PROFILE}><i className="fas fa-user"></i> Profiili</Link>
             </button>
         </div>
 
@@ -361,7 +361,7 @@ function Header() {
     return (
         <div className="Header">
             <div className="logoContainer">
-                <img src={logo}/>
+                <img src="https://cdn.discordapp.com/attachments/507585455999418368/521387737161400342/Asset_2.png"/>
 
             </div>
             <div className="headerButtons">
@@ -1002,7 +1002,7 @@ class Posts extends Component {
 
     render() {
         return (
-            <div>
+            <div className="Posts">
                 <SkillList posts={this.state.posts}/>
             </div>
         );
