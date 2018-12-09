@@ -45,6 +45,7 @@ export const makeBetterPDF = (props) => {
 
 
 export function copyToClipboard() {
+    let el = document.querySelector('.sharePDFTextAreaContainer textarea');
 
     firebase.database().ref().child("profile/userid/urlId").on('value', snap => {
 
@@ -53,15 +54,26 @@ export function copyToClipboard() {
 
         if (str) {
 
-            let el = document.querySelector('.sharePDFTextAreaContainer textarea');
+            console.log(str);
+
+
             let sharedUrl = window.location.host + '/shared?id=' + str;
+
+            console.log(sharedUrl);
+
             el.value = sharedUrl;
+
+            console.log(el.value);
+
             el.select();
             document.execCommand('copy');
+
+
         }
 
 
     });
+
 
 }
 

@@ -25,11 +25,18 @@ oranssi(musiikki) #e48255
     text-align: center;
 }
 
+.pelle {
+    margin-bottom: 1rem;
+}
+
 .greenButton {
-    background-color: #47C786 !important;
-    color: white !important;
-    position: relative;
-    top: 0.5rem;
+
+    height: 3.5rem;
+    top: 0;
+    right: 117.5px;
+
+    position: fixed;
+    z-index: 24;
 }
 
 .postFormPro {
@@ -42,11 +49,22 @@ oranssi(musiikki) #e48255
     padding: 0.5rem;
 }
 
+.homeProMain {
+    margin-top:5rem;
+
+    width: calc(100% - 1rem);
+}
+
 .messageHeader {
     font-weight: bold;
     margin-bottom: 1rem;
 }
 
+
+.usersListWrapper h3{
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
 @media only screen and (max-width: 600px) {
 
     .userHeadlines h2 {

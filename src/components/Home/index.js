@@ -9,7 +9,7 @@ import * as tuomas from '../../tuomas.js';
 import * as ROUTES from "../../constants/routes";
 import {Link} from 'react-router-dom';
 import {Collapse} from 'react-collapse';
-import {Form, Radio, RadioGroup, Text, TextArea} from 'informed';
+import {Form, Text, Scope, TextArea, Option, RadioGroup, Radio} from 'informed';
 import {NewButton} from "../../Pauliina2";
 import Dialog from 'react-dialog'
 import {Modal} from "react-modal-button";
@@ -25,7 +25,8 @@ function LogOut() {
     return (
         <div className="headerButtonContainer">
             <button className="headerButton">
-                <Link className="headerButtonLink" to={ROUTES.LANDING}><i className="fas fa-sign-out-alt"></i> Kirjaudu ulos</Link>
+                <Link className="headerButtonLink" to={ROUTES.LANDING}><i className="fas fa-sign-out-alt"></i> Kirjaudu
+                    ulos</Link>
             </button>
         </div>
     );
@@ -91,6 +92,7 @@ class PostTitles extends Component {
     render() {
         return (
             <SkillList posts={this.state.posts} justTitle='true'/>
+
         );
     }
 }
@@ -121,7 +123,7 @@ class Notification extends Component {
                 <Modal windowClassName="window-container" isOpen={this.state.isModalOpen} onClose={this.closeModal}>
                     <div>
                         <h2>{this.props.notificationTitle}</h2>
-                        <button className="clickable" onClick={this.closeModal}>Sulje</button>
+                        <button className="clickable click" onClick={this.closeModal}>Sulje</button>
                     </div>
                 </Modal>
             </div>
@@ -139,19 +141,25 @@ class ShareButton extends Component {
             selected: '',
             isModalOpen: false,
             openNotification: false,
-            content: <div>
+            content: <div className="ShareModal">
                 <h2>Mitä haluat jakaa?</h2>
-                <PostTitles/>
-                <button className="clickable" onClick={() => {
-                    this.sendToShared();
-                    this.changeContent('sharePDF')
-                }
-                }>Hanki jaettava linkki
-                </button>
-                <button className="clickable" onClick={() => {
-                    this.changeContent('askComment')
-                }}>Pyydä kommenttia
-                </button>
+                <div className="ShareRow">
+                    <PostTitles/>
+                    <div className="shareModalButtonContainer">
+                        <button className="clickable shareModalButton" onClick={() => {
+                            this.sendToShared();
+                            this.changeContent('sharePDF')
+                        }
+                        }>Hanki jaettava linkki
+                        </button>
+                        <button className="clickable shareModalButton" onClick={() => {
+                            this.changeContent('askComment')
+                        }}>Pyydä kommenttia
+                        </button>
+                    </div>
+                </div>
+
+
             </div>
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -214,55 +222,64 @@ class ShareButton extends Component {
             {value: 'userid2', label: 'Maisa Auttaja'}
         ];
 
-        if (titleArray.length === 0 && checks.length === 0) {
+        if (titleArray.length === 0 && checks.length === 0 && content !== 'auto') {
             alert('Valitse, mitä haluat jakaa.');
         } else {
             switch (content) {
                 case 'auto':
                     this.setState({
-                        content: <div>
+                        content: <div className="ShareRow">
                             <h2>Mitä haluat jakaa?</h2>
                             <PostTitles/>
-                            <button className="clickable" onClick={() => {
-                                this.sendToShared();
-                                this.changeContent('sharePDF')
-                            }
-                            }>Hanki jaettava linkki
-                            </button>
-                            <button className="clickable" onClick={() => {
-                                this.changeContent('askComment')
-                            }}>Pyydä kommenttia
-                            </button>
+                            <div className="shareModalButtonContainer">
+                                <button className="clickable shareModalButton" onClick={() => {
+                                    this.sendToShared();
+                                    this.changeContent('sharePDF')
+                                }
+                                }>Hanki jaettava linkki
+                                </button>
+                                <button className="clickable shareModalButton" onClick={() => {
+                                    this.changeContent('askComment')
+                                }}>Pyydä kommenttia
+                                </button>
+                            </div>
                         </div>
+
                     });
                     break;
                 case 'askComment':
                     this.setState({
-                        content: <div>
-                            <h2>Kenelle haluat jakaa?</h2>
-                            <Select placeholder='Valitse henkilö...' onChange={this.handleChange}
-                                    options={people}>
+                        content: <div className="ShareModal shareToUserModal">
+                            <div><h2>Kenelle haluat jakaa?</h2>
+                                <Select placeholder='Valitse henkilö...' onChange={this.handleChange}
+                                        options={people}>
 
-                            </Select>
-                            <textarea placeholder="Kirjoita viesti..." onBlur={this.setMessage}>
+                                </Select>
+                                <textarea className="Viesti" placeholder="Kirjoita viesti..." onBlur={this.setMessage}>
 
-                            </textarea>
-                            <button className="clickable" onClick={() => {
-                                this.send();
-                                this.closeModal();
-                            }}>Lähetä
-                            </button>
-                            <button className="clickable" onClick={() => {
-                                this.changeContent('auto');
-                                this.resetChecks();
-                            }}>Peruuta
-                            </button>
+                            </textarea></div>
+
+
+                            <div className="shareToUserButtonContainer">
+                                <button className="clickable shareToUserButton" onClick={() => {
+                                    this.changeContent('auto');
+                                    this.resetChecks();
+                                }}><i className="fas fa-ban"></i> Peruuta
+                                </button>
+                                <button className="clickable shareToUserButton" onClick={() => {
+                                    this.send();
+                                    this.closeModal();
+                                }}>Lähetä
+                                </button>
+
+                            </div>
+
                         </div>
                     });
                     break;
                 case 'sharePDF':
                     this.setState({
-                        content: <div>
+                        content: <div className="ShareModal">
                             <h1>Jaa osaamisesi</h1>
 
                             <div className="sharePDFSection">
@@ -289,7 +306,7 @@ class ShareButton extends Component {
                             <button className="clickable" onClick={() => {
                                 this.changeContent('auto');
                                 this.resetChecks();
-                            }}>Peruuta
+                            }}><i className="fas fa-ban"></i> Peruuta
                             </button>
                         </div>
                     });
@@ -304,6 +321,7 @@ class ShareButton extends Component {
 
     closeModal = () => {
         this.setState({isModalOpen: false});
+        this.changeContent('auto');
         this.resetChecks();
     };
 
@@ -323,7 +341,8 @@ class ShareButton extends Component {
                 <Modal windowClassName="window-container" isOpen={this.state.isModalOpen} onClose={this.closeModal}>
                     {this.state.content}
                 </Modal>
-                <Notification open={this.state.openNotification} notificationTitle='Jakaminen onnistui.'/>
+                <Notification windowClassName="window-containertwo" open={this.state.openNotification}
+                              notificationTitle='Jakaminen onnistui.'/>
             </div>
 
 
@@ -541,7 +560,9 @@ class Comment extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            seen: <div className="checkmarkIcon center clickable"><p>✓</p></div>
+            seen: <div className="checkmarkIcon center clickable"><i className="fas fa-check-circle"></i></div>,
+            commentState: 'Paina tästä kertoaksesi, että olet huomannut kommentin.',
+            commentStatePro: 'Kommenttiasi ei ole vielä huomioitu.'
         };
         this.handleClick = this.handleClick.bind(this);
     }
@@ -556,7 +577,12 @@ class Comment extends Component {
             const value = snapshot.val();
             if (value) {
                 if (value.seen === 'true') {
-                    me.setState({seen: <div></div>})
+                    me.setState({
+                        seen: <div className="checkmarkIconChecked center clickable"><i
+                            className="far fa-check-circle"></i></div>
+                    });
+                    me.setState({commentState: 'Olet huomannut tämän kommentin.'});
+                    me.setState({commentStatePro: 'Kommenttisi on otettu huomioon.'});
                 }
             }
         });
@@ -564,7 +590,12 @@ class Comment extends Component {
 
     handleClick() {
         if (!this.props.user) {
-            this.setState({seen: <div></div>});
+            this.setState({
+                seen: <div className="checkmarkIconChecked center clickable"><i className="far fa-check-circle"></i>
+                </div>
+            });
+            this.setState({commentState: 'Olet huomannut tämän kommentin.'});
+            this.setState({commentStatePro: 'Kommenttisi on otettu huomioon.'});
             const postid = this.props.postid;
             const commentId = this.props.info.commentId;
 
@@ -583,7 +614,7 @@ class Comment extends Component {
                             <p>{this.props.info.comment}</p>
                         </div>
                         <div className="commentRight center" onClick={this.handleClick}>
-                            <Tooltip content={'Kommenttiasi ei ole vielä huomioitu.'} background="#F0F0F0">
+                            <Tooltip content={this.state.commentStatePro} background="rgba(0,0,0,0.3)" color="white">
                                 {this.state.seen}
                             </Tooltip>
                         </div>
@@ -597,8 +628,8 @@ class Comment extends Component {
                         <p>{this.props.info.comment}</p>
                     </div>
                     <div className="commentRight center" onClick={this.handleClick}>
-                        <Tooltip content={'Paina tästä kertoaksesi, että olet huomannut kommentin.'}
-                                 background="#F0F0F0">
+                        <Tooltip content={this.state.commentState}
+                                 background="rgba(0,0,0,0.3)" color="white">
                             {this.state.seen}
                         </Tooltip>
                     </div>
@@ -731,6 +762,7 @@ class DeletePostDialog extends Component {
                 <button className="deletePost" type="button" onClick={this.openDialog}><i
                     className="far fa-trash-alt"></i> Poista osaaminen
                 </button>
+
                 {
                     this.state.isDialogOpen &&
                     <Dialog
@@ -764,7 +796,7 @@ class ToggleCollapse extends Component {
         super(props);
         this.state = {
             isOpened: false,
-            button: '▼',
+            button: <i className="fas fa-angle-down openPostArrow"></i>,
             value: '',
             id: '',
             commenticon: <div/>
@@ -794,8 +826,9 @@ class ToggleCollapse extends Component {
                         if (val.seen === 'false') {
                             me.setState({
                                 commenticon:
-                                    <Tooltip content={'Uusi kommentti.'} background="#F0F0F0">
-                                        <img className="icon" src={commenticon}/>
+                                    <Tooltip content={'Uusi kommentti.'} background="rgba(0,0,0,0.3)" color="white">
+                                        {/*<img className="icon" src={commenticon}/>*/}
+                                        <i className="far fa-comment-dots"></i>
                                     </Tooltip>
                             })
                         }
@@ -814,11 +847,11 @@ class ToggleCollapse extends Component {
                     <div className="postTop clickable" onClick={() => {
                         if (this.state.isOpened === true) {
                             this.setState({isOpened: false});
-                            this.setState({button: '▼'});
+                            this.setState({button: <i className="fas fa-angle-down openPostArrow"></i>});
                         }
                         else {
                             this.setState({isOpened: true});
-                            this.setState({button: '▲'});
+                            this.setState({button: <i class="fas fa-angle-up openPostArrow"></i>});
                         }
                     }
                     }>
@@ -895,7 +928,8 @@ class Checkbox extends Component {
         return (
             <label>
                 <input type="checkbox"
-                       className="clickable"
+                       className="clickable regular-checkbox big-checkbox"
+
                        checked={this.state.isChecked}
                        onChange={this.toggleChange}
                        onClick={this.addChecked}
@@ -955,10 +989,11 @@ function SkillList(props) {
         return (
             <ul className="SkillTitleList">
                 <li>
-                    <div className="flexBetween">
+                    <div className="flexBetween more">
                         <p>Kaikki</p>
                         {/*<input type="checkbox" id="myCheck" onClick={()=>{checkAll()}}></input>*/}
-                        <input type="checkbox" className="clickable" onClick={() => {
+                        <input type="checkbox" className="clickable regular-checkbox big-checkbox" onClick={() => {
+
                             handleAllChecked(postArray)
                         }}/>
                     </div>

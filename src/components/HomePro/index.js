@@ -3,7 +3,7 @@ import './HomePro.css';
 import firebase from '../../firebase/firebase.js';
 import * as sanna from '../../sanna.js';
 import * as ROUTES from "../../constants/routes";
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {Collapse} from 'react-collapse';
 import {getColour, Comments} from "../Home";
 import {Tab, TabList, TabPanel, Tabs} from "react-tabs";
@@ -11,11 +11,14 @@ import "react-tabs/style/react-tabs.css";
 import {Profile} from "../Profile";
 import logo from "../../OON.svg";
 
-function LogOut () {
+function LogOut() {
     return (
-        <button className="LogOut">
-            <Link to={ROUTES.LANDING}>Kirjaudu ulos</Link>
-        </button>
+        <div className="headerButtonContainer">
+            <button className="headerButton">
+                <Link className="headerButtonLink" to={ROUTES.LANDING}><i className="fas fa-sign-out-alt"></i> Kirjaudu
+                    ulos</Link>
+            </button>
+        </div>
     );
 }
 
@@ -40,7 +43,9 @@ function DbButton() {
 function Header() {
     return (
         <div className="Header">
-            <img src={logo} width="30%" height="100%" />
+            <div className="logoContainer">
+                <img src="https://cdn.discordapp.com/attachments/507585455999418368/521387737161400342/Asset_2.png"/>
+            </div>
             <div className="headerButtons">
                 <LogOut/>
             </div>
@@ -54,7 +59,7 @@ function Header() {
  * @returns {string}
  */
 function getColor(seen) {
-    if(seen === 'false'){
+    if (seen === 'false') {
         return '#e48255';
     }
     return '#47C786';
@@ -66,7 +71,7 @@ function getColor(seen) {
  * @returns {*}
  * @constructor
  */
-class User extends Component{
+class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -79,19 +84,19 @@ class User extends Component{
     // Lähetetään parentille käsky onSelectUser eli kerrotaan mikä käyttäjä valitaan.
     handleUserChange = () => {
         this.setState({
-            seen:  'true'
+            seen: 'true'
         });
 
-        firebase.database().ref().child('shareToUser/userid2/'+this.props.userId+'/seen').set('true');
+        firebase.database().ref().child('shareToUser/userid2/' + this.props.userId + '/seen').set('true');
         this.props.onSelectUser(this.props.userId);
     };
 
     componentDidMount() {
-        const postsRef = firebase.database().ref().child('shareToUser/userid2/'+this.props.userId+'/seen');
+        const postsRef = firebase.database().ref().child('shareToUser/userid2/' + this.props.userId + '/seen');
 
         postsRef.on('value', snap => {
             this.setState({
-                seen:  snap.val()
+                seen: snap.val()
             });
         });
 
@@ -101,7 +106,7 @@ class User extends Component{
             console.log(snap.val());
             this.setState({
                 fName: snap.val().fName,
-                lName:  snap.val().lName
+                lName: snap.val().lName
             })
         });
     }
@@ -111,10 +116,11 @@ class User extends Component{
 
         return (
             <li className="Skill">
-                <div className="skillColorTag" style={{backgroundColor : colour}}>
+                <div className="skillColorTag" style={{backgroundColor: colour}}>
                 </div>
                 <div className="skillContent clickable" onClick={this.props.buttonClick}>
-                    <p className="selectUserButton" onClick={this.handleUserChange}>{this.state.fName} {this.state.lName}</p>
+                    <p className="selectUserButton"
+                       onClick={this.handleUserChange}>{this.state.fName} {this.state.lName}</p>
                 </div>
             </li>
         )
@@ -131,14 +137,15 @@ function UserList(props) {
     let userArray = props.users;
 
     // Jos objekti on tyhjä, annetaan sille arvo. Näin käy kun tietokannasta ei ole haettu riittävän nopeasti.
-    if(Object.keys(userArray).length === 0 && userArray.constructor === Object){
+    if (Object.keys(userArray).length === 0 && userArray.constructor === Object) {
         userArray = [''];
     }
 
     return (
         <ul className="SkillList">
             {userArray.map((content, id) => {
-                return <User key={id} userId={content} id={id} buttonClick={props.buttonClick} onSelectUser={props.onSelectUser}/>
+                return <User key={id} userId={content} id={id} buttonClick={props.buttonClick}
+                             onSelectUser={props.onSelectUser}/>
             })}
         </ul>
     );
@@ -157,17 +164,17 @@ class Users extends Component {
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const postsRef = firebase.database().ref().child('shareToUser/userid2/');
 
         postsRef.on('value', snap => {
             let ar = [];
 
-            snap.forEach(function(childSnapshot) {
+            snap.forEach(function (childSnapshot) {
                 ar[ar.length] = childSnapshot.key;
             });
             this.setState({
-                users:  ar
+                users: ar
             });
         });
     }
@@ -178,24 +185,32 @@ class Users extends Component {
     }
 
     // Childiltä tulee arvo, joka kertoo minkä käyttäjän tietoja halutaan nähdä.
-    handleUser (value) {
+    handleUser(value) {
         this.setState({userid: value});
     };
 
     render() {
+
         // Näytetään tietyn käyttäjän jakamat postaukset Posts.
-        if(this.state.content === false){
+        if (this.state.content === false) {
             return (
                 <div>
-                    <button className="returnButton clickable greenButton" onClick={this.changeButtonState.bind(this)}>Takaisin</button>
+                    <div className="headerButtonContainer greenButton">
+                        <button className="headerButton clickable "
+                                onClick={this.changeButtonState.bind(this)}>
+                            <a className="headerButtonLink"><i className="fas fa-long-arrow-alt-left"></i> Takaisin</a>
+                        </button>
+                    </div>
                     <Posts userid={this.state.userid}/>
                 </div>
             )
         }
         // Näytetään lista käyttäjistä.
         return (
-            <div>
-                <UserList users={this.state.users} buttonClick={this.changeButtonState.bind(this)} onSelectUser={this.handleUser.bind(this)}/>
+            <div className="usersListWrapper">
+                <h3>Henkilöt, jotka ovat jakaneet osaamisensa sinulle:</h3>
+                <UserList users={this.state.users} buttonClick={this.changeButtonState.bind(this)}
+                          onSelectUser={this.handleUser.bind(this)}/>
             </div>
         )
     }
@@ -203,9 +218,9 @@ class Users extends Component {
 
 // Palautetaan muotoiltu sisältö, jos osaamisessa on tiettyjä alueita.
 
-function GetTools (props) {
-    if(props.info.tools){
-        return(
+function GetTools(props) {
+    if (props.info.tools) {
+        return (
             <div>
                 <h4>Työvälineet:</h4>
                 <br></br>
@@ -214,12 +229,12 @@ function GetTools (props) {
             </div>
         );
     }
-    return(<div></div>)
+    return (<div></div>)
 }
 
-function GetSteps (props) {
-    if(props.info.steps){
-        return(
+function GetSteps(props) {
+    if (props.info.steps) {
+        return (
             <div>
                 <h4>Työvaiheet:</h4>
                 <br></br>
@@ -228,12 +243,12 @@ function GetSteps (props) {
             </div>
         );
     }
-    return(<div></div>)
+    return (<div></div>)
 }
 
-function GetRating (props) {
-    if(props.info.rating){
-        return(
+function GetRating(props) {
+    if (props.info.rating) {
+        return (
             <div>
                 <h4>Itsearviointi</h4>
                 <br></br>
@@ -242,12 +257,12 @@ function GetRating (props) {
             </div>
         );
     }
-    return(<div></div>)
+    return (<div></div>)
 }
 
-function GetPicture (props) {
-    if(props.info.picture){
-        return(
+function GetPicture(props) {
+    if (props.info.picture) {
+        return (
             <div>
                 <img className="postImg" src={props.info.picture}/>
                 <br></br>
@@ -255,12 +270,12 @@ function GetPicture (props) {
             </div>
         );
     }
-    return(<div></div>)
+    return (<div></div>)
 }
 
-function GetNewSection1 (props) {
-    if(props.info.newsection1){
-        return(
+function GetNewSection1(props) {
+    if (props.info.newsection1) {
+        return (
             <div>
                 {/*TODO otsikko muokattavissa, on käyttäjän lisäämä uusi osio*/}
                 <h4>Muuta:</h4>
@@ -270,7 +285,7 @@ function GetNewSection1 (props) {
             </div>
         );
     }
-    return(<div></div>)
+    return (<div></div>)
 }
 
 /**
@@ -280,6 +295,7 @@ class PostForm extends Component {
     constructor(props) {
         super(props);
     }
+
     render() {
         return (
             <div className="postFormPro">
@@ -301,8 +317,8 @@ class ToggleCollapse extends Component {
         super(props);
         this.state = {
             isOpened: false,
-            button: '▼',
-            value:'',
+            button: <i className="fas fa-angle-down openPostArrow"></i>,
+            value: '',
             id: ''
         };
     }
@@ -316,11 +332,11 @@ class ToggleCollapse extends Component {
                     <div className="postTop clickable" onClick={() => {
                         if (this.state.isOpened === true) {
                             this.setState({isOpened: false});
-                            this.setState({button: '▼'});
+                            this.setState({button: <i className="fas fa-angle-down openPostArrow"></i>,});
                         }
                         else {
                             this.setState({isOpened: true});
-                            this.setState({button: '▲'});
+                            this.setState({button: <i className="fas fa-angle-up openPostArrow"></i>,});
                         }
                     }
                     }>
@@ -343,7 +359,8 @@ class ToggleCollapse extends Component {
                             <PostForm info={this.props.info} id={this.props.id}/>
                         </TabPanel>
                         <TabPanel>
-                            <Comments postid={this.props.info.postId} userid='userid2' user={true} /> {/*TODO hae oikea userid*/}
+                            <Comments postid={this.props.info.postId} userid='userid2'
+                                      user={true}/> {/*TODO hae oikea userid*/}
                         </TabPanel>
                     </Tabs>
                 </Collapse>
@@ -363,7 +380,7 @@ function Skill(props) {
 
     return (
         <li className="Skill">
-            <div className="skillColorTag" style={{backgroundColor : colour}}>
+            <div className="skillColorTag" style={{backgroundColor: colour}}>
             </div>
             <div className="skillContent">
                 <ToggleCollapse info={props.skillInfo} id={props.id}/>
@@ -382,7 +399,7 @@ function SkillList(props) {
     let postArray = props.posts;
 
     // Jos objekti on tyhjä, annetaan sille arvo. Näin käy kun tietokannasta ei ole haettu riittävän nopeasti.
-    if(Object.keys(postArray).length === 0 && postArray.constructor === Object){
+    if (Object.keys(postArray).length === 0 && postArray.constructor === Object) {
         postArray = [''];
     }
 
@@ -400,7 +417,7 @@ function SkillList(props) {
  * Jaetut osaamiset eli postit listattuna, sekä jaettu vieti.
  */
 export class Posts extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             posts: {},
@@ -410,21 +427,21 @@ export class Posts extends Component {
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const user = this.props.userid;
         console.log(user);
-        const sharedPosts = firebase.database().ref().child('shareToUser/userid2/'+user+'/posts/');
+        const sharedPosts = firebase.database().ref().child('shareToUser/userid2/' + user + '/posts/');
 
         sharedPosts.on('value', snap => {
             let postid = snap.val();
             let postArray = [];
 
             // Tehdään jaetuista osaamisista lista.
-            postid.forEach((post)=> {
-                let postsRef = firebase.database().ref().child('posts/'+user+'/'+post+'');
+            postid.forEach((post) => {
+                let postsRef = firebase.database().ref().child('posts/' + user + '/' + post + '');
                 postsRef.on('value', snap => {
                     // Jos käyttäjä on poistanut jaetun postauksen, antaisi errorin ilman tätä if-lausetta.
-                    if(snap.val()) {
+                    if (snap.val()) {
                         const addId = snap.val(); // Lisätään objektiin postauksen id //TODO pitäiskö olla suoraan databasessa?
                         addId.postId = post;
                         postArray[postArray.length] = addId;
@@ -438,7 +455,7 @@ export class Posts extends Component {
         });
 
         // Haetaan viesti.
-        const sharedMessage = firebase.database().ref().child('shareToUser/userid2/'+user+'/message/');
+        const sharedMessage = firebase.database().ref().child('shareToUser/userid2/' + user + '/message/');
 
         sharedMessage.on('value', snap => {
             this.setState({
@@ -452,13 +469,13 @@ export class Posts extends Component {
             console.log(snap.val());
             this.setState({
                 fName: snap.val().fName,
-                lName:  snap.val().lName
+                lName: snap.val().lName
             })
         });
     }
 
     render() {
-        if(this.state.message!=='') {
+        if (this.state.message !== '') {
             return (
                 <div>
                     <div className="userHeadlines">
@@ -475,7 +492,7 @@ export class Posts extends Component {
         return (
             <div>
                 <div className="userHeadlines">
-                    <h2>Henkilön {this.state.fName} {this.state.lName} osaaminen</h2>
+                    <h2 className="pelle">Henkilön {this.state.fName} {this.state.lName} osaaminen</h2>
                 </div>
                 <SkillList posts={this.state.posts}/>
             </div>
@@ -486,7 +503,8 @@ export class Posts extends Component {
 // Sivun varsinanen sisältö
 function Main() {
     return (
-        <div className="Main">
+        <div className="Main homeProMain">
+
             <Users/>
         </div>
     );

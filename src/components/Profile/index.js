@@ -136,27 +136,15 @@ class UserInfo extends Component{
     }
 
     saveChanges(value){
-        console.log('save');
-        console.log(value.email);
-        console.log(value.phone);
+        let fName = value.fName;
+        let lName = value.lName;
+        let pic = value.pic;
+        let email = value.email;
+        let phone = value.phone;
 
-        let fName = this.state.userinfo.fName;
-        let lName = this.state.userinfo.lName;
-        let pic = this.state.userinfo.pic;
-        let email = this.state.userinfo.email;
-        let phone = this.state.userinfo.phone;
-
-        if(value.email){
-            email = value.email;
-            this.setState({email : value.email});
-        }
-        if(value.phone) {
-            phone = value.phone;
-            this.setState({phone : value.phone});
-        }
+        this.setState({userinfo : {fName: fName, lName: lName, pic: pic, email: email, phone: phone}});
 
         sanna.saveProfile('userid', fName, lName, pic, email, phone);
-
 
         this.setInitialValues();
     }
@@ -235,11 +223,19 @@ class UserInfo extends Component{
 function Header() {
     return (
         <div className="Header">
-            <h1>OON</h1>
+            <div className="logoContainer">
+                <img src="https://cdn.discordapp.com/attachments/507585455999418368/521387737161400342/Asset_2.png"/>
+
+            </div>
+
             <div className="headerButtons">
-                <button className="returnButton"><Link to={ROUTES.HOME}><i className="fas fa-long-arrow-alt-left"></i> Takaisin</Link></button>
+                <div className="headerButtonContainer">
+                    <button className="headerButton"><Link className="headerButtonLink" to={ROUTES.HOME}><i className="fas fa-long-arrow-alt-left"></i> Takaisin</Link></button>
+                </div>
+
             </div>
         </div>
+
     );
 }
 

@@ -47,6 +47,7 @@ html {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 3.5rem;
 }
 
 .profileFull h1 {
@@ -135,7 +136,7 @@ html {
 }
 
 .editProfileFormWrapper{
-    height: 100%;
+
     width: 40%;
     display: flex;
     justify-content: center;
@@ -170,9 +171,16 @@ html {
         margin-top: 0.5rem;
     }
 
+    .profileEditButton {
+        flex-shrink: 0;
+    }
+
     .profileShared {
         height: 50%;
         width: 80%;
+
+
+        padding-bottom: 1rem;
     }
     .profilePicture {
         width: 5rem;
@@ -181,7 +189,7 @@ html {
 
     .profileInfo {
         width: 90%;
-        height: 55%;
+         flex-grow: 0;
     }
 
     .profileFull h1 {
@@ -197,14 +205,12 @@ html {
     }
 
     .editProfileFormWrapper{
+        flex-grow: 0;
+        flex-shrink: 0;
         width: 100%;
     }
 
-    .editProfileForm {
-
-    }
-
-    .editProfileForm input, .editProfileForm label, .editProfileForm button {
+    .editProfileForm input, .editProfileForm label  {
         margin-top: 0.3rem;
     }
 
