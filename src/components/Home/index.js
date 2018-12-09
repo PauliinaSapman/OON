@@ -9,13 +9,13 @@ import * as tuomas from '../../tuomas.js';
 import * as ROUTES from "../../constants/routes";
 import {Link} from 'react-router-dom';
 import {Collapse} from 'react-collapse';
-import {Form, Text, Scope, TextArea, Option, RadioGroup, Radio} from 'informed';
-import {AddTools, EnterSteps, NewButton, NewTitle, SelectCategory, SelfEvulation} from "../../Pauliina2";
+import {Form, Radio, RadioGroup, Text, TextArea} from 'informed';
+import {NewButton} from "../../Pauliina2";
 import Dialog from 'react-dialog'
-import {Modal, ModalButton} from "react-modal-button";
-import logo from '../../OON.svg';
+import {Modal} from "react-modal-button";
+import logo from '../../unknown.png';
 
-import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
+import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import Tooltip from 'react-tooltip-lite';
 
@@ -23,9 +23,11 @@ import commenticon from '../../iconfinder_Streamline-59_185079.png'
 
 function LogOut() {
     return (
-        <button className="LogOut">
-            <Link to={ROUTES.LANDING}>Kirjaudu ulos</Link>
-        </button>
+        <div className="headerButtonContainer">
+            <button className="headerButton">
+                <Link className="headerButtonLink" to={ROUTES.LANDING}>Kirjaudu ulos</Link>
+            </button>
+        </div>
     );
 }
 
@@ -140,10 +142,12 @@ class ShareButton extends Component {
             content: <div>
                 <h2>Mitä haluat jakaa?</h2>
                 <PostTitles/>
-                <button className="clickable" onClick={ () => {
+                <button className="clickable" onClick={() => {
                     this.sendToShared();
-                    this.changeContent('sharePDF')}
-                }>Hanki jaettava linkki</button>
+                    this.changeContent('sharePDF')
+                }
+                }>Hanki jaettava linkki
+                </button>
                 <button className="clickable" onClick={() => {
                     this.changeContent('askComment')
                 }}>Pyydä kommenttia
@@ -164,14 +168,14 @@ class ShareButton extends Component {
         this.setState({selected: option});
     };
 
-/*
-    checked = () => {
-        if (titleArray.length === 0) {
-            return checks;
-        }
-        return titleArray;
-    };
-    */
+    /*
+        checked = () => {
+            if (titleArray.length === 0) {
+                return checks;
+            }
+            return titleArray;
+        };
+        */
 
     send = () => {
         let to = this.state.selected;
@@ -219,10 +223,12 @@ class ShareButton extends Component {
                         content: <div>
                             <h2>Mitä haluat jakaa?</h2>
                             <PostTitles/>
-                            <button className="clickable" onClick={ () => {
+                            <button className="clickable" onClick={() => {
                                 this.sendToShared();
-                                this.changeContent('sharePDF')}
-                            }>Hanki jaettava linkki</button>
+                                this.changeContent('sharePDF')
+                            }
+                            }>Hanki jaettava linkki
+                            </button>
                             <button className="clickable" onClick={() => {
                                 this.changeContent('askComment')
                             }}>Pyydä kommenttia
@@ -263,7 +269,7 @@ class ShareButton extends Component {
                                 <p>Jaettavan sivusi osoite</p>
                                 <div className="sharePDFTextAreaContainer">
                                     <textarea></textarea>
-                                    <div onClick={ ()  => {
+                                    <div onClick={() => {
                                         tuomas.copyToClipboard();
                                     }} className="copyToClipboard"><i className="fas fa-paste"></i></div>
                                 </div>
@@ -272,11 +278,12 @@ class ShareButton extends Component {
                             <div className="sharePDFSection">
                                 <p>Tämä generoi sinulle uuden osoitteen jaettavaa sivua varten.</p>
                                 <p>HUOM! tämä myö mitätöi vanhan osoitteen </p>
-                                <button className="clickable" onClick={ ()=> {
+                                <button className="clickable" onClick={() => {
                                     tuomas.randomizeUrl();
                                     tuomas.copyToClipboard();
                                 }
-                                }><i class="fas fa-redo-alt"></i> Generoi uusi osoite</button>
+                                }><i class="fas fa-redo-alt"></i> Generoi uusi osoite
+                                </button>
                             </div>
 
                             <button className="clickable" onClick={() => {
@@ -309,8 +316,10 @@ class ShareButton extends Component {
 
     render() {
         return (
-            <div>
-                <button className="shareButton clickable" onClick={this.openModal}>Jaa ↷</button>
+            <div className="headerButtonContainer">
+                <button className="headerButton clickable" onClick={this.openModal}>
+                    <a className="headerButtonLink">Jaa ↷</a>
+                </button>
                 <Modal windowClassName="window-container" isOpen={this.state.isModalOpen} onClose={this.closeModal}>
                     {this.state.content}
                 </Modal>
@@ -337,9 +346,12 @@ class ShareButton extends Component {
 
 function Profile() {
     return (
-        <button className="Profile">
-            <Link to={ROUTES.PROFILE}>Profiili</Link>
-        </button>
+        <div className="headerButtonContainer">
+            <button className="headerButton">
+                <Link className="headerButtonLink" to={ROUTES.PROFILE}>Profiili</Link>
+            </button>
+        </div>
+
     );
 }
 
@@ -348,7 +360,10 @@ function Profile() {
 function Header() {
     return (
         <div className="Header">
-            <img src={logo} width="30%" height="100%" />
+            <div className="logoContainer">
+                <img src={logo}/>
+
+            </div>
             <div className="headerButtons">
                 <Profile/>
                 <ShareButton/>
@@ -453,7 +468,7 @@ class PostForm extends Component {
                 <div className="editPostFormWrap">
                     {/*<p>{this.props.id}</p>*/}
                     <Select placeholder={this.state.selected} value={this.state.selected} onChange={this.handleChange}
-                            options={Kategoriat} className="postFormSelect"  theme={(theme) => ({
+                            options={Kategoriat} className="postFormSelect" theme={(theme) => ({
                         ...theme,
                         borderRadius: 0,
                         colors: {
@@ -467,7 +482,8 @@ class PostForm extends Component {
                     <br></br>
                     <label htmlFor="textarea-title">Otsikko:</label>
                     <br></br>
-                    <TextArea field="title" id="textarea-title" className="postFormTitle" initialValue={this.props.info.title}/>
+                    <TextArea field="title" id="textarea-title" className="postFormTitle"
+                              initialValue={this.props.info.title}/>
                     <br></br>
                     <br></br>
                     <label htmlFor="textarea-tools">Työvälineet:</label>
@@ -669,7 +685,8 @@ export class Comments extends Component {
                 <div className="commentWrap">
                     <CommentList comments={this.state.comments} postid={this.props.postid} user={true}/>
                     <form onSubmit={this.handleSubmit}>
-                        <input type="text" value={this.state.value} onChange={this.handleChange} autoComplete='off' className="sendCommentInput"/>
+                        <input type="text" value={this.state.value} onChange={this.handleChange} autoComplete='off'
+                               className="sendCommentInput"/>
                         <button className="clickable sendCommentButton" type="submit">Kommentoi</button>
                     </form>
                 </div>
@@ -711,7 +728,9 @@ class DeletePostDialog extends Component {
     render() {
         return (
             <div className="container">
-                <button className="deletePost" type="button" onClick={this.openDialog}><i className="far fa-trash-alt"></i> Poista osaaminen</button>
+                <button className="deletePost" type="button" onClick={this.openDialog}><i
+                    className="far fa-trash-alt"></i> Poista osaaminen
+                </button>
                 {
                     this.state.isDialogOpen &&
                     <Dialog

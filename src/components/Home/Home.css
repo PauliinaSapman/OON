@@ -31,16 +31,35 @@ oranssi(musiikki) #e48255
     z-index: 23;
     height: 4rem;
     */
-    height: 7rem;
+
+    display: flex;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3.5rem;
     background-color: #4B8CAB;
     box-shadow: 0px 0px 33px -3px rgba(0,0,0,0.75);
     z-index: 23;
+
+    width: 100%;
+}
+
+
+.logoContainer {
+    height: 100%;
+    padding-left: 0.3rem;
+}
+
+.logoContainer img {
+    height: 100%;
 }
 
 .oon {
     font-size: 3rem;
     color: #E9ECF0;
     padding-right: 2rem;
+
 }
 
 .Main {
@@ -59,7 +78,12 @@ oranssi(musiikki) #e48255
 }
 
 .kys {
+    margin-top: 3.3rem;
+    display: flex;
+    justify-content: center;
     padding-top: 0.5rem;
+
+    flex-shrink: 0;
 }
 
 .Skill {
@@ -86,7 +110,11 @@ oranssi(musiikki) #e48255
     color: white;
     background-color: #47C786;
     border-radius: 8px;
-    width: 98%;
+    width: calc(100% - 1rem);
+    height: 4rem;
+
+    border: none;
+
 }
 
 .ominaisuus {
@@ -172,15 +200,45 @@ oranssi(musiikki) #e48255
 }
 
 .headerButtons {
+
     display: flex;
     flex-direction: row;
-    float: right;
+
+    justify-content: flex-end;
+
+    flex-grow: 1;
+
+
+
     margin:0;
 }
 
 .headerButtons button a {
     text-decoration: none;
 }
+
+
+.headerButtonContainer {
+    display: flex;
+    height: 100%;
+}
+
+.headerButton {
+    height: 100%;
+
+    background-color: #4b8cab;
+
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.headerButtonLink {
+    height: 1rem;
+}
+
 
 /*
 .Main {
@@ -507,9 +565,12 @@ button:focus {outline:0;}
     height: 2rem;
     width: calc(100% - 3rem);
 
+    padding-left: 0.2rem;
+
     border-radius:  8px 0 0 8px;
     border: 2px solid #4b8cab;
    background-color: #f0f0f0;
+
 
 
 }
@@ -581,6 +642,10 @@ button:focus {outline:0;}
     height: 2rem;
 
     width: calc(100% - 1rem + 4px);
+}
+
+div.c-modal--window.modal-fade-on-enter.window-container, div.headerButtons > div:nth-child(2) > div.c-modal.modal-fade-on-enter, div.c-modal.modal-fade-on-enter > div.c-modal--backdrop  {
+    position: fixed;
 }
 
 
