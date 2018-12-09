@@ -525,7 +525,9 @@ class Comment extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            seen: <div className="checkmarkIcon center clickable"><p>✓</p></div>
+            seen: <div className="checkmarkIcon center clickable"><i className="fas fa-check-circle"></i></div>,
+            commentState: 'Paina tästä kertoaksesi, että olet huomannut kommentin.',
+            commentStatePro: 'Kommenttiasi ei ole vielä huomioitu.'
         };
         this.handleClick = this.handleClick.bind(this);
     }
@@ -540,7 +542,9 @@ class Comment extends Component {
             const value = snapshot.val();
             if (value) {
                 if (value.seen === 'true') {
-                    me.setState({seen: <div></div>})
+                    me.setState({seen: <div className="checkmarkIconChecked center clickable"><i className="far fa-check-circle"></i></div>});
+                    me.setState({commentState: 'Olet huomannut tämän kommentin.'});
+                    me.setState({commentStatePro: 'Kommenttisi on otettu huomioon.'});
                 }
             }
         });
@@ -548,7 +552,9 @@ class Comment extends Component {
 
     handleClick() {
         if (!this.props.user) {
-            this.setState({seen: <div></div>});
+            this.setState({seen: <div className="checkmarkIconChecked center clickable"><i className="far fa-check-circle"></i></div>});
+            this.setState({commentState: 'Olet huomannut tämän kommentin.'});
+            this.setState({commentStatePro: 'Kommenttisi on otettu huomioon.'});
             const postid = this.props.postid;
             const commentId = this.props.info.commentId;
 
@@ -567,7 +573,7 @@ class Comment extends Component {
                             <p>{this.props.info.comment}</p>
                         </div>
                         <div className="commentRight center" onClick={this.handleClick}>
-                            <Tooltip content={'Kommenttiasi ei ole vielä huomioitu.'} background="#F0F0F0">
+                            <Tooltip content={this.state.commentStatePro}  background="rgba(0,0,0,0.3)" color="white">
                                 {this.state.seen}
                             </Tooltip>
                         </div>
@@ -581,8 +587,8 @@ class Comment extends Component {
                         <p>{this.props.info.comment}</p>
                     </div>
                     <div className="commentRight center" onClick={this.handleClick}>
-                        <Tooltip content={'Paina tästä kertoaksesi, että olet huomannut kommentin.'}
-                                 background="#F0F0F0">
+                        <Tooltip content={this.state.commentState}
+                                 background="rgba(0,0,0,0.3)" color="white">
                             {this.state.seen}
                         </Tooltip>
                     </div>
@@ -745,7 +751,7 @@ class ToggleCollapse extends Component {
         super(props);
         this.state = {
             isOpened: false,
-            button: '▼',
+            button: <i className="fas fa-angle-down openPostArrow"></i>,
             value: '',
             id: '',
             commenticon: <div/>
@@ -775,8 +781,9 @@ class ToggleCollapse extends Component {
                         if (val.seen === 'false') {
                             me.setState({
                                 commenticon:
-                                    <Tooltip content={'Uusi kommentti.'} background="#F0F0F0">
-                                        <img className="icon" src={commenticon}/>
+                                    <Tooltip content={'Uusi kommentti.'} background="rgba(0,0,0,0.3)" color="white">
+                                        {/*<img className="icon" src={commenticon}/>*/}
+                                        <i className="far fa-comment-dots"></i>
                                     </Tooltip>
                             })
                         }
@@ -795,11 +802,11 @@ class ToggleCollapse extends Component {
                     <div className="postTop clickable" onClick={() => {
                         if (this.state.isOpened === true) {
                             this.setState({isOpened: false});
-                            this.setState({button: '▼'});
+                            this.setState({button: <i className="fas fa-angle-down openPostArrow"></i>});
                         }
                         else {
                             this.setState({isOpened: true});
-                            this.setState({button: '▲'});
+                            this.setState({button: <i class="fas fa-angle-up openPostArrow"></i>});
                         }
                     }
                     }>

@@ -301,7 +301,7 @@ class ToggleCollapse extends Component {
         super(props);
         this.state = {
             isOpened: false,
-            button: '▼',
+            button: <i className="fas fa-angle-down openPostArrow"></i>,
             value:'',
             id: ''
         };
@@ -316,11 +316,11 @@ class ToggleCollapse extends Component {
                     <div className="postTop clickable" onClick={() => {
                         if (this.state.isOpened === true) {
                             this.setState({isOpened: false});
-                            this.setState({button: '▼'});
+                            this.setState({button: <i className="fas fa-angle-down openPostArrow"></i>,});
                         }
                         else {
                             this.setState({isOpened: true});
-                            this.setState({button: '▲'});
+                            this.setState({button: <i className="fas fa-angle-up openPostArrow"></i>,});
                         }
                     }
                     }>
