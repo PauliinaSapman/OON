@@ -9,7 +9,7 @@ import * as tuomas from '../../tuomas.js';
 import * as ROUTES from "../../constants/routes";
 import {Link} from 'react-router-dom';
 import {Collapse} from 'react-collapse';
-import {Form, Text, Scope, TextArea, Option} from 'informed';
+import {Form, Text, Scope, TextArea, Option, RadioGroup, Radio} from 'informed';
 import {AddTools, EnterSteps, NewButton, NewTitle, SelectCategory, SelfEvulation} from "../../Pauliina2";
 import Dialog from 'react-dialog'
 import {Modal, ModalButton} from "react-modal-button";
@@ -24,7 +24,7 @@ import commenticon from '../../iconfinder_Streamline-59_185079.png'
 function LogOut() {
     return (
         //<button className="LogOut"><Link to={ROUTES.LANDING}>Kirjaudu ulos</Link></button>
-        <Link to={ROUTES.LANDING}><button className="LogOut">Kirjaudu Ulos</button></Link>
+        <Link to={ROUTES.LANDING}><button className="LogOut"><a>Kirjaudu Ulos</a></button></Link>
     );
 }
 
@@ -88,7 +88,9 @@ class PostTitles extends Component {
 
     render() {
         return (
+            <div className="ShareRow">
             <SkillList posts={this.state.posts} justTitle='true'/>
+            </div>
         );
     }
 }
@@ -119,7 +121,7 @@ class Notification extends Component {
                 <Modal windowClassName="window-container" isOpen={this.state.isModalOpen} onClose={this.closeModal}>
                     <div>
                         <h2>{this.props.notificationTitle}</h2>
-                        <button className="clickable" onClick={this.closeModal}>Sulje</button>
+                        <button className="clickable click" onClick={this.closeModal}>Sulje</button>
                     </div>
                 </Modal>
             </div>
@@ -137,16 +139,14 @@ class ShareButton extends Component {
             selected: '',
             isModalOpen: false,
             openNotification: false,
-            content: <div>
+            content: <div className="ShareModal">
                 <h2>Mitä haluat jakaa?</h2>
                 <PostTitles/>
-                <button className="clickable" onClick={ () => {
-                    this.sendToShared()}
-                }>Tallenna PDF</button>
-                <button className="clickable" onClick={ () => {
-                    this.sendToShared()}
+                <button className="clickable click clicktrhee " onClick={ () => {
+                    this.sendToShared();
+                    this.changeContent('sharePDF')}
                 }>Hanki jaettava linkki</button>
-                <button className="clickable" onClick={() => {
+                <button className="clickable click clicktwo clicktrhee " onClick={() => {
                     this.changeContent('askComment')
                 }}>Pyydä kommenttia
                 </button>
@@ -197,12 +197,8 @@ class ShareButton extends Component {
     sendToShared = () => {
         if (titleArray.length === 0) { // jos käyttäjä on valinnut osan
             tuomas.sharePosts(checks);
-            this.resetChecks();
-            this.closeModal();
         } else { // jos käyttäjä on valinnut kaikki
             tuomas.sharePosts(titleArray);
-            this.resetChecks();
-            this.closeModal();
         }
     };
 
@@ -222,16 +218,14 @@ class ShareButton extends Component {
             switch (content) {
                 case 'auto':
                     this.setState({
-                        content: <div>
+                        content: <div className="ShareModal">
                             <h2>Mitä haluat jakaa?</h2>
                             <PostTitles/>
-                            <button className="clickable" onClick={ () => {
-                                this.sendToShared()}
-                            }>Tallenna PDF</button>
-                            <button className="clickable" onClick={ () => {
-                                this.sendToShared()}
+                            <button  className="clickable click"  onClick={ () => {
+                                this.sendToShared();
+                                this.changeContent('sharePDF')}
                             }>Hanki jaettava linkki</button>
-                            <button className="clickable" onClick={() => {
+                            <button className="clickable click" onClick={() => {
                                 this.changeContent('askComment')
                             }}>Pyydä kommenttia
                             </button>
@@ -240,24 +234,57 @@ class ShareButton extends Component {
                     break;
                 case 'askComment':
                     this.setState({
-                        content: <div>
+                        content: <div className="ShareModal">
                             <h2>Kenelle haluat jakaa?</h2>
                             <Select placeholder='Valitse henkilö...' onChange={this.handleChange}
                                     options={people}>
 
                             </Select>
-                            <textarea placeholder="Kirjoita viesti..." onBlur={this.setMessage}>
+                            <textarea className="Viesti" placeholder="Kirjoita viesti..." onBlur={this.setMessage}>
 
                             </textarea>
-                            <button className="clickable" onClick={() => {
+                            <button className="clickable click" onClick={() => {
                                 this.send();
                                 this.closeModal();
                             }}>Lähetä
                             </button>
-                            <button className="clickable" onClick={() => {
+                            <button className="clickable click clicktwo" onClick={() => {
                                 this.changeContent('auto');
                                 this.resetChecks();
-                            }}>Peruuta
+                            }}><i className="fas fa-ban"></i> Peruuta
+                            </button>
+                        </div>
+                    });
+                    break;
+                case 'sharePDF':
+                    this.setState({
+                        content: <div className="ShareModal">
+                            <h2>Jaa osaamisesi</h2>
+
+                            <div className="sharePDFSection">
+                                <p>Jaettavan sivusi osoite</p>
+                                <div className="sharePDFTextAreaContainer">
+                                    <textarea></textarea>
+                                    <div onClick={ ()  => {
+                                        tuomas.copyToClipboard();
+                                    }} className="copyToClipboard"><i className="fas fa-paste"></i></div>
+                                </div>
+                            </div>
+
+                            <div className="sharePDFSection">
+                                <p>Tämä generoi sinulle uuden osoitteen jaettavaa sivua varten.</p>
+                                <p>HUOM! tämä myö mitätöi vanhan osoitteen </p>
+                                <button className="clickable" onClick={ ()=> {
+                                    tuomas.randomizeUrl();
+                                    tuomas.copyToClipboard();
+                                }
+                                }><i class="fas fa-redo-alt"></i> Generoi uusi osoite</button>
+                            </div>
+
+                            <button className="clickable click" onClick={() => {
+                                this.changeContent('auto');
+                                this.resetChecks();
+                            }}><i className="fas fa-ban"></i> Peruuta
                             </button>
                         </div>
                     });
@@ -289,7 +316,7 @@ class ShareButton extends Component {
                 <Modal windowClassName="window-container" isOpen={this.state.isModalOpen} onClose={this.closeModal}>
                     {this.state.content}
                 </Modal>
-                <Notification open={this.state.openNotification} notificationTitle='Jakaminen onnistui.'/>
+                <Notification windowClassName="window-containertwo" open={this.state.openNotification} notificationTitle='Jakaminen onnistui.'/>
             </div>
 
 
@@ -314,6 +341,7 @@ function Profile() {
     return (
         //<button className="Profile"><Link to={ROUTES.PROFILE}>Profiili</Link></button>
         <Link to={ROUTES.PROFILE}><button className="Profile"><a>Profiili</a></button></Link>
+
     );
 }
 
@@ -323,10 +351,11 @@ function Header() {
     return (
         <div className="Header">
             <img src={logo} width="30%" height="100%" />
+
                 <div className="headerButtons">
-                    <Profile/>
-                    <ShareButton/>
-                    <LogOut/>
+                    <div className="logoutButton"><ShareButton/></div>
+                    <div className="otherButtons"><LogOut/><Profile/>
+                    </div>
                 </div>
         </div>
     );
@@ -423,34 +452,69 @@ class PostForm extends Component {
         ];
 
         return (
-            <Form id="postForm" onSubmit={this.handleSubmit}>
-                <div>
+            <Form id="postForm" className="postForm" onSubmit={this.handleSubmit}>
+                <div className="editPostFormWrap">
                     {/*<p>{this.props.id}</p>*/}
                     <Select placeholder={this.state.selected} value={this.state.selected} onChange={this.handleChange}
-                            options={Kategoriat}>Kategoria</Select>
+                            options={Kategoriat} className="postFormSelect"  theme={(theme) => ({
+                        ...theme,
+                        borderRadius: 0,
+                        colors: {
+                            ...theme.colors,
+                            primary25: '#F0F0F0',
+                            primary: 'none',
+                            primary75: '#E9ECF0',
+                            primary50: '#E9ECF0'
+                        },
+                    })}>Kategoria</Select>
                     <br></br>
-                    <TextArea field="title" id="textarea-title" initialValue={this.props.info.title}/>
+                    <label htmlFor="textarea-title">Otsikko:</label>
+                    <br></br>
+                    <TextArea field="title" id="textarea-title" className="postFormTitle" initialValue={this.props.info.title}/>
+                    <br></br>
                     <br></br>
                     <label htmlFor="textarea-tools">Työvälineet:</label>
                     <br></br>
                     <TextArea field="tools" id="textarea-tools" initialValue={this.props.info.tools}/>
                     <br></br>
+                    <br></br>
                     <label htmlFor="textarea-steps">Työvaiheet:</label>
                     <br></br>
                     <TextArea field="steps" id="textarea-steps" initialValue={this.props.info.steps}/>
                     <br></br>
-                    <Text field="rating" id="text-rating" initialValue={this.props.info.rating}/>
+                    <br></br>
+                    {/*<Text field="rating" id="text-rating" initialValue={this.props.info.rating}/>*/}
+                    <label htmlFor="radio-rating">Itsearviointi: </label>
+                    <br></br>
+                    <RadioGroup field="rating" id="radio-rating" initialValue={this.props.info.rating}>
+                        <label htmlFor="radio-one">1</label>
+                        <Radio value="1" id="radio-one" className="radioButton"/>
+                        <label htmlFor="radio-two">2</label>
+                        <Radio value="2" id="radio-two" className="radioButton"/>
+                        <label htmlFor="radio-three">3</label>
+                        <Radio value="3" id="radio-three" className="radioButton"/>
+                        <label htmlFor="radio-four">4</label>
+                        <Radio value="4" id="radio-four" className="radioButton"/>
+                    </RadioGroup>
+                    <br></br>
+                    <br></br>
+                    <img src={this.props.info.picture} alt='' className="postImg"/>
+                    <br></br>
+                    <label htmlFor="text-picture">Kuvan url: </label>
                     <br></br>
                     <Text field="picture" id="text-picture" initialValue={this.props.info.picture}/>
+                    <br></br>
                     <br></br>
                     {/*TODO otsikko muokattavissa, on käyttäjän lisäämä uusi osio*/}
                     <label htmlFor="textarea-newsection1">Muuta:</label>
                     <br></br>
                     <TextArea field="newsection1" id="textarea-newsection1" initialValue={this.props.info.newsection1}/>
                     <br></br>
-                    <button className="clickable" type="submit">
-                        Tallenna
-                    </button>
+                    <div className="savePostButtonWrapper">
+                        <button className="clickable savePostButton" type="submit">
+                            Tallenna
+                        </button>
+                    </div>
                 </div>
             </Form>
         )
@@ -605,17 +669,17 @@ export class Comments extends Component {
     render() {
         if (this.props.user) { // ohjaava ammattilainen
             return (
-                <div>
+                <div className="commentWrap">
                     <CommentList comments={this.state.comments} postid={this.props.postid} user={true}/>
                     <form onSubmit={this.handleSubmit}>
-                        <input type="text" value={this.state.value} onChange={this.handleChange} autoComplete='off'/>
-                        <button className="clickable" type="submit">Kommentoi</button>
+                        <input type="text" value={this.state.value} onChange={this.handleChange} autoComplete='off' className="sendCommentInput"/>
+                        <button className="clickable sendCommentButton" type="submit">Kommentoi</button>
                     </form>
                 </div>
             );
         }
         return ( // käyttäjä
-            <div>
+            <div className="commentWrap">
                 <CommentList comments={this.state.comments} postid={this.props.postid}/>
             </div>
         );
@@ -650,7 +714,7 @@ class DeletePostDialog extends Component {
     render() {
         return (
             <div className="container">
-                <button className="deletePost" type="button" onClick={this.openDialog}>Poista osaaminen</button>
+                <button className="deletePost" type="button" onClick={this.openDialog}><i className="far fa-trash-alt"></i> Poista osaaminen</button>
                 {
                     this.state.isDialogOpen &&
                     <Dialog
@@ -815,7 +879,7 @@ class Checkbox extends Component {
         return (
             <label>
                 <input type="checkbox"
-                       className="clickable"
+                       className="clickable regular-checkbox big-checkbox"
                        checked={this.state.isChecked}
                        onChange={this.toggleChange}
                        onClick={this.addChecked}
@@ -875,10 +939,10 @@ function SkillList(props) {
         return (
             <ul className="SkillTitleList">
                 <li>
-                    <div className="flexBetween">
+                    <div className="flexBetween more">
                         <p>Kaikki</p>
                         {/*<input type="checkbox" id="myCheck" onClick={()=>{checkAll()}}></input>*/}
-                        <input type="checkbox" className="clickable" onClick={() => {
+                        <input type="checkbox" className="clickable regular-checkbox big-checkbox" onClick={() => {
                             handleAllChecked(postArray)
                         }}/>
                     </div>

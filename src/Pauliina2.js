@@ -57,7 +57,7 @@ export class SelectCategory extends Component {
     render() {
         return (
             <div>
-                <Select placeholder = "Kategoria" options={Kategoriat} onChange={this.handleChange}></Select>
+                <Select className="Category" placeholder = "Kategoria" options={Kategoriat} onChange={this.handleChange}></Select>
             </div>
         );
     }
@@ -98,11 +98,13 @@ export class SelfEvulation extends Component {
 
     render() {
         return (
+            <div className="RadioSection"> <p>Itsearvionti</p>
             <div className="radio">
                 <input type="radio" value="1" name="rating"  onChange={this.handleChange}></input> 1
                 <input type="radio" value="2" name="rating"  onChange={this.handleChange}></input> 2
                 <input type="radio" value="3" name="rating"  onChange={this.handleChange}></input> 3
                 <input type="radio" value="4" name="rating"  onChange={this.handleChange}></input> 4
+            </div>
             </div>
         );
     }
@@ -165,8 +167,8 @@ export class AddFile extends Component {
 
     render () {
         return (
-            <div>
-                <input type="file" onChange={this.handleChange}/>
+            <div className="pictureInput">
+                <input placeholder="Lisää kuvan URL" onChange={this.handleChange}/>
             </div>
         )
     }}
@@ -193,6 +195,7 @@ export  class NewSection extends Component {
         )
     }}
 
+
 //Lisää uusi osaamisen määrittely
 
 let contents = [];
@@ -202,7 +205,7 @@ export class AddButton extends Component {
         super();
         this.state = {
             showMenu: false,
-        }
+        };
 
         this.showMenu = this.showMenu.bind(this);
         this.renderComponent = this.renderComponent.bind(this);
@@ -224,9 +227,11 @@ export class AddButton extends Component {
         //  this.setState({render:compName});
         this.setState({render: contents});
     }
+
     renderComponent(){
         let r = contents;
         let s = <div></div>
+
         let rating = <div></div>;
         let tools = <div></div>;
         let steps = <div></div>;
@@ -287,10 +292,10 @@ export class AddButton extends Component {
                             <button onClick = {this.handleClick.bind(this, 'tools')} > Työkalut </button>
                             <button onClick={this.handleClick.bind(this, 'steps')}>Vaiheet</button>
                             <button onClick = {this.handleClick.bind(this, 'picture')} > lisää kuva </button>
-                            <button onClick = {this.handleClick.bind(this, 'newsection1')} > Lisää uusi osio </button>
+                            <button onClick = {this.handleClick.bind(this, 'newsection1')} > +Uusi osio </button>
                         </div>
                     ) : (null)}
-                <button className="Lisaa" onClick={this.showMenu}>+Lisää</button>
+                <button className="Lisaa" onClick={this.showMenu }>+Lisää</button>
             </div>
         );
     }
@@ -320,7 +325,7 @@ export class NewButton extends Component {
         return (
             <div className="kys">
                 <button className="New" onClick={this.onOpenModal}><h1> + Lisää uusi osaaminen </h1></button>
-                <Modal open={open} onClose={this.onCloseModal} >
+                <Modal className="ModalWindow" open={open} onClose={this.onCloseModal} >
                     <form className="NewModal" onSubmit={this.handleSubmit}>
                         <div><SelectCategory/></div>
                         <div><NewTitle/></div>

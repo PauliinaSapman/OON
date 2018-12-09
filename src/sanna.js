@@ -103,7 +103,7 @@ export function askComment(to, from, posts, message) {
     });
     firebase.database().ref('shareToUser/'+to+'/testuser').set({
         userid  : 'testuser',
-        message : message,
+        message : '',
         posts   : posts,
         seen    : 'false'
     });
@@ -154,4 +154,28 @@ export function saveProfile(userid, fName, lName, pic, email, phone) {
             email: email,
             phone: phone
         });
+
+/*
+    // Toiselle käyttäjälle esimerkkidataa
+    const ref2 = firebase.database().ref('profile/testuser');
+    ref2.set(
+        {
+            fName: 'Elli',
+            lName: 'Esimerkki',
+            pic: 'https://images.pexels.com/photos/157661/young-woman-shooting-model-157661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+            email: 'elli.esimerkki@mail.com',
+            phone: '0452345612'
+        });
+
+    // Ohjaava ammattilainen
+    const ref2 = firebase.database().ref('profile/userid2');
+    ref2.set(
+        {
+            fName: 'Maisa',
+            lName: 'Auttaja',
+            pic: 'https://www.pexels.com/photo/adult-doctor-girl-healthcare-355934/',
+            email: 'maisa.auttaja@mail.com',
+            phone: '0441122987'
+        });
+        */
 }

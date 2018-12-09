@@ -26,6 +26,8 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0.5rem;
+    margin-top: 60%;
 }
 
 .returnButton a {
@@ -110,6 +112,10 @@ html {
     padding-left: 1rem;
 }
 
+.skillListWrapper {
+    overflow: auto;
+}
+
 .skillListWrapper h4 {
     margin-bottom: 1rem;
 }
@@ -178,10 +184,6 @@ html {
     .profileInfo {
         width: 90%;
         height: 55%;
-    }
-
-    .skillListWrapper {
-        overflow: auto;
     }
 
     .profileFull h1 {
