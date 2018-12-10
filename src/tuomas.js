@@ -54,19 +54,18 @@ export function copyToClipboard() {
 
         if (str) {
 
-            console.log(str);
+
 
 
             let sharedUrl = window.location.host + '/shared?id=' + str;
 
-            console.log(sharedUrl);
+
 
             el.value = sharedUrl;
 
-            console.log(el.value);
-
             el.select();
             document.execCommand('copy');
+            window.open(sharedUrl);
 
 
         }

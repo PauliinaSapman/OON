@@ -21,7 +21,6 @@ oranssi(musiikki) #e48255
 
 /*  Headerin tyylit alku*/
 .Header {
-    font-family: 'Roboto', sans-serif;
 
     display: flex;
 
@@ -41,7 +40,7 @@ oranssi(musiikki) #e48255
     padding-left: 0.3rem;
     display: flex;
     align-items: center;
-    font-family: 'PT Mono', monospace;
+
 
 }
 
@@ -164,7 +163,6 @@ oranssi(musiikki) #e48255
 }
 
 .New {
-    font-family: 'Source Sans Pro', sans-serif;
     padding: .5rem 1rem .6rem 1rem;
     color: #f0f0f0;
     background-color: #47c786;
@@ -330,7 +328,7 @@ div.kys > button > h2 > i {
     padding: 10px;
     font-size: 16px;
     border: 2px solid #4B8CAB;
-    width: 95%;
+    width: calc(100% - 1.5rem);
 }
 
 .AddToolsMain .header button {
@@ -354,7 +352,7 @@ div.kys > button > h2 > i {
     font-size: 16px;
     border: 2px solid #4B8CAB;
     margin-top: 10px;
-    width: 95% !important;
+    width: calc(100% - 1.5rem) !important;
 }
 
 .EnterStepsMain .header button {
@@ -377,7 +375,7 @@ div.kys > button > h2 > i {
     font-size: 16px;
     border: 2px solid #4B8CAB;
     margin-top: 10px;
-    width: 95%;
+    width: calc(100% - 1.5rem) !important;
 
 }
 
@@ -386,14 +384,12 @@ div.kys > button > h2 > i {
 
 
 .Viesti {
-
-    resize: none;
     outline: none;
     padding: 10px;
     font-size: 16px;
     border: 2px solid #4B8CAB;
     margin-top: 10px;
-    width: calc(100% - 1.5rem);
+    width: calc(100% - 1.5rem) !important;
 }
 
 .ShareModal {
@@ -409,8 +405,11 @@ div.kys > button > h2 > i {
 .ShareRow {
     height: calc(100% - 24px - 1.5rem);
 
-}
 
+}
+.ShareRow h2 {
+    text-align: center;
+}
 .Lisaa {
     margin-top: 0.5rem;
     background-color: #4B8CAB;
@@ -428,7 +427,7 @@ div.kys > button > h2 > i {
     font-size: 16px;
     border: 2px solid #4B8CAB;
     margin-top: 10px;
-    width: 95%;
+    width: calc(100% - 1.5rem);
 }
 
 .pictureInput input {
@@ -443,7 +442,7 @@ div.kys > button > h2 > i {
     font-size: 16px;
     border: 2px solid #4B8CAB;
     margin-top: 10px;
-    width: 95%;
+
 }
 
 .RadioSection p {
@@ -471,7 +470,7 @@ div.kys > button > h2 > i {
     font-size: 16px;
     border: 2px solid #4B8CAB;
     margin-top: 10px;
-    width: 95%;
+    width: calc(100% - 1.5rem) !important;
 }
 
 .deletePost {
@@ -569,7 +568,7 @@ button:focus {
 }
 
 .Category {
-    width: 98%;
+    width: 100%;
     border: #4B8CAB;
 }
 
@@ -820,18 +819,32 @@ justify-content: space-between;
 
 }
 
-.sharePDFSection button {
-    background-color: #dc2411;
+.pdf h1 {
+    text-align: center;
+}
 
-    border-radius: 8px;
-    border: none;
+.hr {
+    margin-top: 1.5rem;
+    opacity: 0.5;
+}
+
+.pdf {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
+.sharePDFSection button {
+    background-color: #e48255;
+    color: white;
+
+
+    margin-top: 0.5rem;
+    border-radius: 8px;
     height: 2rem;
 
-    width: calc(100% - 1rem + 4px);
+    width: calc(100% - 1rem);
+    border: 2px solid #e48255;
 }
 
 

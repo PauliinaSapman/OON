@@ -108,6 +108,7 @@ class Notification extends Component {
 
     closeModal = () => {
         this.setState({isModalOpen: false});
+
     };
 
     // Avataan modaali heti kun saadaan prop arvo open
@@ -123,7 +124,10 @@ class Notification extends Component {
                 <Modal windowClassName="window-container" isOpen={this.state.isModalOpen} onClose={this.closeModal}>
                     <div>
                         <h2>{this.props.notificationTitle}</h2>
-                        <button className="clickable click" onClick={this.closeModal}>Sulje</button>
+                        <button className="clickable click" onClick={
+                            this.closeModal
+                        }>Sulje
+                        </button>
                     </div>
                 </Modal>
             </div>
@@ -279,31 +283,40 @@ class ShareButton extends Component {
                     break;
                 case 'sharePDF':
                     this.setState({
-                        content: <div className="ShareModal">
-                            <h1>Jaa osaamisesi</h1>
+                        content: <div className="ShareModal pdf">
+                            <div>
 
-                            <div className="sharePDFSection">
-                                <p>Jaettavan sivusi osoite</p>
-                                <div className="sharePDFTextAreaContainer">
-                                    <textarea></textarea>
-                                    <div onClick={() => {
-                                        tuomas.copyToClipboard();
-                                    }} className="copyToClipboard"><i className="fas fa-paste"></i></div>
+                                <h1>Jaa osaamisesi</h1>
+
+                                <div className="sharePDFSection">
+                                    <p>Jaettavan sivusi osoite</p>
+                                    <div className="sharePDFTextAreaContainer clickable">
+                                        <textarea></textarea>
+                                        <div onClick={() => {
+                                            tuomas.copyToClipboard();
+                                        }} className="copyToClipboard"><i className="fas fa-paste"></i></div>
+                                    </div>
                                 </div>
+
+                                <hr className="hr"/>
+
+                                <div className="sharePDFSection">
+                                    <p>Generoi uusi osoite jaettavalle sivullesi ja samalla mitätöi vanha. Muistathan jakaa uuden linkin uudestaan niille henkilöille, joiden
+                                        haluat näkevän sivusi, sillä vanha linkki poistetaan käytöstä.</p>
+                                    <button className="clickable" onClick={() => {
+                                        tuomas.randomizeUrl();
+                                        tuomas.copyToClipboard();
+                                    }
+                                    }><i class="fas fa-redo-alt"></i> Generoi uusi osoite
+                                    </button>
+
+                                </div>
+                                <hr className="hr"/>
                             </div>
 
-                            <div className="sharePDFSection">
-                                <p>Tämä generoi sinulle uuden osoitteen jaettavaa sivua varten.</p>
-                                <p>HUOM! tämä myö mitätöi vanhan osoitteen </p>
-                                <button className="clickable" onClick={() => {
-                                    tuomas.randomizeUrl();
-                                    tuomas.copyToClipboard();
-                                }
-                                }><i class="fas fa-redo-alt"></i> Generoi uusi osoite
-                                </button>
-                            </div>
 
-                            <button className="clickable" onClick={() => {
+
+                            <button className="clickable click" onClick={() => {
                                 this.changeContent('auto');
                                 this.resetChecks();
                             }}><i className="fas fa-ban"></i> Peruuta
@@ -317,12 +330,15 @@ class ShareButton extends Component {
 
     openModal = () => {
         this.setState({isModalOpen: true});
+        this.setState(
+            {openNotification: false}
+        );
+        this.changeContent('auto');
     };
 
     closeModal = () => {
         this.setState({isModalOpen: false});
-        this.changeContent('auto');
-        this.resetChecks();
+
     };
 
     resetChecks = () => {
