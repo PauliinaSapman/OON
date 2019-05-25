@@ -73,36 +73,22 @@ export class SelectCategory extends Component {
 //Osaamisen otsikko
 export class NewTitle extends Component {
 
-    constructor(props) {
-        super();
-        this.state = {
-            title: '',
-        };
-
-    }
-
     // sama kuin selectissä, mutta tässä joudutaan ottaa event.target.value (Select on kirjasto, jossa se ei toimi)
     handleChange(event) {
         const value = event.target.value;
         setValues('title', value);
     }
 
-    render () {
-        if(this.props.title !== '') {
-            return (
-                <div className="addPostFormSection">
-                    <input placeholder="Otsikko" onBlur={this.handleChange} value={this.props.title}>
-                    </input>
-                </div>
-            );
 
-        }
+    render () {
         return (
             <div className="addPostFormSection">
-                            <input placeholder="Otsikko" onBlur={this.handleChange}>
+                            <input placeholder="Otsikko" onBlur={this.handleChange} id="newPostTitle">
                             </input>
             </div>
+
         );
+
     }
 }
 
@@ -395,9 +381,9 @@ export class NewButton extends Component {
         openNewPost = openNewPost.bind(this)
     }
 
-
     componentDidMount() {
         const me = this;
+        console.log(this.state.title);
     }
 
     // lähetetään kaikki tiedot savedValues
@@ -440,7 +426,7 @@ export class NewButton extends Component {
                         <p className="addFormTitles">Kategoria</p>
                         <SelectCategory/>
                         <p className="addFormTitles">Otsikko</p>
-                        <NewTitle title={this.state.title}/>
+                        <NewTitle/>
                         <SelfEvulation/>
                         <p className="addFormTitles">Työkalut</p>
                         <AddTools/>
@@ -459,12 +445,10 @@ export class NewButton extends Component {
 }
 
 
-
-
 function openNewPost(val, title) {
     window.scrollTo(0, 0);
     this.setState({isOpened: val});
-    this.setState({title: title})
+    document.getElementById('newPostTitle').value = title;
 }
 
 
@@ -503,6 +487,7 @@ export class FindButton extends Component {
     open = () => {
         document.getElementById('breadcrumb').scrollIntoView();
         openNewPost(true, 'Testi');
+        console.log('Testi');
     };
 
     render() {
