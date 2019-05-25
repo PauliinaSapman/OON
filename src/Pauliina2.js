@@ -10,6 +10,8 @@ import {Collapse} from "react-collapse";
 import {Tab, TabList, TabPanel, Tabs} from "react-tabs";
 import {Comments} from "./components/Home";
 
+import Skill from "./components/Home/index.js"
+
 // Komponentteihin lisätään myös "Lisää" -napin toiminnallisuus. Kun nappia painetaan avautuu/paljastuu uusi vaihe osaamisen
 // määrittelyyn !!HUOM!! mulla oli joku syy miks oon laittanu jokasen osan omaks komponentiks mut en just nyt muista sitä..
 
@@ -71,6 +73,14 @@ export class SelectCategory extends Component {
 //Osaamisen otsikko
 export class NewTitle extends Component {
 
+    constructor(props) {
+        super();
+        this.state = {
+            title: '',
+        };
+
+    }
+
     // sama kuin selectissä, mutta tässä joudutaan ottaa event.target.value (Select on kirjasto, jossa se ei toimi)
     handleChange(event) {
         const value = event.target.value;
@@ -78,6 +88,15 @@ export class NewTitle extends Component {
     }
 
     render () {
+        if(this.props.title !== '') {
+            return (
+                <div className="addPostFormSection">
+                    <input placeholder="Otsikko" onBlur={this.handleChange} value={this.props.title}>
+                    </input>
+                </div>
+            );
+
+        }
         return (
             <div className="addPostFormSection">
                             <input placeholder="Otsikko" onBlur={this.handleChange}>
@@ -366,10 +385,16 @@ export class AddButton extends Component {
 //Modaalin sisältö kasattuna
 // Modaali muutettu haitariksi
 export class NewButton extends Component {
-    state = {
-        open: false,
-        isOpened: false,
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            isOpened: false,
+            title: ''
+        };
+        openNewPost = openNewPost.bind(this)
+    }
+
 
     componentDidMount() {
         const me = this;
@@ -415,7 +440,7 @@ export class NewButton extends Component {
                         <p className="addFormTitles">Kategoria</p>
                         <SelectCategory/>
                         <p className="addFormTitles">Otsikko</p>
-                        <NewTitle/>
+                        <NewTitle title={this.state.title}/>
                         <SelfEvulation/>
                         <p className="addFormTitles">Työkalut</p>
                         <AddTools/>
@@ -434,6 +459,16 @@ export class NewButton extends Component {
 }
 
 
+
+
+function openNewPost(val, title) {
+    window.scrollTo(0, 0);
+    this.setState({isOpened: val});
+    this.setState({title: title})
+}
+
+
+
 // Haitari
 
 // Löydä Uusi osaaminen
@@ -441,10 +476,14 @@ export class NewButton extends Component {
 
 
 export class FindButton extends Component {
-    state = {
-        open: false,
-        isOpened: false,
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            isOpened: false,
+        };
+        openNewPost = openNewPost.bind(this)
+    }
 
     componentDidMount() {
         const me = this;
@@ -458,6 +497,12 @@ export class FindButton extends Component {
     onCloseModal = () => {
         this.setState({ open: false });
         contents = [];
+    };
+
+
+    open = () => {
+        document.getElementById('breadcrumb').scrollIntoView();
+        openNewPost(true, 'Testi');
     };
 
     render() {
@@ -489,7 +534,7 @@ export class FindButton extends Component {
                         <button className="ModalSave">Hae</button>
                         <div className="addPostFormSection">
                             <p>Voit myös hakea aiempien osaamistesi perusteella. Tekoäly etsii aiemmista osaamisistasi avainsanoja ja ehdottaa niiden perusteella samankaltaisia osaamisalueita.</p>
-                            <button className="ModalSave">Hae</button>
+                            <button className="ModalSave" onClick={(e) => this.open()}>Hae</button>
                         </div>
                     </form>
                 </Collapse>

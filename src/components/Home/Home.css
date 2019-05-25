@@ -210,6 +210,7 @@ padding-top: 1rem;
     text-align: left;
     width: calc(100% - 2rem);
     margin: 1rem;
+    margin-bottom: 0;
 }
 
 .addPostWrapper .addPostFormSection {
@@ -246,14 +247,6 @@ padding-top: 1rem;
 
 .addPostWrapper .addPostFormSection .radio input{
     width: auto;
-}
-
-.addPostWrapper .selfEval p {
-    margin-bottom: 1rem;
-}
-
-.searchPostsWrapper .addPostFormSection input, .searchPostsWrapper .addPostFormSection textarea {
-    margin-top: 1rem;
 }
 
 .searchPostsWrapper p {
@@ -363,6 +356,7 @@ div.kys > button > h2 > i {
     width: 80%;
 }
 
+
 .editPostFormWrap textarea {
     outline: none;
     overflow: auto;
@@ -412,21 +406,7 @@ div.kys > button > h2 > i {
 */
 
 .ModalSave {
-    /*
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    background-color: #3cb289;
-    border: none;
-    width: 10rem;
-    height: 2rem;
-    color: white;
-    align-self: center;
-    float: right;
-<<<<<<< HEAD
-    font-size: 1rem;
-=======
-    font-size: 14px;
-    */
+
     width: 10rem !important;
     border: none !important;
     border-radius: 0 !important;
@@ -436,9 +416,20 @@ div.kys > button > h2 > i {
     height: calc(2.25rem + 2px);
     padding: .375rem .75rem;
     margin: 1rem auto 1rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
 }
 
-.ModalSave
+.ModalSave:hover, .ModalSave:active {
+    background-color: #369e78 !important;
+    color: #e5e5e5 !important;
+}
+
+
+.postCollapse ul {
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+}
 
 .skillContent h3, .Skill p {
     margin: 0.3rem;
@@ -611,12 +602,21 @@ div.kys > button > h2 > i {
     width: calc(100% - 1.5rem) !important;
 }
 
+.skillContent .container {
+    display: flex;
+    justify-content: flex-end;
+    height: 0;
+}
+
 .deletePost {
     background-color: white;
     color: red;
     border: 0;
     cursor: pointer;
     margin: 1rem;
+
+    position: relative;
+    top: -3rem;
 }
 
 .radioButton {
@@ -625,15 +625,21 @@ div.kys > button > h2 > i {
 }
 
 .savePostButton {
-
     border: none;
     width: 10rem;
-    height: 2rem;
     background-color: #3cb289;
     color: white;
-    margin-top: 1rem;
     font-size: 1rem;
+    cursor: pointer;
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    margin-top: 1rem;
+}
 
+
+.savePostButton:hover, .savePostButton:active {
+    background-color: #369e78 !important;
+    color: #e5e5e5 !important;
 }
 
 

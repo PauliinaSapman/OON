@@ -878,6 +878,11 @@ class ToggleCollapse extends Component {
 
     render() {
         const {isOpened} = this.state;
+        const style = {marginTop: '1rem'};
+
+        if(this.props.info.isOpened) {
+            this.setState({isOpened:true});
+        }
 
         return (
             <div>
@@ -903,7 +908,7 @@ class ToggleCollapse extends Component {
                         </div>
                     </div>
                 </div>
-                <Collapse isOpened={isOpened} styleName="margin-top:1rem">
+                <Collapse isOpened={isOpened} className="postCollapse">
                     <Tabs>
                         <TabList>
                             <Tab>Osaaminen</Tab>
@@ -1093,7 +1098,7 @@ export class Breadcrumb extends Component {
     render() {
 
         return (
-            <div className="breadcrumbHolder">
+            <div className="breadcrumbHolder" id="breadcrumb">
                 <p>Oma osioni / Oma osaaminen näkyväksi</p>
             </div>
         );
