@@ -462,7 +462,7 @@ export class NewButton extends Component {
 
 
 
-function openNewPost(val, title) {
+export function openNewPost(val, title) {
     window.scrollTo(0, 0);
     this.setState({isOpened: val});
     this.setState({title: title})
@@ -538,8 +538,8 @@ export class FindButton extends Component {
                             <button className="ModalSave" onClick={ () => {apiTesti()} }>
                                 <p className="haeButton3">Hae</p>
                             </button>
+                            <p className="valintaOhje3">Valitse listasta asia jonka, saattaisit osata.</p>
                             <div className="resultContainer" id="resultContainer3">
-
 
                                 <div className="resultArrowContainer clickable"  onClick={ () => { scrollToLeft()}}>
 

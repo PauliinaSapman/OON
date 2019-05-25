@@ -118,6 +118,11 @@ oranssi(musiikki) #e48255
 
 /* headerin tyylit loppu*/
 
+.valintaOhje3 {
+    display: none;
+
+}
+
 #resultContainer3 {
     padding-top: 0rem;
     padding-bottom: 1rem;
@@ -154,12 +159,22 @@ oranssi(musiikki) #e48255
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0,0,0,0.17);
     margin: 0.5rem;
     margin-right: 0;
 
+    color: #666666;
+
+    transition-duration: 0.11;
+
  white-space: nowrap;
 }
+
+
+.result:hover {
+    color: black;
+
+}
+
 
 
 .oon {

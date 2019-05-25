@@ -1,7 +1,6 @@
 import firebase from "./firebase/firebase";
 import JsPDF from "jspdf";
-
-
+import * as pauliina from './Pauliina2.js'
 export const makePDF = (props) => {
     let doc = new JsPDF("p", "px", "a4", true);
 
@@ -133,6 +132,7 @@ export let nSkillInposition = 0;
 
 export function apiTesti() {
 
+
     resetResults();
     let texts = '';
 
@@ -186,7 +186,8 @@ export function apiTesti() {
                 }).then((jsonResult) => {
                     skillsArray = jsonResult.data;
                      for (let result of skillsArray) {
-                        document.querySelector('#resultBox3').innerHTML += '<div class="result" id="' + result + '">\n' +
+
+                        document.querySelector('#resultBox3').innerHTML += '<div class="result clickable" id="' + result + '">\n' +
                             '                                                   <p>'+ result.replace(/_/g, " ") + '</p>\n' +
                             '                                               </div>';
 
@@ -194,15 +195,29 @@ export function apiTesti() {
                          let positionInfo = element.getBoundingClientRect();
                          let width = positionInfo.width;
 
-                         console.log(width);
+                         element.addEventListener("click", (e) => {
+                             this.console.log('sos');
+                         });
                          skillPositionArray.push(width);
 
-                         document.querySelector('#resultContainer3').style.height = '3rem';
-                         document.querySelector('#resultContainer3').style.opacity = '1';
-                         document.querySelector('#resultContainer3').style.paddingTop = '1rem';
+
                      }
                     console.log(skillsArray);
+                        document.querySelector('#resultContainer3').style.height = '3rem';
+                        document.querySelector('#resultContainer3').style.opacity = '1';
+                        document.querySelector('#resultContainer3').style.paddingTop = '1.5rem';
 
+                        document.querySelector('.valintaOhje3').style.display = 'block';
+
+                        for (let suggestedSkill of document.querySelectorAll('.result')) {
+
+                            console.log(suggestedSkill);
+
+
+                            suggestedSkill.onclick = function(){pauliina.openNewPost(true,suggestedSkill.innerText )};
+
+
+                        }
 
                 });
         })
@@ -221,8 +236,8 @@ export function scrollToLeft() {
 
     if (nSkillInposition > 0) {
         console.log(skillPositionArray[nSkillInposition-1]);
-        scrollTo( document.querySelector('.resultBox3'), -1 *(skillPositionArray[nSkillInposition - 1] + 7.65), 70);
-        nSkillInposition -= 1;
+        scrollTo( document.querySelector('.resultBox3'), -1 *(skillPositionArray[nSkillInposition - 1] + 7.65 + skillPositionArray[nSkillInposition - 2] + 7.65), 140);
+        nSkillInposition -= 2;
     }
 
 
@@ -233,8 +248,8 @@ export function scrollToRight() {
     console.log('numero: ' + nSkillInposition);
     console.log('arvo: ' + skillPositionArray[nSkillInposition]);
 
-        scrollTo(document.querySelector('.resultBox3'), skillPositionArray[nSkillInposition] + 8.45, 70);
-    nSkillInposition += 1;
+        scrollTo(document.querySelector('.resultBox3'), skillPositionArray[nSkillInposition] + 8.45 + skillPositionArray[nSkillInposition + 1] + 8.45, 140);
+    nSkillInposition += 2;
 
 
 }
@@ -276,6 +291,7 @@ export function resetResults ()  {
     document.querySelector('#resultContainer3').style.height = '0rem';
     document.querySelector('#resultContainer3').style.opacity = '0';
     document.querySelector('#resultContainer3').style.paddingTop = '0rem';
+    document.querySelector('.valintaOhje3').style.display = 'none';
 
     skillPositionArray = [];
     skillsArray = [];
