@@ -27,11 +27,14 @@ oranssi(musiikki) #e48255
 
     display: flex;
     flex-direction: column;
-
+    flex-shrink: 0;
     width: 16rem;
     height: calc(100% - 1.5rem);
     background-color: #f3f3f3;
     z-index: 23;
+
+    font-family: 'Lato', sans-serif !important;
+
 }
 
 .logoContainer {
@@ -90,12 +93,34 @@ oranssi(musiikki) #e48255
 
     color: #f0f0f0;
 
-    font-size: 100%;
+    font-size: 130%;
+}
+
+.navBarLinkText {
+    font-size: 120%;
+    margin-left: 0.25rem;
+}
+
+.headerButtonLink:hover {
+    color: black;
+}
+.logOutButton {
+    margin-top: auto;
 }
 
 
+
 .copyrightContainer {
-    align-self: flex-end;
+    padding: 0.5rem;
+    margin-top: auto;
+    font-family: 'Lato', sans-serif;
+
+    opacity: 0.8;
+}
+
+.copyRightText {
+padding-top: 1rem;
+
 }
 
 /* headerin tyylit loppu*/

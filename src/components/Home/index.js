@@ -24,9 +24,8 @@ import commenticon from '../../iconfinder_Streamline-59_185079.png'
 function LogOut() {
     return (
         <div className="headerButtonContainer">
-            <button className="headerButton">
-                <Link className="headerButtonLink" to={ROUTES.LANDING}><i className="fas fa-sign-out-alt"></i> Kirjaudu
-                    ulos</Link>
+            <button className="headerButton ">
+                <Link className="headerButtonLink" to={ROUTES.LANDING}><i className="fas fa-sign-out-alt"></i><span className="navBarLinkText"> Kirjaudu ulos</span></Link>
             </button>
         </div>
     );
@@ -352,7 +351,7 @@ class ShareButton extends Component {
         return (
             <div className="headerButtonContainer">
                 <button className="headerButton clickable" onClick={this.openModal}>
-                    <a className="headerButtonLink"><i className="fas fa-share-alt"></i> Jaa</a>
+                    <a className="headerButtonLink"><i className="fas fa-share-alt"></i><span className="navBarLinkText"> Jaa</span></a>
                 </button>
                 <Modal windowClassName="window-container" isOpen={this.state.isModalOpen} onClose={this.closeModal}>
                     {this.state.content}
@@ -383,7 +382,7 @@ function Profile() {
     return (
         <div className="headerButtonContainer">
             <button className="headerButton">
-                <Link className="headerButtonLink" to={ROUTES.PROFILE}><i className="fas fa-user"></i> Profiili</Link>
+                <Link className="headerButtonLink" to={ROUTES.PROFILE}><i className="fas fa-user"></i><span className="navBarLinkText"> Profiili</span></Link>
             </button>
         </div>
 
@@ -411,8 +410,10 @@ function Header() {
             <div className="headerButtons">
                 <Profile/>
                 <ShareButton/>
-                <LogOut/>
-                <CopyRight/>
+                <div className="logOutButton">
+                     <LogOut/>
+                    <CopyRight/>
+                </div>
             </div>
         </div>
     );
