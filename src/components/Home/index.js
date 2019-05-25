@@ -822,7 +822,7 @@ class ToggleCollapse extends Component {
         super(props);
         this.state = {
             isOpened: false,
-            button: <i className="fas fa-angle-down openPostArrow"></i>,
+            button: <i className="fas fa-caret-down"></i>,
             value: '',
             id: '',
             commenticon: <div/>
@@ -987,8 +987,6 @@ function Skill(props) {
     }
     return (
         <li className="Skill">
-            <div className="skillColorTag" style={{backgroundColor: colour}}>
-            </div>
             <div className="skillContent">
                 <ToggleCollapse info={props.skillInfo} id={props.id}/>
             </div>

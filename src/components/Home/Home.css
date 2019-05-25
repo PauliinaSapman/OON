@@ -144,22 +144,15 @@ oranssi(musiikki) #e48255
     flex-direction: row;
     margin: 0.5rem 0;
     padding: 0;
+    border-bottom: 1px solid #e5e5e5 !important;
     background-color: white;
-    box-shadow: 0px 0px 13px -6px rgba(0, 0, 0, 0.75);
-    border-radius: 8px;
+    font-family: Lato;
 }
 
 .Skill:nth-child(1) {
     margin-top: 0;
 }
 
-.skillColorTag {
-    margin-left: 0;
-    height: inherit;
-    width: 1.5rem;
-    border-radius: 8px 0 0 8px;
-    flex-shrink: 0;
-}
 
 .kys {
     margin-top: 4.5rem;
@@ -186,6 +179,7 @@ oranssi(musiikki) #e48255
     box-shadow: 0px 0px 23px -13px rgba(0, 0, 0, 0.55);
 
     border: none;
+
 }
 
 div.kys > button > h2 > i {
@@ -498,12 +492,12 @@ div.kys > button > h2 > i {
 
 .savePostButton {
     border: none;
-    width: 6rem;
+    width: 10rem;
     height: 2rem;
-    border-radius: 8px;
     background-color: #47C786;
     color: white;
     margin-top: 1rem;
+    font-size: 1rem;
 }
 
 
@@ -564,7 +558,7 @@ button:focus {
 .SkillTitleList {
     overflow: auto;
     height: calc(100% - 4rem);
-    font-size: 20px;
+    font-size: 20npx;
 }
 
 .clickable {
