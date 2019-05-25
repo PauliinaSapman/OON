@@ -115,29 +115,19 @@ export function sharePosts(listOfSkills) {
 
 }
 
-export default class ApiTest extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {testi: []};
-    }
+export function apiTesti() {
+    fetch('https://api.microcompetencies.com/microcompetencies?action=semantic_suggestion&type=skill&lang=xx&word=mekaniikka&word_limit=10&token=7125d5g8m6d9i9c6t8c7y3f8b57ecnm1h')
+        .then((result) => {
+            // Get the result
+            // If we want text, call result.text()
+            return result.json();
+        }).then((jsonResult) => {
+        // Do something with the result
 
-    componentDidMount() {
-        this.ApiTest();
-    }
+        for (const i of jsonResult.data){
+            console.log(i);
+        }
 
-    UserList() {
-        $.getJSON('https://api.microcompetencies.com/microcompetencies?action=semantic_suggestion&type=skill&lang=xx&word=mekaniikka&word_limit=10&token=7125d5g8m6d9i9c6t8c7y3f8b57ecnm1h')
-            .then(({ results }) => this.setState({ testi: results }));
-    }
-
-    render() {
-        const persons = this.state.testi;
-
-        return (
-            <div>
-                <div>{ persons }</div>
-            </div>
-        );
-    }
+    })
 }

@@ -20,6 +20,7 @@ import "react-tabs/style/react-tabs.css";
 import Tooltip from 'react-tooltip-lite';
 
 import commenticon from '../../iconfinder_Streamline-59_185079.png'
+import ApiTest, {apiTesti} from "../../tuomas";
 
 function LogOut() {
     return (
@@ -1083,6 +1084,12 @@ function Home() {
     return (
         <div className="App">
             <Header/>
+
+
+            <div className="testinappula clickable" onClick={ () => {apiTesti()}}>
+                <h1>testinappula</h1>
+
+            </div>
             <Main/>
         </div>
     );
