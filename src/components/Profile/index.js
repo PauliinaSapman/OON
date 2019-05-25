@@ -86,17 +86,21 @@ class UserInfo extends Component{
             email: '',
             phone: '',
             editProfile: <div>
-                <div className="profileName">
-                    <h2></h2>
-                </div>
                 <div className="profilePictureContainer">
-                    <img className="profilePicture"/>
-
+                    <i className="fas fa-pen editProfileIcon clickable" ></i>
+                    <img className="profilePicture clickable"/>
 
                 </div>
-                <div className="profileAdditionalInfo">
-                    <p></p>
-                    <p></p>
+
+                <div className="profileInfoContainer">
+                    <div className="profileName">
+                        <h3 className="profileNameText"></h3>
+                    </div>
+                    <div className="profileAdditionalInfo">
+                        <p className="profileInfoText"></p>
+                        <p className="profileInfoText"></p>
+                    </div>
+
                 </div>
 
             </div>

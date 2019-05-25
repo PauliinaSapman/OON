@@ -9,6 +9,7 @@ import Tooltip from "react-tooltip-lite";
 import {Collapse} from "react-collapse";
 import {Tab, TabList, TabPanel, Tabs} from "react-tabs";
 import {Comments} from "./components/Home";
+import {apiTesti, resetResults, scrollRight, scrollToLeft, scrollToRight} from "./tuomas";
 
 // Komponentteihin lisätään myös "Lisää" -napin toiminnallisuus. Kun nappia painetaan avautuu/paljastuu uusi vaihe osaamisen
 // määrittelyyn !!HUOM!! mulla oli joku syy miks oon laittanu jokasen osan omaks komponentiks mut en just nyt muista sitä..
@@ -489,7 +490,26 @@ export class FindButton extends Component {
                         <button className="ModalSave">Hae</button>
                         <div className="addPostFormSection">
                             <p>Voit myös hakea aiempien osaamistesi perusteella. Tekoäly etsii aiemmista osaamisistasi avainsanoja ja ehdottaa niiden perusteella samankaltaisia osaamisalueita.</p>
-                            <button className="ModalSave">Hae</button>
+                            <button className="ModalSave" onClick={ () => {apiTesti()} }>
+                                <p className="haeButton3">Hae</p>
+                            </button>
+                            <div className="resultContainer" id="resultContainer3">
+
+
+                                <div className="resultArrowContainer clickable"  onClick={ () => { scrollToLeft()}}>
+
+                                    <i className="fas fa-chevron-left"></i>
+                                </div>
+
+                                <div className="resultBox3" id="resultBox3">
+
+                                </div>
+
+                                <div className="resultArrowContainer clickable" onClick={ () => { scrollToRight()}}>
+                                    <i className="fas fa-chevron-right" ></i>
+                                </div>
+
+                            </div>
                         </div>
                     </form>
                 </Collapse>
