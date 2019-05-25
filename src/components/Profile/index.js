@@ -89,12 +89,16 @@ class UserInfo extends Component{
                 <div className="profileName">
                     <h2></h2>
                 </div>
-                <img className="profilePicture" src={''}/>
+                <div className="profilePictureContainer">
+                    <img className="profilePicture"/>
+
+
+                </div>
                 <div className="profileAdditionalInfo">
                     <p></p>
                     <p></p>
                 </div>
-                <button className="profileEditButton clickable" onClick={this.editInfo}><i className="far fa-edit"></i> Muokkaa</button>
+
             </div>
         };
         this.editInfo = this.editInfo.bind(this);
@@ -107,7 +111,9 @@ class UserInfo extends Component{
                 <div className="profileContainer">
 
                     <div className="profilePictureContainer">
+                        <i className="fas fa-pen editProfileIcon clickable" onClick={this.editInfo}></i>
                         <img className="profilePicture clickable" onClick={this.editInfo} src={this.state.userinfo.pic}/>
+
                     </div>
 
                     <div className="profileInfoContainer">
