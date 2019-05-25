@@ -107,6 +107,7 @@ html {
 
 .profilePicture {
     width: 10rem;
+    height: 10rem;
     max-height: 20rem;
     border-radius: 50%;
     transition-duration: 0.15s;

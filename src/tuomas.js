@@ -2,8 +2,6 @@ import firebase from "./firebase/firebase";
 import JsPDF from "jspdf";
 
 
-
-
 export const makePDF = (props) => {
     let doc = new JsPDF("p", "px", "a4", true);
 
@@ -11,10 +9,10 @@ export const makePDF = (props) => {
     let name = props.fName + '_' + props.lName + '_osaamiset.pdf';
 
     let specialElementHandlers = {
-        '#ignorePDF1': function(element, renderer){
+        '#ignorePDF1': function (element, renderer) {
             return true;
         },
-        '.skillPicture': function(element, renderer){
+        '.skillPicture': function (element, renderer) {
             return true;
         }
     };
@@ -55,10 +53,7 @@ export function copyToClipboard() {
         if (str) {
 
 
-
-
             let sharedUrl = window.location.host + '/shared?id=' + str;
-
 
 
             el.value = sharedUrl;
@@ -116,8 +111,8 @@ export function sharePosts(listOfSkills) {
 }
 
 
-export function apiTesti() {
-    fetch('https://api.microcompetencies.com/microcompetencies?action=semantic_suggestion&type=skill&lang=xx&word=mekaniikka&word_limit=10&token=7125d5g8m6d9i9c6t8c7y3f8b57ecnm1h')
+export function fetchApi(param) {
+    fetch(param.url)
         .then((result) => {
             // Get the result
             // If we want text, call result.text()
@@ -125,9 +120,78 @@ export function apiTesti() {
         }).then((jsonResult) => {
         // Do something with the result
 
-        for (const i of jsonResult.data){
-            console.log(i);
-        }
+        console.log(jsonResult.data);
+
+        return jsonResult.data;
 
     })
 }
+
+
+export function apiTesti() {
+    let texts = '';
+
+    const testRef = firebase.database().ref('posts/userid');
+    testRef.on('value', function (snapshot) {
+
+        // loopataan läpi postaukset ja annetaan viimeisimmän arvo postNumberille
+        for (let i = 0; i < snapshot.numChildren(); i++) {
+            let post = Object.keys(snapshot.val())[i];
+
+            let textCategory = firebase.database().ref('posts/userid/' + post + '/category');
+            textCategory.on('value', function (snapshot) {
+                texts += ' ' + snapshot.val();
+            });
+
+            let textTitle = firebase.database().ref('posts/userid/' + post + '/title');
+            textTitle.on('value', function (snapshot) {
+                texts += ' ' + snapshot.val();
+            });
+
+            let textTools = firebase.database().ref('posts/userid/' + post + '/tools');
+            textTools.on('value', function (snapshot) {
+                texts += ' ' + snapshot.val();
+            });
+
+            let textSteps = firebase.database().ref('posts/userid/' + post + '/steps');
+            textSteps.on('value', function (snapshot) {
+                texts += ' ' + snapshot.val();
+            });
+
+            let textOther = firebase.database().ref('posts/userid/' + post + '/newsection1');
+            textOther.on('value', function (snapshot) {
+                texts += ' ' + snapshot.val();
+            });
+
+        }
+
+
+        fetch('https://api.microcompetencies.com/microcompetencies?action=text_to_skills&token=7125d5g8m6d9i9c6t8c7y3f8b57ecnm1h&text=' + texts)
+            .then((result) => {
+                return result.json();
+            }).then((jsonResult) => {
+                console.log(jsonResult.data);
+            let newStr;
+            for (let skill of jsonResult.data){
+                newStr+= skill + ','
+            }
+            return newStr;})
+            .then((skills) => {
+                console.log(skills);
+                    fetch('https://api.microcompetencies.com/microcompetencies?action=semantic_suggestion&type=skill&lang=fi&word=' + skills + '&word_limit=100&token=7125d5g8m6d9i9c6t8c7y3f8b57ecnm1h')
+                    .then((result) => {
+                    return result.json();
+                }).then((jsonResult) => {
+                    console.log(jsonResult.data);
+                });
+        })
+
+
+
+
+        // console.log(postNumber);
+    });
+}
+
+
+apiTesti();

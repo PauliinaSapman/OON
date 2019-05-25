@@ -1084,12 +1084,6 @@ function Home() {
     return (
         <div className="App">
             <Header/>
-
-
-            <div className="testinappula clickable" onClick={ () => {apiTesti()}}>
-                <h1>testinappula</h1>
-
-            </div>
             <Main/>
         </div>
     );
