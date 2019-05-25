@@ -373,16 +373,18 @@ div.kys > button > h2 > i {
 
 .ModalSave {
     margin-top: 1rem;
-    background-color: #47C786;
+    margin-bottom: 1rem;
+    background-color: #3cb289;
     border: none;
-    border-radius: 8px;
-    width: 6rem;
+    width: 10rem;
     height: 2rem;
     color: white;
     align-self: center;
     float: right;
-    font-size: 14px;
+    font-size: 1rem;
 }
+
+.ModalSave
 
 .skillContent h3, .Skill p {
     margin: 0.3rem;
@@ -572,7 +574,7 @@ div.kys > button > h2 > i {
     border: none;
     width: 10rem;
     height: 2rem;
-    background-color: #47C786;
+    background-color: #3cb289;
     color: white;
     margin-top: 1rem;
     font-size: 1rem;
@@ -1017,6 +1019,10 @@ div.c-modal--window.modal-fade-on-enter.window-container, div.headerButtons > di
 
         max-width: 59rem;
     }
+}
+
+.findButton {
+    margin-top: 0;
 }
 
 

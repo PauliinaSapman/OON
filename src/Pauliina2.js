@@ -162,7 +162,8 @@ export class AddFile extends Component {
                 <input placeholder="Lisää kuvan URL" onChange={this.handleChange}/>
             </div>
         )
-    }}
+    }
+}
 
 //Lisää oma osio (Tulossa)
 export  class NewSection extends Component {
@@ -179,7 +180,60 @@ export  class NewSection extends Component {
 
             </div>
         )
-    }}
+    }
+}
+
+//mitä haluaisin osata
+
+export class MitaHaluaisin extends Component {
+    handleChange(event) {
+        const value = event.target.value;
+        setValues('Haluaisin', value);
+    }
+
+    render () {
+        return (
+            <div className="addPostFormSection">
+                <textarea placeholder="Mitä haluaisin osata?"></textarea>
+            </div>
+        );
+    }
+}
+
+//mitä tähän liittyen osaan jo
+export class MitaOsaan extends Component {
+    handleChange(event) {
+        const value = event.target.value;
+        setValues('Osaanjo', value);
+    }
+
+    render () {
+        return (
+            <div className="addPostFormSection">
+                <textarea placeholder="Mitä tähän liittyvää osaan jo?"></textarea>
+            </div>
+        );
+    }
+}
+
+//Mikä minua kiinnostaa
+
+export class MikaKiinnostaa extends Component {
+    handleChange(event) {
+        const value = event.target.value;
+        setValues('Kiinnostaa', value);
+    }
+
+    render () {
+        return (
+            <div className="addPostFormSection">
+                <textarea placeholder="Mikä minua kiinnostaa?"></textarea>
+            </div>
+        );
+    }
+}
+
+
 
 
 //Lisää uusi osaamisen määrittely
@@ -372,4 +426,62 @@ export class NewButton extends Component {
 
 
 // Haitari
+
+// Löydä Uusi osaaminen
+
+
+
+export class FindButton extends Component {
+    state = {
+        open: false,
+        isOpened: false,
+    };
+
+    componentDidMount() {
+        const me = this;
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        sanna.sendToDb(savedValues);
+    };
+
+    onCloseModal = () => {
+        this.setState({ open: false });
+        contents = [];
+    };
+
+    render() {
+        const { open } = this.state;
+        const {isOpened} = this.state;
+        return (
+            <div className="kys findButton">
+                <div className="New clickable" onClick={() => {
+                    if (this.state.isOpened === true) {
+                        this.setState({isOpened: false});
+                    }
+                    else {
+                        this.setState({isOpened: true});
+                    }
+                }
+                }>
+                    <div className="addButtonTexts">
+                        <h4><i className="fas fa-search"></i> Löydä osaaminen</h4>
+                        <p>{this.state.button}</p>
+                    </div>
+                </div>
+                <Collapse isOpened={isOpened}>
+                    <form className="addPostWrapper" onSubmit={this.handleSubmit}>
+                        <MitaHaluaisin/>
+                        <MitaOsaan/>
+                        <button className="ModalSave">Hae</button>
+                        <MikaKiinnostaa/>
+                        <button className="ModalSave">Hae</button>
+                        <button className="ModalSave">Hae satunnaisesti</button>
+                    </form>
+                </Collapse>
+            </div>
+        );
+    }
+}
 
