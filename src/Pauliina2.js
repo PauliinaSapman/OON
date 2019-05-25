@@ -9,6 +9,7 @@ import Tooltip from "react-tooltip-lite";
 import {Collapse} from "react-collapse";
 import {Tab, TabList, TabPanel, Tabs} from "react-tabs";
 import {Comments} from "./components/Home";
+import {apiTesti, resetResults, scrollRight, scrollToLeft, scrollToRight} from "./tuomas";
 
 import Skill from "./components/Home/index.js"
 
@@ -444,9 +445,8 @@ export class NewButton extends Component {
     }
 }
 
-
-function openNewPost(val, title) {
-    window.scrollTo(0, 0);
+export function openNewPost(val, title) {
+    document.getElementById('breadcrumb').scrollIntoView();
     this.setState({isOpened: val});
     document.getElementById('newPostTitle').value = title;
 }
@@ -455,7 +455,7 @@ function openNewPost(val, title) {
 
 // Haitari
 
-// Löydä Uusi osaaminen
+// Löydä Uusi osaaminennn
 
 
 
@@ -519,7 +519,27 @@ export class FindButton extends Component {
                         <button className="ModalSave">Hae</button>
                         <div className="addPostFormSection">
                             <p>Voit myös hakea aiempien osaamistesi perusteella. Tekoäly etsii aiemmista osaamisistasi avainsanoja ja ehdottaa niiden perusteella samankaltaisia osaamisalueita.</p>
-                            <button className="ModalSave" onClick={(e) => this.open()}>Hae</button>
+                            <button className="ModalSave" onClick={ () => {apiTesti()} }>
+                                <p className="haeButton3">Hae</p>
+                            </button>
+                            <p className="valintaOhje3">Valitse listasta asia jonka, saattaisit osata.</p>
+                            <div className="resultContainer" id="resultContainer3">
+
+                                <div className="resultArrowContainer clickable"  onClick={ () => { scrollToLeft()}}>
+
+                                    <i className="fas fa-chevron-left"></i>
+                                </div>
+
+                                <div className="resultBox3" id="resultBox3">
+
+                                </div>
+
+                                <div className="resultArrowContainer clickable" onClick={ () => { scrollToRight()}}>
+                                    <i className="fas fa-chevron-right" ></i>
+                                </div>
+
+                            </div>
+
                         </div>
                     </form>
                 </Collapse>
