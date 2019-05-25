@@ -201,6 +201,13 @@ padding-top: 1rem;
     align-items: center;
     background-color: #f3f3f3;
 }
+
+.addPostWrapper .addFormTitles {
+    text-align: left;
+    width: calc(100% - 2rem);
+    margin: 1rem;
+}
+
 .addPostWrapper .addPostFormSection {
     width: 100%;
 }
@@ -214,6 +221,7 @@ padding-top: 1rem;
     border: 1px solid #e5e5e5;
     margin: 1rem;
     padding: 0.5rem;
+    margin-top: 0;
 }
 
 .addPostWrapper .addPostFormSection .Category input {
@@ -234,6 +242,34 @@ padding-top: 1rem;
 
 .addPostWrapper .addPostFormSection .radio input{
     width: auto;
+}
+
+.addPostWrapper .selfEval p {
+    margin-bottom: 1rem;
+}
+
+.searchPostsWrapper .addPostFormSection input, .searchPostsWrapper .addPostFormSection textarea {
+    margin-top: 1rem;
+}
+
+.searchPostsWrapper p {
+    margin: 0 1rem;
+}
+
+.searchPostsWrapper a {
+    color: #666666;
+}
+
+.searchPostsWrapper .addPostFormSection {
+    margin-top: 1rem;
+}
+
+.searchPostsWrapper .addPostFormSection textarea {
+    margin-bottom: 0;
+}
+
+.kys .searchPostsWrapper {
+    padding-top: 1rem;
 }
 
 .New {

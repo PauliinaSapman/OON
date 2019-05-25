@@ -194,6 +194,7 @@ export class MitaHaluaisin extends Component {
     render () {
         return (
             <div className="addPostFormSection">
+                <p>Mitä haluaisin osata?</p>
                 <textarea placeholder="Mitä haluaisin osata?"></textarea>
             </div>
         );
@@ -210,6 +211,7 @@ export class MitaOsaan extends Component {
     render () {
         return (
             <div className="addPostFormSection">
+                <p>Mitä tähän liittyen osaan jo?</p>
                 <textarea placeholder="Mitä tähän liittyvää osaan jo?"></textarea>
             </div>
         );
@@ -227,6 +229,7 @@ export class MikaKiinnostaa extends Component {
     render () {
         return (
             <div className="addPostFormSection">
+                <p>Mikä minua kiinnostaa?</p>
                 <textarea placeholder="Mikä minua kiinnostaa?"></textarea>
             </div>
         );
@@ -409,12 +412,18 @@ export class NewButton extends Component {
                 </div>
                 <Collapse isOpened={isOpened}>
                     <form className="addPostWrapper" onSubmit={this.handleSubmit}>
+                        <p className="addFormTitles">Kategoria</p>
                         <SelectCategory/>
+                        <p className="addFormTitles">Otsikko</p>
                         <NewTitle/>
                         <SelfEvulation/>
+                        <p className="addFormTitles">Työkalut</p>
                         <AddTools/>
+                        <p className="addFormTitles">Vaiheet</p>
                         <EnterSteps/>
+                        <p className="addFormTitles">Lisää tiedoston linkki</p>
                         <AddFile/>
+                        <p className="addFormTitles">Muuta</p>
                         <NewSection/>
                         <button className="ModalSave" type="submit" onClick={this.onCloseModal}>Tallenna</button>
                     </form>
@@ -471,13 +480,17 @@ export class FindButton extends Component {
                     </div>
                 </div>
                 <Collapse isOpened={isOpened}>
-                    <form className="addPostWrapper" onSubmit={this.handleSubmit}>
+                    <form className="addPostWrapper searchPostsWrapper" onSubmit={this.handleSubmit}>
+                        <p>Voit etsiä ehdotuksia osaamisiksi tekoälyn avulla. Voit kertoa kiinnostuksistasi ja taidoistasi ja tekoäly etsii sinulle ehdotuksia perustuen vastauksiisi. <a href="https://www.microcompetencies.com" target="_blank">Lue lisää tekoälystä.</a></p>
                         <MitaHaluaisin/>
                         <MitaOsaan/>
                         <button className="ModalSave">Hae</button>
                         <MikaKiinnostaa/>
                         <button className="ModalSave">Hae</button>
-                        <button className="ModalSave">Hae satunnaisesti</button>
+                        <div className="addPostFormSection">
+                            <p>Voit myös hakea aiempien osaamistesi perusteella. Tekoäly etsii aiemmista osaamisistasi avainsanoja ja ehdottaa niiden perusteella samankaltaisia osaamisalueita.</p>
+                            <button className="ModalSave">Hae</button>
+                        </div>
                     </form>
                 </Collapse>
             </div>
