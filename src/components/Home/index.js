@@ -11,6 +11,7 @@ import {Link} from 'react-router-dom';
 import {Collapse} from 'react-collapse';
 import {Form, Text, Scope, TextArea, Option, RadioGroup, Radio} from 'informed';
 import {NewButton} from "../../Pauliina2";
+import {FindButton} from "../../Pauliina2";
 import Dialog from 'react-dialog'
 import {Modal} from "react-modal-button";
 import logo from '../../unknown.png';
@@ -1075,6 +1076,7 @@ function Main() {
     return (
         <div className="Main">
             <NewButton/>
+            <FindButton/>
             <Posts/>
         </div>
     );

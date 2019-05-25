@@ -201,6 +201,13 @@ padding-top: 1rem;
     align-items: center;
     background-color: #f3f3f3;
 }
+
+.addPostWrapper .addFormTitles {
+    text-align: left;
+    width: calc(100% - 2rem);
+    margin: 1rem;
+}
+
 .addPostWrapper .addPostFormSection {
     width: 100%;
 }
@@ -210,14 +217,21 @@ padding-top: 1rem;
     margin: 0 1rem;
 }
 .addPostWrapper .addPostFormSection input, .addPostWrapper .addPostFormSection textarea {
-    width: calc(100% - (2rem + 2px));
+    width: calc(100% - (3rem + 2px));
     border: 1px solid #e5e5e5;
-    margin: 0 1rem;
+    margin: 1rem;
+    padding: 0.5rem;
+    margin-top: 0;
+}
+
+.addPostWrapper .addPostFormSection .Category input {
+    margin: auto;
 }
 
 .addPostWrapper .addPostFormSection textarea {
     resize: vertical;
 }
+
 .addPostWrapper .addPostFormSection textarea:focus, .addPostWrapper .addPostFormSection input:focus,.addPostWrapper .Category:focus {
     outline: none;
     border-color: black;
@@ -226,6 +240,37 @@ padding-top: 1rem;
     border-color: black;
 }
 
+.addPostWrapper .addPostFormSection .radio input{
+    width: auto;
+}
+
+.addPostWrapper .selfEval p {
+    margin-bottom: 1rem;
+}
+
+.searchPostsWrapper .addPostFormSection input, .searchPostsWrapper .addPostFormSection textarea {
+    margin-top: 1rem;
+}
+
+.searchPostsWrapper p {
+    margin: 0 1rem;
+}
+
+.searchPostsWrapper a {
+    color: #666666;
+}
+
+.searchPostsWrapper .addPostFormSection {
+    margin-top: 1rem;
+}
+
+.searchPostsWrapper .addPostFormSection textarea {
+    margin-bottom: 0;
+}
+
+.kys .searchPostsWrapper {
+    padding-top: 1rem;
+}
 
 .New {
     /*
@@ -372,17 +417,33 @@ div.kys > button > h2 > i {
 */
 
 .ModalSave {
+    /*
     margin-top: 1rem;
-    background-color: #47C786;
+    margin-bottom: 1rem;
+    background-color: #3cb289;
     border: none;
-    border-radius: 8px;
-    width: 6rem;
+    width: 10rem;
     height: 2rem;
     color: white;
     align-self: center;
     float: right;
+<<<<<<< HEAD
+    font-size: 1rem;
+=======
     font-size: 14px;
+    */
+    width: 10rem !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background-color: #3cb289 !important;
+    color: white !important;
+
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    margin: 1rem auto 1rem 1rem;
 }
+
+.ModalSave
 
 .skillContent h3, .Skill p {
     margin: 0.3rem;
@@ -569,13 +630,15 @@ div.kys > button > h2 > i {
 }
 
 .savePostButton {
+
     border: none;
     width: 10rem;
     height: 2rem;
-    background-color: #47C786;
+    background-color: #3cb289;
     color: white;
     margin-top: 1rem;
     font-size: 1rem;
+
 }
 
 
@@ -1017,6 +1080,10 @@ div.c-modal--window.modal-fade-on-enter.window-container, div.headerButtons > di
 
         max-width: 59rem;
     }
+}
+
+.findButton {
+    margin-top: 0;
 }
 
 

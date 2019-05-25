@@ -162,7 +162,8 @@ export class AddFile extends Component {
                 <input placeholder="Lisää kuvan URL" onChange={this.handleChange}/>
             </div>
         )
-    }}
+    }
+}
 
 //Lisää oma osio (Tulossa)
 export  class NewSection extends Component {
@@ -179,7 +180,63 @@ export  class NewSection extends Component {
 
             </div>
         )
-    }}
+    }
+}
+
+//mitä haluaisin osata
+
+export class MitaHaluaisin extends Component {
+    handleChange(event) {
+        const value = event.target.value;
+        setValues('Haluaisin', value);
+    }
+
+    render () {
+        return (
+            <div className="addPostFormSection">
+                <p>Mitä haluaisin osata?</p>
+                <textarea placeholder="Mitä haluaisin osata?"></textarea>
+            </div>
+        );
+    }
+}
+
+//mitä tähän liittyen osaan jo
+export class MitaOsaan extends Component {
+    handleChange(event) {
+        const value = event.target.value;
+        setValues('Osaanjo', value);
+    }
+
+    render () {
+        return (
+            <div className="addPostFormSection">
+                <p>Mitä tähän liittyen osaan jo?</p>
+                <textarea placeholder="Mitä tähän liittyvää osaan jo?"></textarea>
+            </div>
+        );
+    }
+}
+
+//Mikä minua kiinnostaa
+
+export class MikaKiinnostaa extends Component {
+    handleChange(event) {
+        const value = event.target.value;
+        setValues('Kiinnostaa', value);
+    }
+
+    render () {
+        return (
+            <div className="addPostFormSection">
+                <p>Mikä minua kiinnostaa?</p>
+                <textarea placeholder="Mikä minua kiinnostaa?"></textarea>
+            </div>
+        );
+    }
+}
+
+
 
 
 //Lisää uusi osaamisen määrittely
@@ -355,12 +412,18 @@ export class NewButton extends Component {
                 </div>
                 <Collapse isOpened={isOpened}>
                     <form className="addPostWrapper" onSubmit={this.handleSubmit}>
+                        <p className="addFormTitles">Kategoria</p>
                         <SelectCategory/>
+                        <p className="addFormTitles">Otsikko</p>
                         <NewTitle/>
                         <SelfEvulation/>
+                        <p className="addFormTitles">Työkalut</p>
                         <AddTools/>
+                        <p className="addFormTitles">Vaiheet</p>
                         <EnterSteps/>
+                        <p className="addFormTitles">Lisää tiedoston linkki</p>
                         <AddFile/>
+                        <p className="addFormTitles">Muuta</p>
                         <NewSection/>
                         <button className="ModalSave" type="submit" onClick={this.onCloseModal}>Tallenna</button>
                     </form>
@@ -372,4 +435,66 @@ export class NewButton extends Component {
 
 
 // Haitari
+
+// Löydä Uusi osaaminen
+
+
+
+export class FindButton extends Component {
+    state = {
+        open: false,
+        isOpened: false,
+    };
+
+    componentDidMount() {
+        const me = this;
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        sanna.sendToDb(savedValues);
+    };
+
+    onCloseModal = () => {
+        this.setState({ open: false });
+        contents = [];
+    };
+
+    render() {
+        const { open } = this.state;
+        const {isOpened} = this.state;
+        return (
+            <div className="kys findButton">
+                <div className="New clickable" onClick={() => {
+                    if (this.state.isOpened === true) {
+                        this.setState({isOpened: false});
+                    }
+                    else {
+                        this.setState({isOpened: true});
+                    }
+                }
+                }>
+                    <div className="addButtonTexts">
+                        <h4><i className="fas fa-search"></i> Löydä osaaminen</h4>
+                        <p>{this.state.button}</p>
+                    </div>
+                </div>
+                <Collapse isOpened={isOpened}>
+                    <form className="addPostWrapper searchPostsWrapper" onSubmit={this.handleSubmit}>
+                        <p>Voit etsiä ehdotuksia osaamisiksi tekoälyn avulla. Voit kertoa kiinnostuksistasi ja taidoistasi ja tekoäly etsii sinulle ehdotuksia perustuen vastauksiisi. <a href="https://www.microcompetencies.com" target="_blank">Lue lisää tekoälystä.</a></p>
+                        <MitaHaluaisin/>
+                        <MitaOsaan/>
+                        <button className="ModalSave">Hae</button>
+                        <MikaKiinnostaa/>
+                        <button className="ModalSave">Hae</button>
+                        <div className="addPostFormSection">
+                            <p>Voit myös hakea aiempien osaamistesi perusteella. Tekoäly etsii aiemmista osaamisistasi avainsanoja ja ehdottaa niiden perusteella samankaltaisia osaamisalueita.</p>
+                            <button className="ModalSave">Hae</button>
+                        </div>
+                    </form>
+                </Collapse>
+            </div>
+        );
+    }
+}
 

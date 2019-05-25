@@ -190,7 +190,6 @@ export function getAllTextsFromUser() {
     const testRef = firebase.database().ref('posts/userid');
     testRef.on('value', function(snapshot)
     {
-        postNumber = snapshot.numChildren();
 
         // loopataan läpi postaukset ja annetaan viimeisimmän arvo postNumberille
         for(let i = 0; i < snapshot.numChildren(); i++) {
