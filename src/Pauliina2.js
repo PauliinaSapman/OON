@@ -312,7 +312,6 @@ export class NewButton extends Component {
     state = {
         open: false,
         isOpened: false,
-        button: <i className="fas fa-angle-down openPostArrow"></i>
     };
 
     componentDidMount() {
@@ -343,11 +342,9 @@ export class NewButton extends Component {
                 <div className="New clickable" onClick={() => {
                     if (this.state.isOpened === true) {
                         this.setState({isOpened: false});
-                        this.setState({button: <i className="fas fa-angle-down openPostArrow"></i>});
                     }
                     else {
                         this.setState({isOpened: true});
-                        this.setState({button: <i className="fas fa-angle-up openPostArrow"></i>});
                     }
                 }
                 }>
