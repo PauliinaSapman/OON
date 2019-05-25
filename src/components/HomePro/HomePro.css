@@ -1,0 +1,78 @@
+/*
+Värit:
+headerin sininen #4B8CAB
+nappulan vihree #47C786
+vaalea sininen #E9ECF0
+taustan vaalea harmaa #F0F0F0
+tummanliila(autot) #590375
+tummanvihreä(ruoka) #136F63
+tummanisininen(siivous) #395C89
+tummanpunainen(it) #89023E
+keltainen(rakennus) #FFBA5C
+oranssi(musiikki) #e48255
+ */
+
+.selectUserButton {
+    width: 100%;
+    height: 100%;
+}
+
+.userHeadlines {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.pelle {
+    margin-bottom: 1rem;
+}
+
+.greenButton {
+
+    height: 3.5rem;
+    top: 0;
+    right: 117.5px;
+
+    position: fixed;
+    z-index: 24;
+}
+
+.postFormPro {
+    margin: 1rem;
+}
+
+.proMessageContainer {
+    width: 50%;
+    margin: 1rem;
+    padding: 0.5rem;
+}
+
+.homeProMain {
+    margin-top:5rem;
+
+    width: calc(100% - 1rem);
+}
+
+.messageHeader {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+
+.usersListWrapper h3{
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+@media only screen and (max-width: 600px) {
+
+    .userHeadlines h2 {
+        margin-top: 1rem;
+        font-size: 120%;
+    }
+
+    .proMessageContainer {
+        margin: 0.5rem;
+    }
+}

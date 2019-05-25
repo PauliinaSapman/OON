@@ -1,0 +1,217 @@
+
+/*
+Värit:
+headerin sininen #4B8CAB
+nappulan vihree #47C786
+vaalea sininen #E9ECF0
+taustan vaalea harmaa #F0F0F0
+tummanliila(autot) #590375
+tummanvihreä(ruoka) #136F63
+tummanisininen(siivous) #395C89
+tummanpunainen(it) #89023E
+keltainen(rakennus) #FFBA5C
+ */
+
+
+html {
+    background-color: #F0F0F0;
+}
+
+.returnButton {
+    background-color: white;
+    width: 6rem;
+    height: 2rem;
+    border-radius: 8px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.returnButton a {
+    width: 100%;
+    height: 100%;
+    color: black;
+    text-decoration: none;
+}
+
+.profileMain {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.profileFull {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3.5rem;
+}
+
+.profileFull h1 {
+    text-align: center;
+    margin-top: 1rem;
+    width: 90%;
+
+}
+
+.profileEditButton {
+    margin-top: 1rem;
+    background-color: #47C786;
+    border: none;
+    border-radius: 8px;
+    width: 6rem;
+    height: 2rem;
+    color: white;
+    align-self: center;
+}
+
+.profileContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: white;
+    width: 90%;
+    height: calc(100% - 2rem);
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.profileInfo {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profilePicture {
+    width: 10rem;
+    max-height: 20rem;
+}
+
+.profileAdditionalInfo {
+    padding-top: 1rem;
+}
+
+.profileAdditionalInfo p {
+    margin-top: 1rem;
+}
+
+.profileShared {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+.SkillListProfile {
+    margin: 1rem;
+    padding-left: 1rem;
+}
+
+.skillListWrapper {
+    overflow: auto;
+}
+
+.skillListWrapper h4 {
+    margin-bottom: 1rem;
+}
+
+.profileList {
+    list-style: circle;
+    list-style-position: inside;
+}
+
+.profileContent h2 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.profileLine {
+    border-left: 2px solid #F0F0F0;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.editProfileFormWrapper{
+
+    width: 40%;
+    display: flex;
+    justify-content: center;
+}
+
+.editProfileForm {
+    display: flex;
+    flex-direction: column;
+
+    width: 80%;
+}
+
+.editProfileForm input, .editProfileForm label, .editProfileForm button {
+    margin-top: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+    .profileContent {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profileContent h2 {
+        font-size: 120%;
+    }
+
+    .profileAdditionalInfo {
+        padding: 0;
+    }
+
+    .profileAdditionalInfo p {
+        margin-top: 0.5rem;
+    }
+
+    .profileEditButton {
+        flex-shrink: 0;
+    }
+
+    .profileShared {
+        height: 50%;
+        width: 80%;
+
+
+        padding-bottom: 1rem;
+    }
+    .profilePicture {
+        width: 5rem;
+        max-height: 10rem;
+    }
+
+    .profileInfo {
+        width: 90%;
+         flex-grow: 0;
+    }
+
+    .profileFull h1 {
+        font-size: 150%;
+    }
+
+    .profileLine {
+        border-top: 2px solid #F0F0F0;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-bottom: 0;
+        width: 90%;
+    }
+
+    .editProfileFormWrapper{
+        flex-grow: 0;
+        flex-shrink: 0;
+        width: 100%;
+    }
+
+    .editProfileForm input, .editProfileForm label  {
+        margin-top: 0.3rem;
+    }
+
+}
