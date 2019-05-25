@@ -179,3 +179,60 @@ export function saveProfile(userid, fName, lName, pic, email, phone) {
         });
         */
 }
+
+// ultrahack
+
+// get all texts from user's all posts to be sent to api
+export function getAllTextsFromUser() {
+
+    let texts = '';
+
+    const testRef = firebase.database().ref('posts/userid');
+    testRef.on('value', function(snapshot)
+    {
+        postNumber = snapshot.numChildren();
+
+        // loopataan läpi postaukset ja annetaan viimeisimmän arvo postNumberille
+        for(let i = 0; i < snapshot.numChildren(); i++) {
+              console.log(Object.keys(snapshot.val())[i]);
+            let post = Object.keys(snapshot.val())[i];
+
+            let textCategory = firebase.database().ref('posts/userid/' + post + '/category');
+            textCategory.on('value', function(snapshot) {
+                texts += ' ' + snapshot.val();
+                console.log(texts);
+            });
+
+            let textTitle = firebase.database().ref('posts/userid/' + post + '/title');
+            textTitle.on('value', function(snapshot) {
+                texts += ' ' + snapshot.val();
+                console.log(texts);
+            });
+
+            let textTools = firebase.database().ref('posts/userid/' + post + '/tools');
+            textTools.on('value', function(snapshot) {
+                texts += ' ' + snapshot.val();
+                console.log(texts);
+            });
+
+            let textSteps = firebase.database().ref('posts/userid/' + post + '/steps');
+            textSteps.on('value', function(snapshot) {
+                texts += ' ' + snapshot.val();
+                console.log(texts);
+            });
+
+            let textOther = firebase.database().ref('posts/userid/' + post + '/newsection1');
+            textOther.on('value', function(snapshot) {
+                texts += ' ' + snapshot.val();
+                console.log(texts);
+            });
+
+
+
+           // postNumber = Object.keys(snapshot.val())[i];
+        }
+
+        // console.log(postNumber);
+    });
+}
+getAllTextsFromUser();
