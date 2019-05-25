@@ -104,15 +104,26 @@ class UserInfo extends Component{
 
     setInitialValues() {
         this.setState({editProfile: <div className="profileInfo">
-                <div className="profileName">
-                    <h2>{this.state.userinfo.fName} {this.state.userinfo.lName}</h2>
+                <div className="profileContainer">
+
+                    <div className="profilePictureContainer">
+                        <img className="profilePicture clickable" onClick={this.editInfo} src={this.state.userinfo.pic}/>
+                    </div>
+
+                    <div className="profileInfoContainer">
+                        <div className="profileName">
+                            <h3 className="profileNameText">{this.state.userinfo.fName} {this.state.userinfo.lName}</h3>
+                        </div>
+                        <div className="profileAdditionalInfo">
+                            <p className="profileInfoText">{this.state.userinfo.email}</p>
+                            <p className="profileInfoText">{this.state.userinfo.phone}</p>
+                        </div>
+
+                    </div>
                 </div>
-                <img className="profilePicture" src={this.state.userinfo.pic}/>
-                <div className="profileAdditionalInfo">
-                    <p>{this.state.userinfo.email}</p>
-                    <p>{this.state.userinfo.phone}</p>
-                </div>
-                <button className="profileEditButton clickable" onClick={this.editInfo}><i className="far fa-edit"></i> Muokkaa</button>
+
+
+
             </div>})
     }
 
@@ -208,7 +219,9 @@ class UserInfo extends Component{
                 {/*<h1>Profiili</h1>*/}
                 <div className="profileContent">
                     {this.state.editProfile}
-                    <div className="profileLine"></div>
+
+                    <div className="profileDivider"/>
+
                     <div className="profileShared">
                         <h2>Jakaminen</h2>
                         <GetShared/>
@@ -219,19 +232,43 @@ class UserInfo extends Component{
     }
 }
 
+
+function LogOut() {
+    return (
+        <div className="headerButtonContainer">
+            <button className="headerButton ">
+                <Link className="headerButtonLink" to={ROUTES.LANDING}><i className="fas fa-sign-out-alt"></i><span className="navBarLinkText"> Kirjaudu ulos</span></Link>
+            </button>
+        </div>
+    );
+}
+function CopyRight() {
+    return (
+        <div className="copyrightContainer">
+            <hr className="copyRightDivider"/>
+            <p className="copyRightText">Copyright 2018 © NäytönPaikka</p>
+        </div>
+
+    );
+}
+
+
 // Sivun yläpalkki.
 function Header() {
     return (
         <div className="Header">
             <div className="logoContainer">
-                <img src="https://cdn.discordapp.com/attachments/507585455999418368/521387737161400342/Asset_2.png"/>
-
+                <img src="https://cdn.discordapp.com/attachments/507585455999418368/531509068632686611/np-logo.png"/>
             </div>
 
             <div className="headerButtons">
                 <div className="headerButtonContainer">
-                    <button className="headerButton"><Link className="headerButtonLink" to={ROUTES.HOME}><i className="fas fa-long-arrow-alt-left"></i> Takaisin</Link></button>
+                    <button className="headerButton"><Link className="headerButtonLink" to={ROUTES.HOME}><i className="fas fa-long-arrow-alt-left"></i> <span className="navBarLinkText"> Takaisin</span></Link></button>
                 </div>
+                <div className="logOutButton">
+                <LogOut/>
+                <CopyRight/>
+            </div>
 
             </div>
         </div>

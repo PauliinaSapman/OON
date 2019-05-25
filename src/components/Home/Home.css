@@ -27,11 +27,14 @@ oranssi(musiikki) #e48255
 
     display: flex;
     flex-direction: column;
-
+    flex-shrink: 0;
     width: 16rem;
     height: calc(100% - 1.5rem);
     background-color: #f3f3f3;
     z-index: 23;
+
+    font-family: 'Lato', sans-serif !important;
+
 }
 
 .logoContainer {
@@ -90,12 +93,34 @@ oranssi(musiikki) #e48255
 
     color: #f0f0f0;
 
-    font-size: 100%;
+    font-size: 130%;
+}
+
+.navBarLinkText {
+    font-size: 120%;
+    margin-left: 0.25rem;
+}
+
+.headerButtonLink:hover {
+    color: black;
+}
+.logOutButton {
+    margin-top: auto;
 }
 
 
+
 .copyrightContainer {
-    align-self: flex-end;
+    padding: 0.5rem;
+    margin-top: auto;
+    font-family: 'Lato', sans-serif;
+
+    opacity: 0.8;
+}
+
+.copyRightText {
+padding-top: 1rem;
+
 }
 
 /* headerin tyylit loppu*/
@@ -114,14 +139,18 @@ oranssi(musiikki) #e48255
     flex-direction: column;
     flex-grow: 1;
 
-    height: calc(100% - 1rem);
+    height: 100%;
+    width: 100%;
+    padding: 0 8rem;
 
-    padding: 1rem;
     background-color: white;
+    overflow: auto;
+    /*
+    padding: 1rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     padding-top: 0;
-
+*/
 }
 
 .SkillList {
@@ -158,6 +187,7 @@ oranssi(musiikki) #e48255
     margin-top: 4.5rem;
     margin-bottom: 1.2rem;
     display: flex;
+    flex-direction: column;
     justify-content: center;
 
     width: 100%;
@@ -165,7 +195,40 @@ oranssi(musiikki) #e48255
     flex-shrink: 0;
 }
 
+.addPostWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f3f3f3;
+}
+.addPostWrapper .addPostFormSection {
+    width: 100%;
+}
+
+.addPostWrapper .addPostFormSection .selfEval, .addPostWrapper .addPostFormSection .Category{
+    width: calc(100% - 2rem);
+    margin: 0 1rem;
+}
+.addPostWrapper .addPostFormSection input, .addPostWrapper .addPostFormSection textarea {
+    width: calc(100% - (2rem + 2px));
+    border: 1px solid #e5e5e5;
+    margin: 0 1rem;
+}
+
+.addPostWrapper .addPostFormSection textarea {
+    resize: vertical;
+}
+.addPostWrapper .addPostFormSection textarea:focus, .addPostWrapper .addPostFormSection input:focus,.addPostWrapper .Category:focus {
+    outline: none;
+    border-color: black;
+}
+.addPostWrapper .addPostFormSection textarea:hover, .addPostWrapper .addPostFormSection input:hover,.addPostWrapper .Category:hover  {
+    border-color: black;
+}
+
+
 .New {
+    /*
     padding: .5rem 1rem .6rem 1rem;
     color: #f0f0f0;
     background-color: #47c786;
@@ -179,7 +242,22 @@ oranssi(musiikki) #e48255
     box-shadow: 0px 0px 23px -13px rgba(0, 0, 0, 0.55);
 
     border: none;
+<<<<<<< HEAD
 
+=======
+    */
+    background-color: #f3f3f3;
+    color: #3cb289;
+    border: none;
+    border-radius: 0;
+    text-align: left;
+    padding: 0.5rem 1rem;
+    font-size: 150%;
+}
+
+.addButtonTexts {
+    display: flex;
+    justify-content: space-between;
 }
 
 div.kys > button > h2 > i {
@@ -558,7 +636,7 @@ button:focus {
 .SkillTitleList {
     overflow: auto;
     height: calc(100% - 4rem);
-    font-size: 20npx;
+    font-size: 20px;
 }
 
 .clickable {
@@ -694,9 +772,6 @@ justify-content: space-between;
     justify-content: center;
 }
 
-.openPostArrow {
-    font-size: 150%;
-}
 
 .icon {
     width: 1rem;

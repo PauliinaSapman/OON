@@ -4,6 +4,11 @@ import {ModalButton} from "react-modal-button";
 //import firebase from './firebase/firebase.js';
 import * as sanna from './sanna.js'
 import Modal from 'react-responsive-modal';
+import firebase from "./firebase/firebase";
+import Tooltip from "react-tooltip-lite";
+import {Collapse} from "react-collapse";
+import {Tab, TabList, TabPanel, Tabs} from "react-tabs";
+import {Comments} from "./components/Home";
 
 // Komponentteihin lisätään myös "Lisää" -napin toiminnallisuus. Kun nappia painetaan avautuu/paljastuu uusi vaihe osaamisen
 // määrittelyyn !!HUOM!! mulla oli joku syy miks oon laittanu jokasen osan omaks komponentiks mut en just nyt muista sitä..
@@ -56,7 +61,7 @@ export class SelectCategory extends Component {
 
     render() {
         return (
-            <div>
+            <div className="addPostFormSection">
                 <Select className="Category" placeholder = "Kategoria" options={Kategoriat} onChange={this.handleChange}></Select>
             </div>
         );
@@ -74,15 +79,9 @@ export class NewTitle extends Component {
 
     render () {
         return (
-            <div>
-                <div className="NewTitleMain">
-                    <div className="header">
-                        <form /*onSubmit={}*/>
+            <div className="addPostFormSection">
                             <input placeholder="Otsikko" onBlur={this.handleChange}>
                             </input>
-                        </form>
-                    </div>
-                </div>
             </div>
         );
     }
@@ -98,12 +97,15 @@ export class SelfEvulation extends Component {
 
     render() {
         return (
-            <div className="RadioSection"> <p>Itsearvionti</p>
-                <div className="radio">
-                    <input type="radio" value="1" name="rating"  onChange={this.handleChange}></input> 1
-                    <input type="radio" value="2" name="rating"  onChange={this.handleChange}></input> 2
-                    <input type="radio" value="3" name="rating"  onChange={this.handleChange}></input> 3
-                    <input type="radio" value="4" name="rating"  onChange={this.handleChange}></input> 4
+            <div className="addPostFormSection">
+                <div className="selfEval">
+                    <p>Itsearvionti</p>
+                    <div className="radio">
+                        <input type="radio" value="1" name="rating"  onChange={this.handleChange}></input> 1
+                        <input type="radio" value="2" name="rating"  onChange={this.handleChange}></input> 2
+                        <input type="radio" value="3" name="rating"  onChange={this.handleChange}></input> 3
+                        <input type="radio" value="4" name="rating"  onChange={this.handleChange}></input> 4
+                    </div>
                 </div>
             </div>
         );
@@ -120,15 +122,9 @@ export class AddTools extends Component {
 
     render () {
         return (
-            <div>
-                <div className="AddToolsMain">
-                    <div className="header">
-                        <form>
+            <div className="addPostFormSection">
                             <textarea placeholder="Tarvittavat työkalut" onBlur={this.handleChange}>
                             </textarea>
-                        </form>
-                    </div>
-                </div>
             </div>
         );
     }
@@ -144,15 +140,10 @@ export class EnterSteps extends Component {
 
     render () {
         return (
-            <div>
-                <div className="EnterStepsMain">
-                    <div className="header">
-                        <form>
+            <div className="addPostFormSection">
                             <textarea placeholder="Työn vaiheet" onBlur={this.handleChange}>
                             </textarea>
-                        </form>
-                    </div>
-                </div>
+
             </div>
         );
     }
@@ -167,7 +158,7 @@ export class AddFile extends Component {
 
     render () {
         return (
-            <div className="pictureInput">
+            <div  className="addPostFormSection">
                 <input placeholder="Lisää kuvan URL" onChange={this.handleChange}/>
             </div>
         )
@@ -182,15 +173,10 @@ export  class NewSection extends Component {
 
     render () {
         return (
-            <div>
-                <div className="NewSection">
-                    <div className="header" >
-                        <form>
+            <div className="addPostFormSection">
                            <textarea placeholder="Muuta" onBlur={this.handleChange}>
                             </textarea>
-                        </form>
-                    </div>
-                </div>
+
             </div>
         )
     }}
@@ -321,9 +307,16 @@ export class AddButton extends Component {
 }
 
 //Modaalin sisältö kasattuna
+// Modaali muutettu haitariksi
 export class NewButton extends Component {
     state = {
-        open: false,};
+        open: false,
+        isOpened: false,
+    };
+
+    componentDidMount() {
+        const me = this;
+    }
 
     // lähetetään kaikki tiedot savedValues
     handleSubmit(e) {
@@ -342,18 +335,41 @@ export class NewButton extends Component {
 
     render() {
         const { open } = this.state;
+        const {isOpened} = this.state;
         return (
             <div className="kys">
-                <button className="New clickable" onClick={this.onOpenModal}><h2><i className="fas fa-plus"></i> Uusi osaaminen</h2></button>
-                <Modal className="ModalWindow" open={open} onClose={this.onCloseModal} >
-                    <form className="NewModal" onSubmit={this.handleSubmit}>
-                        <div><SelectCategory/></div>
-                        <div><NewTitle/></div>
-                        <div><AddButton/></div>
+
+                <div className="New clickable" onClick={() => {
+                    if (this.state.isOpened === true) {
+                        this.setState({isOpened: false});
+                    }
+                    else {
+                        this.setState({isOpened: true});
+                    }
+                }
+                }>
+                    <div className="addButtonTexts">
+                        <h4><i className="fas fa-plus"></i> Uusi osaaminen</h4>
+                        <p>{this.state.button}</p>
+                    </div>
+                </div>
+                <Collapse isOpened={isOpened}>
+                    <form className="addPostWrapper" onSubmit={this.handleSubmit}>
+                        <SelectCategory/>
+                        <NewTitle/>
+                        <SelfEvulation/>
+                        <AddTools/>
+                        <EnterSteps/>
+                        <AddFile/>
+                        <NewSection/>
                         <button className="ModalSave" type="submit" onClick={this.onCloseModal}>Tallenna</button>
                     </form>
-                </Modal>
+                </Collapse>
             </div>
         );
     }
 }
+
+
+// Haitari
+
