@@ -9,7 +9,7 @@ import Tooltip from "react-tooltip-lite";
 import {Collapse} from "react-collapse";
 import {Tab, TabList, TabPanel, Tabs} from "react-tabs";
 import {Comments} from "./components/Home";
-import {apiTesti, resetResults, scrollRight, scrollToLeft, scrollToRight} from "./tuomas";
+import {apiTesti, apiTesti1, resetResults, scrollRight, scrollToLeft, scrollToRight} from "./tuomas";
 
 import Skill from "./components/Home/index.js"
 
@@ -218,7 +218,7 @@ export class MitaOsaan extends Component {
         return (
             <div className="addPostFormSection">
                 <p>Mitä tähän liittyen osaan jo?</p>
-                <textarea placeholder="Mitä tähän liittyvää osaan jo?"></textarea>
+                <textarea placeholder="Mitä tähän liittyvää osaan jo?" id="mitaOsaan"></textarea>
             </div>
         );
     }
@@ -493,6 +493,14 @@ export class FindButton extends Component {
     render() {
         const { open } = this.state;
         const {isOpened} = this.state;
+
+        const mitaOsaan = document.getElementById('mitaOsaan');
+        let text1 = '';
+        if(mitaOsaan) {
+            text1 = mitaOsaan.value;
+        }
+        console.log(text1);
+
         return (
             <div className="kys findButton">
                 <div className="New clickable" onClick={() => {
@@ -514,7 +522,31 @@ export class FindButton extends Component {
                         <p>Voit etsiä ehdotuksia osaamisiksi tekoälyn avulla. Voit kertoa kiinnostuksistasi ja taidoistasi ja tekoäly etsii sinulle ehdotuksia perustuen vastauksiisi. <a href="https://www.microcompetencies.com" target="_blank">Lue lisää tekoälystä.</a></p>
                         <MitaHaluaisin/>
                         <MitaOsaan/>
-                        <button className="ModalSave">Hae</button>
+                        <button className="ModalSave" onClick={ () => {
+                            if(mitaOsaan) {
+                                text1 = mitaOsaan.value;
+                            }
+                            console.log(text1);
+                            apiTesti1(text1)} }>Hae</button>
+
+                        <p className="valintaOhje1">Valitse listasta asia jonka, saattaisit osata. Voit lisätä sen suoraan osaamisiisi ja muokata sitä.</p>
+                        <div className="resultContainer" id="resultContainer1">
+
+                            <div className="resultArrowContainer clickable"  onClick={ () => { scrollToLeft()}}>
+
+                                <i className="fas fa-chevron-left"></i>
+                            </div>
+
+                            <div className="resultBox3" id="resultBox1">
+
+                            </div>
+
+                            <div className="resultArrowContainer clickable" onClick={ () => { scrollToRight()}}>
+                                <i className="fas fa-chevron-right" ></i>
+                            </div>
+
+                        </div>
+
                         <MikaKiinnostaa/>
                         <button className="ModalSave">Hae</button>
                         <div className="addPostFormSection">
@@ -522,7 +554,7 @@ export class FindButton extends Component {
                             <button className="ModalSave" onClick={ () => {apiTesti()} }>
                                 <p className="haeButton3">Hae</p>
                             </button>
-                            <p className="valintaOhje3">Valitse listasta asia jonka, saattaisit osata.</p>
+                            <p className="valintaOhje3">Valitse listasta asia jonka, saattaisit osata. Voit lisätä sen suoraan osaamisiisi ja muokata sitä.</p>
                             <div className="resultContainer" id="resultContainer3">
 
                                 <div className="resultArrowContainer clickable"  onClick={ () => { scrollToLeft()}}>

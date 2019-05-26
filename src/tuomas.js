@@ -131,8 +131,6 @@ export let skillPositionArray = [];
 export let nSkillInposition = 0;
 
 export function apiTesti() {
-
-
     resetResults();
     let texts = '';
 
@@ -227,6 +225,57 @@ export function apiTesti() {
 
         // console.log(postNumber);
     });
+}
+
+
+
+
+export function apiTesti1(texts) {
+    resetResults();
+
+        fetch('https://api.microcompetencies.com/microcompetencies?action=text_to_skills&token=7125d5g8m6d9i9c6t8c7y3f8b57ecnm1h&text=' + texts)
+            .then((result) => {
+                return result.json();
+            }).then((jsonResult) => {
+            let newStr;
+            for (let skill of jsonResult.data){
+                newStr+= skill + ','
+            }
+            return newStr;})
+            .then((skills) => {
+                fetch('https://api.microcompetencies.com/microcompetencies?action=semantic_suggestion&type=skill&lang=fi&word=' + skills + '&word_limit=100&token=7125d5g8m6d9i9c6t8c7y3f8b57ecnm1h')
+                    .then((result) => {
+                        return result.json();
+                    }).then((jsonResult) => {
+                    skillsArray = jsonResult.data;
+                    for (let result of skillsArray) {
+
+                        document.querySelector('#resultBox1').innerHTML += '<div class="result clickable" id="' + result + '">\n' +
+                            '                                                   <p>'+ result.replace(/_/g, " ") + '</p>\n' +
+                            '                                               </div>';
+
+                        let element = document.getElementById(result);
+                        let positionInfo = element.getBoundingClientRect();
+                        let width = positionInfo.width;
+
+                        element.addEventListener("click", (e) => {
+                            this.console.log('sos');
+                        });
+                        skillPositionArray.push(width);
+                    }
+                    console.log(skillsArray);
+                    document.querySelector('#resultContainer1').style.height = '3rem';
+                    document.querySelector('#resultContainer1').style.opacity = '1';
+                    document.querySelector('#resultContainer1').style.paddingTop = '1.5rem';
+
+                    document.querySelector('.valintaOhje1').style.display = 'block';
+
+                    for (let suggestedSkill of document.querySelectorAll('.result')) {
+                        console.log(suggestedSkill);
+                        suggestedSkill.onclick = function(){pauliina.openNewPost(true,suggestedSkill.innerText )};
+                    }
+                });
+            })
 }
 
 
