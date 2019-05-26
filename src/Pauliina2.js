@@ -491,10 +491,10 @@ export class FindButton extends Component {
     };
 
     render() {
-        const { open } = this.state;
-        const {isOpened} = this.state;
+        let { open } = this.state;
+        let {isOpened} = this.state;
 
-        const mitaOsaan = document.getElementById('mitaOsaan');
+        let mitaOsaan = document.getElementById('mitaOsaan');
         let text1 = '';
         if(mitaOsaan) {
             text1 = mitaOsaan.value;
@@ -522,30 +522,7 @@ export class FindButton extends Component {
                         <p>Voit etsiä ehdotuksia osaamisiksi tekoälyn avulla. Voit kertoa kiinnostuksistasi ja taidoistasi ja tekoäly etsii sinulle ehdotuksia perustuen vastauksiisi. <a href="https://www.microcompetencies.com" target="_blank">Lue lisää tekoälystä.</a></p>
                         <MitaHaluaisin/>
                         <MitaOsaan/>
-                        <button className="ModalSave" onClick={ () => {
-                            if(mitaOsaan) {
-                                text1 = mitaOsaan.value;
-                            }
-                            console.log(text1);
-                            apiTesti1(text1)} }>Hae</button>
-
-                        <p className="valintaOhje1">Valitse listasta asia jonka, saattaisit osata. Voit lisätä sen suoraan osaamisiisi ja muokata sitä.</p>
-                        <div className="resultContainer" id="resultContainer1">
-
-                            <div className="resultArrowContainer clickable"  onClick={ () => { scrollToLeft()}}>
-
-                                <i className="fas fa-chevron-left"></i>
-                            </div>
-
-                            <div className="resultBox3" id="resultBox1">
-
-                            </div>
-
-                            <div className="resultArrowContainer clickable" onClick={ () => { scrollToRight()}}>
-                                <i className="fas fa-chevron-right" ></i>
-                            </div>
-
-                        </div>
+                        <button className="ModalSave">Hae</button>
 
                         <MikaKiinnostaa/>
                         <button className="ModalSave">Hae</button>
@@ -554,10 +531,10 @@ export class FindButton extends Component {
                             <button className="ModalSave" onClick={ () => {apiTesti()} }>
                                 <p className="haeButton3">Hae</p>
                             </button>
-                            <p className="valintaOhje3">Valitse listasta asia jonka, saattaisit osata. Voit lisätä sen suoraan osaamisiisi ja muokata sitä.</p>
+                            <p className="valintaOhje3">Valitse listasta asia, jonka saattaisit osata. Voit lisätä sen suoraan osaamisiisi ja muokata sitä.</p>
                             <div className="resultContainer" id="resultContainer3">
 
-                                <div className="resultArrowContainer clickable"  onClick={ () => { scrollToLeft()}}>
+                                <div className="resultArrowContainer clickable"  onClick={ () => { scrollToLeft('.resultBox3')}}>
 
                                     <i className="fas fa-chevron-left"></i>
                                 </div>
@@ -566,7 +543,7 @@ export class FindButton extends Component {
 
                                 </div>
 
-                                <div className="resultArrowContainer clickable" onClick={ () => { scrollToRight()}}>
+                                <div className="resultArrowContainer clickable" onClick={ () => { scrollToRight('.resultBox3')}}>
                                     <i className="fas fa-chevron-right" ></i>
                                 </div>
 
