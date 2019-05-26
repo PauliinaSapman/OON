@@ -10,7 +10,16 @@ import * as ROUTES from "../../constants/routes";
 import {Link} from 'react-router-dom';
 import {Collapse} from 'react-collapse';
 import {Form, Text, Scope, TextArea, Option, RadioGroup, Radio} from 'informed';
-import {NewButton} from "../../Pauliina2";
+import {
+    AddFile,
+    AddTools,
+    EnterSteps,
+    NewButton,
+    NewSection,
+    NewTitle,
+    SelectCategory,
+    SelfEvulation
+} from "../../Pauliina2";
 import {FindButton} from "../../Pauliina2";
 import Dialog from 'react-dialog'
 import {Modal} from "react-modal-button";
@@ -21,6 +30,9 @@ import "react-tabs/style/react-tabs.css";
 import Tooltip from 'react-tooltip-lite';
 
 import commenticon from '../../iconfinder_Streamline-59_185079.png'
+import ApiTest, {apiTesti} from "../../tuomas";
+
+
 
 function LogOut() {
     return (
@@ -893,6 +905,11 @@ class ToggleCollapse extends Component {
 
     render() {
         const {isOpened} = this.state;
+        const style = {marginTop: '1rem'};
+
+        if(this.props.info.isOpened) {
+            this.setState({isOpened:true});
+        }
 
         return (
             <div>
@@ -918,7 +935,7 @@ class ToggleCollapse extends Component {
                         </div>
                     </div>
                 </div>
-                <Collapse isOpened={isOpened}>
+                <Collapse isOpened={isOpened} className="postCollapse">
                     <Tabs>
                         <TabList>
                             <Tab>Osaaminen</Tab>
@@ -1097,10 +1114,31 @@ class Posts extends Component {
     }
 }
 
+export class Breadcrumb extends Component {
+    state = {
+
+    };
+
+    componentDidMount() {
+        const me = this;
+    }
+
+
+    render() {
+
+        return (
+            <div className="breadcrumbHolder" id="breadcrumb">
+                <p>Oma osioni / Oma osaaminen näkyväksi</p>
+            </div>
+        );
+    }
+}
+
 // Sivun varsinanen sisältö
 function Main() {
     return (
         <div className="Main">
+            <Breadcrumb/>
             <NewButton/>
             <FindButton/>
             <Posts/>

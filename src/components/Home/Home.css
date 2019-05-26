@@ -42,13 +42,11 @@ oranssi(musiikki) #e48255
     display: flex;
     align-items: center;
 
-
 }
 
 .logoContainer img {
 
     width: 100%;
-
 
 }
 
@@ -56,9 +54,6 @@ oranssi(musiikki) #e48255
     display: flex;
 
     flex-direction: column;
-
-
-
 
     flex-grow: 1;
 
@@ -85,7 +80,6 @@ oranssi(musiikki) #e48255
     justify-content: center;
     align-items: center;
 
-
 }
 
 .headerButtonLink {
@@ -104,11 +98,10 @@ oranssi(musiikki) #e48255
 .headerButtonLink:hover {
     color: black;
 }
+
 .logOutButton {
     margin-top: auto;
 }
-
-
 
 .copyrightContainer {
     padding: 0.5rem;
@@ -119,11 +112,68 @@ oranssi(musiikki) #e48255
 }
 
 .copyRightText {
-padding-top: 1rem;
+    padding-top: 1rem;
 
 }
 
 /* headerin tyylit loppu*/
+
+.valintaOhje3 {
+    display: none;
+
+}
+
+#resultContainer3, #resultContainer1 {
+    padding-top: 0rem;
+    padding-bottom: 1rem;
+    height: 0rem;
+    display: flex;
+    opacity: 0;
+    flex-direction: row;
+
+    transition-duration: 0.22s;
+
+}
+
+.resultArrowContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    width: 3rem;
+
+}
+
+.resultBox3 {
+    display: flex;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #e2e2e2;
+    overflow: hidden;
+
+    transition-duration: 0.15s;
+}
+
+.result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem;
+    margin-right: 0;
+
+    color: #666666;
+
+    transition-duration: 0.11s;
+
+ white-space: nowrap;
+}
+
+
+.result:hover {
+    color: black;
+
+}
 
 
 
@@ -153,6 +203,11 @@ padding-top: 1rem;
 */
 }
 
+.breadcrumbHolder p{
+    padding: 2rem 0;
+    color: #666666;
+}
+
 .SkillList {
     list-style: none;
 }
@@ -175,16 +230,14 @@ padding-top: 1rem;
     padding: 0;
     border-bottom: 1px solid #e5e5e5 !important;
     background-color: white;
-    font-family: Lato;
+
 }
 
 .Skill:nth-child(1) {
     margin-top: 0;
 }
 
-
 .kys {
-    margin-top: 4.5rem;
     margin-bottom: 1.2rem;
     display: flex;
     flex-direction: column;
@@ -201,19 +254,29 @@ padding-top: 1rem;
     align-items: center;
     background-color: #f3f3f3;
 }
+
+.addPostWrapper .addFormTitles {
+    text-align: left;
+    width: calc(100% - 2rem);
+    margin: 1rem;
+    margin-bottom: 0;
+}
+
 .addPostWrapper .addPostFormSection {
     width: 100%;
 }
 
-.addPostWrapper .addPostFormSection .selfEval, .addPostWrapper .addPostFormSection .Category{
+.addPostWrapper .addPostFormSection .selfEval, .addPostWrapper .addPostFormSection .Category {
     width: calc(100% - 2rem);
     margin: 0 1rem;
 }
+
 .addPostWrapper .addPostFormSection input, .addPostWrapper .addPostFormSection textarea {
     width: calc(100% - (3rem + 2px));
     border: 1px solid #e5e5e5;
     margin: 1rem;
     padding: 0.5rem;
+    margin-top: 0;
 }
 
 .addPostWrapper .addPostFormSection .Category input {
@@ -224,16 +287,37 @@ padding-top: 1rem;
     resize: vertical;
 }
 
-.addPostWrapper .addPostFormSection textarea:focus, .addPostWrapper .addPostFormSection input:focus,.addPostWrapper .Category:focus {
+.addPostWrapper .addPostFormSection textarea:focus, .addPostWrapper .addPostFormSection input:focus, .addPostWrapper .Category:focus {
     outline: none;
     border-color: black;
 }
-.addPostWrapper .addPostFormSection textarea:hover, .addPostWrapper .addPostFormSection input:hover,.addPostWrapper .Category:hover  {
+
+.addPostWrapper .addPostFormSection textarea:hover, .addPostWrapper .addPostFormSection input:hover, .addPostWrapper .Category:hover {
     border-color: black;
 }
 
-.addPostWrapper .addPostFormSection .radio input{
+.addPostWrapper .addPostFormSection .radio input {
     width: auto;
+}
+
+.searchPostsWrapper p {
+    margin: 0 1rem;
+}
+
+.searchPostsWrapper a {
+    color: #666666;
+}
+
+.searchPostsWrapper .addPostFormSection {
+    margin-top: 1rem;
+}
+
+.searchPostsWrapper .addPostFormSection textarea {
+    margin-bottom: 0;
+}
+
+.kys .searchPostsWrapper {
+    padding-top: 1rem;
 }
 
 .New {
@@ -319,6 +403,10 @@ div.kys > button > h2 > i {
     justify-content: center;
 }
 
+.editPostFormWrap {
+    width: 80%;
+}
+
 
 .editPostFormWrap textarea {
     outline: none;
@@ -352,15 +440,6 @@ div.kys > button > h2 > i {
     width: 7rem;
 }
 
-/*
-.Main {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    padding: 1rem;
-    background-color: #F0F0F0;
-}
-*/
 
 .window-container {
     padding: 2rem;
@@ -378,21 +457,7 @@ div.kys > button > h2 > i {
 */
 
 .ModalSave {
-    /*
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    background-color: #3cb289;
-    border: none;
-    width: 10rem;
-    height: 2rem;
-    color: white;
-    align-self: center;
-    float: right;
-<<<<<<< HEAD
-    font-size: 1rem;
-=======
-    font-size: 14px;
-    */
+
     width: 10rem !important;
     border: none !important;
     border-radius: 0 !important;
@@ -402,9 +467,20 @@ div.kys > button > h2 > i {
     height: calc(2.25rem + 2px);
     padding: .375rem .75rem;
     margin: 1rem auto 1rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
 }
 
-.ModalSave
+.ModalSave:hover, .ModalSave:active {
+    background-color: #369e78 !important;
+    color: #e5e5e5 !important;
+}
+
+
+.postCollapse ul {
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+}
 
 .skillContent h3, .Skill p {
     margin: 0.3rem;
@@ -487,10 +563,6 @@ div.kys > button > h2 > i {
 
 }
 
-
-
-
-
 .Viesti {
     outline: none;
     padding: 10px;
@@ -514,12 +586,13 @@ div.kys > button > h2 > i {
 .ShareRow {
     height: calc(100% - 24px - 1.5rem);
 
-
 }
+
 .ShareRow h2 {
     text-align: center;
     color: #666666;
 }
+
 .Lisaa {
     margin-top: 0.5rem;
     background-color: #4B8CAB;
@@ -583,12 +656,21 @@ div.kys > button > h2 > i {
     width: calc(100% - 1.5rem) !important;
 }
 
+.skillContent .container {
+    display: flex;
+    justify-content: flex-end;
+    height: 0;
+}
+
 .deletePost {
     background-color: white;
     color: red;
     border: 0;
     cursor: pointer;
     margin: 1rem;
+
+    position: relative;
+    top: -3rem;
 }
 
 .radioButton {
@@ -597,23 +679,29 @@ div.kys > button > h2 > i {
 }
 
 .savePostButton {
-
     border: none;
     width: 10rem;
-    height: 2rem;
     background-color: #3cb289;
     color: white;
-    margin-top: 1rem;
     font-size: 1rem;
-
+    cursor: pointer;
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    margin-top: 1rem;
 }
 
+
+.savePostButton:hover, .savePostButton:active {
+    background-color: #369e78 !important;
+    color: #e5e5e5 !important;
+}
 
 .sendCommentInput {
     margin: 1rem;
     padding: 0.5rem;
     width: calc(100% - 10.5rem);
 }
+
 .sendCommentButton {
     border: none;
     width: 6rem;
@@ -623,6 +711,7 @@ div.kys > button > h2 > i {
     color: white;
     margin-top: 1rem;
 }
+
 .ui-dialog-container {
     padding: 1rem;
 }
@@ -711,6 +800,8 @@ button:focus {
 .click {
     margin-left:0;
     background-color: #F3F3F3;
+
+    margin-left: 0;
     border: none;
     width: 9rem;
     height: 2.5rem;
@@ -724,7 +815,7 @@ button:focus {
 .shareToUserModal {
     display: flex;
     flex-direction: column;
-justify-content: space-between;
+    justify-content: space-between;
 
 }
 
@@ -745,11 +836,9 @@ justify-content: space-between;
     font-size: 14px;
 }
 
-
 .clicktwo {
     float: right;
 }
-
 
 .clicktrhee {
     margin-top: 5rem;
@@ -768,32 +857,33 @@ justify-content: space-between;
 }
 
 .regular-checkbox:active, .regular-checkbox:checked:active {
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
     outline: none;
 }
 
 .regular-checkbox:checked {
     outline: none;
     background-color: #666666;
-    }
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
+}
 
 .regular-checkbox:checked:after {
 
 }
+
 .big-checkbox {
     padding: 0.7rem;
 }
+
 .big-checkbox:checked:after {
     font-size: 1.2rem;
 }
-
 
 .center {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 
 .icon {
     width: 1rem;
@@ -812,6 +902,7 @@ justify-content: space-between;
     margin-top: 30%;
     margin-right: 1rem;
 }
+
 .LogOut a {
     text-decoration: none;
 }
@@ -831,7 +922,6 @@ justify-content: space-between;
 .more {
     padding-bottom: 0.2rem;
 }
-
 
 .Profile a {
     text-decoration: none;
@@ -935,7 +1025,6 @@ justify-content: space-between;
     font-size: 1rem;
 }
 
-
 .shareModalButtonContainer {
     display: flex;
     justify-content: space-between;
@@ -956,9 +1045,7 @@ justify-content: space-between;
     font-size: 14px;
 }
 
-
-
-.hideButton{
+.hideButton {
     display: none;
 }
 
@@ -982,8 +1069,9 @@ div.c-modal--window.modal-fade-on-enter.window-container, div.headerButtons > di
 
     div.c-modal--window.modal-fade-on-enter.window-container {
         width: calc(100% - 6rem) !important;
-        height:  calc(100% - 1rem)!important;
+        height: calc(100% - 1rem) !important;
     }
+
     div.c-modal--window.modal-fade-on-enter.window-containertwo {
         width: 70% !important;
         height: 0% !important;
@@ -1011,22 +1099,21 @@ div.c-modal--window.modal-fade-on-enter.window-container, div.headerButtons > di
     }
 }
 
-
-
 @media only screen and (min-width: 401px) {
     .shareModalButton {
         margin-bottom: -9rem;
     }
 }
+
 @media only screen and (min-width: 599px) {
 
     .kys {
-        max-width: 60rem;
+        /*max-width: 60rem;*/
     }
 
     .Main {
 
-        max-width: 59rem;
+       /* max-width: 59rem;*/
     }
 }
 

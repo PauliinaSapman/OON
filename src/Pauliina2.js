@@ -9,6 +9,9 @@ import Tooltip from "react-tooltip-lite";
 import {Collapse} from "react-collapse";
 import {Tab, TabList, TabPanel, Tabs} from "react-tabs";
 import {Comments} from "./components/Home";
+import {apiTesti, apiTesti1, resetResults, scrollRight, scrollToLeft, scrollToRight} from "./tuomas";
+
+import Skill from "./components/Home/index.js"
 
 // Komponentteihin lisätään myös "Lisää" -napin toiminnallisuus. Kun nappia painetaan avautuu/paljastuu uusi vaihe osaamisen
 // määrittelyyn !!HUOM!! mulla oli joku syy miks oon laittanu jokasen osan omaks komponentiks mut en just nyt muista sitä..
@@ -77,13 +80,16 @@ export class NewTitle extends Component {
         setValues('title', value);
     }
 
+
     render () {
         return (
             <div className="addPostFormSection">
-                            <input placeholder="Otsikko" onBlur={this.handleChange}>
+                            <input placeholder="Otsikko" onBlur={this.handleChange} id="newPostTitle">
                             </input>
             </div>
+
         );
+
     }
 }
 
@@ -194,6 +200,7 @@ export class MitaHaluaisin extends Component {
     render () {
         return (
             <div className="addPostFormSection">
+                <p>Mitä haluaisin osata?</p>
                 <textarea placeholder="Mitä haluaisin osata?"></textarea>
             </div>
         );
@@ -210,7 +217,8 @@ export class MitaOsaan extends Component {
     render () {
         return (
             <div className="addPostFormSection">
-                <textarea placeholder="Mitä tähän liittyvää osaan jo?"></textarea>
+                <p>Mitä tähän liittyen osaan jo?</p>
+                <textarea placeholder="Mitä tähän liittyvää osaan jo?" id="mitaOsaan"></textarea>
             </div>
         );
     }
@@ -227,6 +235,7 @@ export class MikaKiinnostaa extends Component {
     render () {
         return (
             <div className="addPostFormSection">
+                <p>Mikä minua kiinnostaa?</p>
                 <textarea placeholder="Mikä minua kiinnostaa?"></textarea>
             </div>
         );
@@ -363,13 +372,19 @@ export class AddButton extends Component {
 //Modaalin sisältö kasattuna
 // Modaali muutettu haitariksi
 export class NewButton extends Component {
-    state = {
-        open: false,
-        isOpened: false,
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            isOpened: false,
+            title: ''
+        };
+        openNewPost = openNewPost.bind(this)
+    }
 
     componentDidMount() {
         const me = this;
+        console.log(this.state.title);
     }
 
     // lähetetään kaikki tiedot savedValues
@@ -409,12 +424,18 @@ export class NewButton extends Component {
                 </div>
                 <Collapse isOpened={isOpened}>
                     <form className="addPostWrapper" onSubmit={this.handleSubmit}>
+                        <p className="addFormTitles">Kategoria</p>
                         <SelectCategory/>
+                        <p className="addFormTitles">Otsikko</p>
                         <NewTitle/>
                         <SelfEvulation/>
+                        <p className="addFormTitles">Työkalut</p>
                         <AddTools/>
+                        <p className="addFormTitles">Vaiheet</p>
                         <EnterSteps/>
+                        <p className="addFormTitles">Lisää tiedoston linkki</p>
                         <AddFile/>
+                        <p className="addFormTitles">Muuta</p>
                         <NewSection/>
                         <button className="ModalSave" type="submit" onClick={this.onCloseModal}>Tallenna</button>
                     </form>
@@ -424,18 +445,29 @@ export class NewButton extends Component {
     }
 }
 
+export function openNewPost(val, title) {
+    document.getElementById('breadcrumb').scrollIntoView();
+    this.setState({isOpened: val});
+    document.getElementById('newPostTitle').value = title;
+}
+
+
 
 // Haitari
 
-// Löydä Uusi osaaminen
+// Löydä Uusi osaaminennn
 
 
 
 export class FindButton extends Component {
-    state = {
-        open: false,
-        isOpened: false,
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            isOpened: false,
+        };
+        openNewPost = openNewPost.bind(this)
+    }
 
     componentDidMount() {
         const me = this;
@@ -451,9 +483,24 @@ export class FindButton extends Component {
         contents = [];
     };
 
+
+    open = () => {
+        document.getElementById('breadcrumb').scrollIntoView();
+        openNewPost(true, 'Testi');
+        console.log('Testi');
+    };
+
     render() {
         const { open } = this.state;
         const {isOpened} = this.state;
+
+        const mitaOsaan = document.getElementById('mitaOsaan');
+        let text1 = '';
+        if(mitaOsaan) {
+            text1 = mitaOsaan.value;
+        }
+        console.log(text1);
+
         return (
             <div className="kys findButton">
                 <div className="New clickable" onClick={() => {
@@ -471,13 +518,61 @@ export class FindButton extends Component {
                     </div>
                 </div>
                 <Collapse isOpened={isOpened}>
-                    <form className="addPostWrapper" onSubmit={this.handleSubmit}>
+                    <form className="addPostWrapper searchPostsWrapper" onSubmit={this.handleSubmit}>
+                        <p>Voit etsiä ehdotuksia osaamisiksi tekoälyn avulla. Voit kertoa kiinnostuksistasi ja taidoistasi ja tekoäly etsii sinulle ehdotuksia perustuen vastauksiisi. <a href="https://www.microcompetencies.com" target="_blank">Lue lisää tekoälystä.</a></p>
                         <MitaHaluaisin/>
                         <MitaOsaan/>
-                        <button className="ModalSave">Hae</button>
+                        <button className="ModalSave" onClick={ () => {
+                            if(mitaOsaan) {
+                                text1 = mitaOsaan.value;
+                            }
+                            console.log(text1);
+                            apiTesti1(text1)} }>Hae</button>
+
+                        <p className="valintaOhje1">Valitse listasta asia jonka, saattaisit osata. Voit lisätä sen suoraan osaamisiisi ja muokata sitä.</p>
+                        <div className="resultContainer" id="resultContainer1">
+
+                            <div className="resultArrowContainer clickable"  onClick={ () => { scrollToLeft()}}>
+
+                                <i className="fas fa-chevron-left"></i>
+                            </div>
+
+                            <div className="resultBox3" id="resultBox1">
+
+                            </div>
+
+                            <div className="resultArrowContainer clickable" onClick={ () => { scrollToRight()}}>
+                                <i className="fas fa-chevron-right" ></i>
+                            </div>
+
+                        </div>
+
                         <MikaKiinnostaa/>
                         <button className="ModalSave">Hae</button>
-                        <button className="ModalSave">Hae satunnaisesti</button>
+                        <div className="addPostFormSection">
+                            <p>Voit myös hakea aiempien osaamistesi perusteella. Tekoäly etsii aiemmista osaamisistasi avainsanoja ja ehdottaa niiden perusteella samankaltaisia osaamisalueita.</p>
+                            <button className="ModalSave" onClick={ () => {apiTesti()} }>
+                                <p className="haeButton3">Hae</p>
+                            </button>
+                            <p className="valintaOhje3">Valitse listasta asia jonka, saattaisit osata. Voit lisätä sen suoraan osaamisiisi ja muokata sitä.</p>
+                            <div className="resultContainer" id="resultContainer3">
+
+                                <div className="resultArrowContainer clickable"  onClick={ () => { scrollToLeft()}}>
+
+                                    <i className="fas fa-chevron-left"></i>
+                                </div>
+
+                                <div className="resultBox3" id="resultBox3">
+
+                                </div>
+
+                                <div className="resultArrowContainer clickable" onClick={ () => { scrollToRight()}}>
+                                    <i className="fas fa-chevron-right" ></i>
+                                </div>
+
+                            </div>
+
+                        </div>
                     </form>
                 </Collapse>
             </div>

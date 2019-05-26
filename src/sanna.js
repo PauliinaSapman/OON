@@ -234,4 +234,3 @@ export function getAllTextsFromUser() {
         // console.log(postNumber);
     });
 }
-getAllTextsFromUser();
