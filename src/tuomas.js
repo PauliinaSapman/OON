@@ -178,51 +178,102 @@ export function apiTesti() {
             }
             return newStr;})
             .then((skills) => {
-                    fetch('https://api.microcompetencies.com/microcompetencies?action=semantic_suggestion&type=skill&lang=fi&word=' + skills + '&word_limit=100&token=7125d5g8m6d9i9c6t8c7y3f8b57ecnm1h')
+                fetch('https://api.microcompetencies.com/microcompetencies?action=semantic_suggestion&type=skill&lang=fi&word=' + skills + '&word_limit=100&token=7125d5g8m6d9i9c6t8c7y3f8b57ecnm1h')
                     .then((result) => {
-                    return result.json();
-                }).then((jsonResult) => {
+                        return result.json();
+                    }).then((jsonResult) => {
                     skillsArray = jsonResult.data;
-                     for (let result of skillsArray) {
+                    for (let result of skillsArray) {
 
-                        document.querySelector('#resultBox3').innerHTML += '<div class="result clickable" id="' + result + '">\n' +
-                            '                                                   <p>'+ result.replace(/_/g, " ") + '</p>\n' +
+                        let newResult = (result.charAt(0).toUpperCase() + result.slice(1)).replace(/_/g, " ");
+
+                        document.querySelector('#section3 .resultBox').innerHTML += '<div class="result clickable" id="' + result + '">\n' +
+                            '                                                   <p>'+ newResult + '</p>\n' +
                             '                                               </div>';
 
-                         let element = document.getElementById(result);
-                         let positionInfo = element.getBoundingClientRect();
-                         let width = positionInfo.width;
+                        let element = document.getElementById(result);
+                        let positionInfo = element.getBoundingClientRect();
+                        let width = positionInfo.width;
 
-                         element.addEventListener("click", (e) => {
-                             this.console.log('sos');
-                         });
-                         skillPositionArray.push(width);
+                        skillPositionArray.push(width);
+                    }
+                    closeResultSection('1');
+                    closeResultSection('2');
+                    openResultSection('3');
 
-
-                     }
-                    console.log(skillsArray);
-                        document.querySelector('#resultContainer3').style.height = '3rem';
-                        document.querySelector('#resultContainer3').style.opacity = '1';
-                        document.querySelector('#resultContainer3').style.paddingTop = '1.5rem';
-
-                        document.querySelector('.valintaOhje3').style.display = 'block';
-
-                        for (let suggestedSkill of document.querySelectorAll('.result')) {
-
-                            console.log(suggestedSkill);
-
-
-                            suggestedSkill.onclick = function(){pauliina.openNewPost(true,suggestedSkill.innerText )};
-
-
-                        }
+                    for (let suggestedSkill of document.querySelectorAll('#section3 .result')) {
+                        suggestedSkill.onclick = function(){pauliina.openNewPost(true,suggestedSkill.innerText )};
+                    }
 
                 });
-        })
+            })
 
 
         // console.log(postNumber);
     });
+}
+
+
+
+export function apiTesti2 (text) {
+    resetResults();
+
+    fetch('https://api.microcompetencies.com/microcompetencies?action=text_to_skills&token=7125d5g8m6d9i9c6t8c7y3f8b57ecnm1h&text=' + text)
+        .then((result) => {
+            return result.json();
+        }).then((jsonResult) => {
+        let newStr;
+        for (let skill of jsonResult.data){
+            newStr+= skill + ','
+        }
+        return newStr;})
+        .then((skills) => {
+            fetch('https://api.microcompetencies.com/microcompetencies?action=semantic_suggestion&type=skill&lang=fi&word=' + skills + '&word_limit=100&token=7125d5g8m6d9i9c6t8c7y3f8b57ecnm1h')
+                .then((result) => {
+                    return result.json();
+                }).then((jsonResult) => {
+                skillsArray = jsonResult.data;
+                for (let result of skillsArray) {
+
+                    let newResult = (result.charAt(0).toUpperCase() + result.slice(1)).replace(/_/g, " ");
+
+                    document.querySelector('#section2 .resultBox').innerHTML += '<div class="result clickable" id="' + result + '">\n' +
+                        '                                                   <p>'+ newResult + '</p>\n' +
+                        '                                               </div>';
+
+                    let element = document.getElementById(result);
+                    let positionInfo = element.getBoundingClientRect();
+                    let width = positionInfo.width;
+
+                    skillPositionArray.push(width);
+                }
+                closeResultSection('1');
+                openResultSection('2');
+                closeResultSection('3');
+
+                for (let suggestedSkill of document.querySelectorAll('#section2 .result')) {
+                    suggestedSkill.onclick = function(){pauliina.openNewPost(true,suggestedSkill.innerText )};
+                }
+
+            });
+        })
+
+
+
+}
+
+export function apiTesti3 () {
+    openResultSection('1');
+    closeResultSection('2');
+    closeResultSection('3');
+}
+
+
+
+export function removeElement(elementId) {
+    // Removes an element from the document
+    let element = document.getElementById(elementId);
+    element.parentNode.removeChild(element);
 }
 
 
@@ -278,25 +329,38 @@ Math.easeInOutQuad = function (t, b, c, d) {
     return -c/2 * (t*(t-2) - 1) + b;
 };
 
-
-export function resetResults ()  {
-    console.log(skillPositionArray);
-    console.log(skillsArray);
-    console.log(nSkillInposition);
-
-    document.querySelector('#resultContainer3').style.height = '0rem';
-    document.querySelector('#resultContainer3').style.opacity = '0';
-    document.querySelector('#resultContainer3').style.paddingTop = '0rem';
-    document.querySelector('.valintaOhje3').style.display = 'none';
-
+export function resetArrays () {
     skillPositionArray = [];
     skillsArray = [];
     nSkillInposition = 0;
+}
 
-    document.querySelector('.resultBox3').scrollLeft = 0;
 
-    console.log(skillPositionArray);
-    console.log(skillsArray);
-    console.log(nSkillInposition);
+export function openResultSection(n) {
+    document.querySelector('#section' +n+ ' .resultContainer').style.height = '3rem';
+    document.querySelector('#section' +n+ ' .resultContainer').style.opacity = '1';
+    document.querySelector('#section' +n+ ' .resultContainer').style.paddingTop = '1.5rem';
 
+    document.querySelector('#section' +n+ ' .valintaOhje').style.display = 'block';
+}
+
+
+export function closeResultSection(n) {
+    document.querySelector('#section' +n+ ' .resultContainer').style.height = '0rem';
+    document.querySelector('#section' +n+ ' .resultContainer').style.opacity = '0';
+    document.querySelector('#section' +n+ ' .resultContainer').style.paddingTop = '0rem';
+    document.querySelector('#section' +n+ ' .valintaOhje').style.display = 'none';
+
+    document.querySelector('#section' +n+ ' .resultBox').scrollLeft = 0;
+
+
+
+}
+
+
+export function resetResults ()  {
+    closeResultSection('1');
+    closeResultSection('2');
+    closeResultSection('3');
+    resetArrays();
 }

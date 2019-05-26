@@ -9,7 +9,10 @@ import Tooltip from "react-tooltip-lite";
 import {Collapse} from "react-collapse";
 import {Tab, TabList, TabPanel, Tabs} from "react-tabs";
 import {Comments} from "./components/Home";
-import {apiTesti, apiTesti1, resetResults, scrollRight, scrollToLeft, scrollToRight} from "./tuomas";
+import {
+    apiTesti, apiTesti1, apiTesti2, apiTesti3, resetResults, scrollRight, scrollToLeft,
+    scrollToRight
+} from "./tuomas";
 
 import Skill from "./components/Home/index.js"
 
@@ -216,7 +219,7 @@ export class MitaOsaan extends Component {
 
     render () {
         return (
-            <div className="addPostFormSection">
+            <div className="addPostFormSection" id="section1">
                 <p>Mitä tähän liittyen osaan jo?</p>
                 <textarea placeholder="Mitä tähän liittyvää osaan jo?" id="mitaOsaan"></textarea>
             </div>
@@ -236,7 +239,7 @@ export class MikaKiinnostaa extends Component {
         return (
             <div className="addPostFormSection">
                 <p>Mikä minua kiinnostaa?</p>
-                <textarea placeholder="Mikä minua kiinnostaa?"></textarea>
+                <textarea placeholder="Mikä minua kiinnostaa?" id="section2Text"></textarea>
             </div>
         );
     }
@@ -520,30 +523,90 @@ export class FindButton extends Component {
                 <Collapse isOpened={isOpened}>
                     <form className="addPostWrapper searchPostsWrapper" onSubmit={this.handleSubmit}>
                         <p>Voit etsiä ehdotuksia osaamisiksi tekoälyn avulla. Voit kertoa kiinnostuksistasi ja taidoistasi ja tekoäly etsii sinulle ehdotuksia perustuen vastauksiisi. <a href="https://www.microcompetencies.com" target="_blank">Lue lisää tekoälystä.</a></p>
+
+                        <hr className="findDivider"/>
+
+
                         <MitaHaluaisin/>
                         <MitaOsaan/>
-                        <button className="ModalSave">Hae</button>
+                        <button className="ModalSave" onClick={ () => {apiTesti3()} }>
+                            <p className="haeButton">Hae</p>
+                        </button>
 
-                        <MikaKiinnostaa/>
-                        <button className="ModalSave">Hae</button>
-                        <div className="addPostFormSection">
+                        <div id="section1">
+
+                            <p className="valintaOhje">Valitse listasta asia, jonka saattaisit osata. Voit lisätä sen suoraan osaamisiisi ja muokata sitä.</p>
+                            <div className="resultContainer">
+
+                                <div className="resultArrowContainer clickable"  onClick={ () => { scrollToLeft('#section1 .resultBox')}}>
+                                    <i className="fas fa-chevron-left"></i>
+                                </div>
+
+                                <div className="resultBox">
+
+                                </div>
+
+                                <div className="resultArrowContainer clickable" onClick={ () => { scrollToRight('#section1 .resultBox')}}>
+                                    <i className="fas fa-chevron-right" ></i>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <hr className="findDivider"/>
+
+
+
+
+                            <MikaKiinnostaa/>
+                            <button className="ModalSave" onClick={ () => {apiTesti2(document.querySelector('#section2Text').value)} }>
+                                <p className="haeButton">Hae</p>
+                            </button>
+
+                            <div id="section2">
+
+                                <p className="valintaOhje">Valitse listasta asia, jonka saattaisit osata. Voit lisätä sen suoraan osaamisiisi ja muokata sitä.</p>
+                                <div className="resultContainer">
+
+                                    <div className="resultArrowContainer clickable"  onClick={ () => { scrollToLeft('#section2 .resultBox')}}>
+                                        <i className="fas fa-chevron-left"></i>
+                                    </div>
+
+                                    <div className="resultBox">
+
+                                    </div>
+
+                                    <div className="resultArrowContainer clickable" onClick={ () => { scrollToRight('#section2 .resultBox')}}>
+                                        <i className="fas fa-chevron-right" ></i>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        <hr className="findDivider"/>
+
+
+                        <div className="addPostFormSection" id="section3">
                             <p>Voit myös hakea aiempien osaamistesi perusteella. Tekoäly etsii aiemmista osaamisistasi avainsanoja ja ehdottaa niiden perusteella samankaltaisia osaamisalueita.</p>
                             <button className="ModalSave" onClick={ () => {apiTesti()} }>
-                                <p className="haeButton3">Hae</p>
+                                <p className="haeButton">Hae</p>
                             </button>
-                            <p className="valintaOhje3">Valitse listasta asia, jonka saattaisit osata. Voit lisätä sen suoraan osaamisiisi ja muokata sitä.</p>
-                            <div className="resultContainer" id="resultContainer3">
+                            <p className="valintaOhje">Valitse listasta asia, jonka saattaisit osata. Voit lisätä sen suoraan osaamisiisi ja muokata sitä.</p>
+                            <div className="resultContainer">
 
-                                <div className="resultArrowContainer clickable"  onClick={ () => { scrollToLeft('.resultBox3')}}>
+                                <div className="resultArrowContainer clickable"  onClick={ () => { scrollToLeft('#section3 .resultBox')}}>
 
                                     <i className="fas fa-chevron-left"></i>
                                 </div>
 
-                                <div className="resultBox3" id="resultBox3">
+                                <div className="resultBox">
 
                                 </div>
 
-                                <div className="resultArrowContainer clickable" onClick={ () => { scrollToRight('.resultBox3')}}>
+                                <div className="resultArrowContainer clickable" onClick={ () => { scrollToRight('#section3 .resultBox')}}>
                                     <i className="fas fa-chevron-right" ></i>
                                 </div>
 

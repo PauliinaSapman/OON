@@ -118,12 +118,25 @@ oranssi(musiikki) #e48255
 
 /* headerin tyylit loppu*/
 
-.valintaOhje3 {
+.valintaOhje {
     display: none;
 
 }
 
-#resultContainer3, #resultContainer1 {
+
+#root > div > div > div.Main > div.kys.findButton > div.ReactCollapse--collapse > div > form > p {
+    margin-bottom: 1rem;
+}
+
+.findDivider {
+    width: calc(100% - 2rem);
+    height: 2px;
+    border-radius: 50%;
+    opacity: 0.58;
+}
+
+
+.resultContainer {
     padding-top: 0rem;
     padding-bottom: 1rem;
     height: 0rem;
@@ -144,7 +157,7 @@ oranssi(musiikki) #e48255
 
 }
 
-.resultBox3 {
+.resultBox {
     display: flex;
     background-color: white;
     width: 100%;
@@ -175,6 +188,11 @@ oranssi(musiikki) #e48255
 
 }
 
+
+#section2, #section1 {
+
+    max-width: 100%;
+}
 
 
 .oon {

@@ -319,7 +319,7 @@ class ShareButton extends Component {
                                         tuomas.randomizeUrl();
                                         tuomas.copyToClipboard();
                                     }
-                                    }><i class="fas fa-redo-alt"></i> Generoi uusi osoite
+                                    }><i className="fas fa-redo-alt"></i> Generoi uusi osoite
                                     </button>
 
                                 </div>
@@ -467,22 +467,22 @@ export function getIcon(category) {
     let icon = ' ';
     switch (category) {
         case 'Autot':
-            icon =  <i class="fas fa-car"></i>;
+            icon =  <i className="fas fa-car"></i>;
             break;
         case 'Tietotekniikka':
-            icon = <i class="fas fa-desktop"></i>;
+            icon = <i className="fas fa-desktop"></i>;
             break;
         case 'Musiikki':
-            icon = <i class="fas fa-music"></i>;
+            icon = <i className="fas fa-music"></i>;
             break;
         case 'Ruuanlaitto':
-            icon = <i class="fas fa-utensils"></i>;
+            icon = <i className="fas fa-utensils"></i>;
             break;
         case 'Talotyöt':
             icon = <i className="fas fa-home"></i>;
             break;
         case 'Nikkarointi':
-            icon = <i class="fas fa-hammer"></i>;
+            icon = <i className="fas fa-hammer"></i>;
             break;
     }
     return icon;
@@ -921,7 +921,7 @@ class ToggleCollapse extends Component {
                         }
                         else {
                             this.setState({isOpened: true});
-                            this.setState({button: <i class="fas fa-caret-up openPostArrow"></i>});
+                            this.setState({button: <i className="fas fa-caret-up openPostArrow"></i>});
                         }
                     }
                     }>
