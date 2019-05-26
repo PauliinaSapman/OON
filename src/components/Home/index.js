@@ -298,7 +298,7 @@ class ShareButton extends Component {
                         content: <div className="ShareModal pdf">
                             <div>
 
-                                <h1>Jaa osaamisesi</h1>
+                                <h2>Jaa osaamisesi</h2>
 
                                 <div className="sharePDFSection">
                                     <p>Jaettavan sivusi osoite</p>
@@ -461,6 +461,31 @@ export function getColour(category) {
             break;
     }
     return colour;
+}
+
+export function getIcon(category) {
+    let icon = ' ';
+    switch (category) {
+        case 'Autot':
+            icon =  <i class="fas fa-car"></i>;
+            break;
+        case 'Tietotekniikka':
+            icon = <i class="fas fa-desktop"></i>;
+            break;
+        case 'Musiikki':
+            icon = <i class="fas fa-music"></i>;
+            break;
+        case 'Ruuanlaitto':
+            icon = <i class="fas fa-utensils"></i>;
+            break;
+        case 'Talotyöt':
+            icon = <i className="fas fa-home"></i>;
+            break;
+        case 'Nikkarointi':
+            icon = <i class="fas fa-hammer"></i>;
+            break;
+    }
+    return icon;
 }
 
 // TODO CSS lomakkeelle
@@ -991,7 +1016,8 @@ class Checkbox extends Component {
  * @constructor
  */
 function Skill(props) {
-    let colour = getColour(props.skillInfo.category);
+    let icon = getIcon(props.skillInfo.category);
+    console.log (icon);
 
     if (props.justTitle) {
         return (
@@ -1006,6 +1032,7 @@ function Skill(props) {
     }
     return (
         <li className="Skill">
+            <div className="skillIcon"><p>{icon}</p></div>
             <div className="skillContent">
                 <ToggleCollapse info={props.skillInfo} id={props.id}/>
             </div>
